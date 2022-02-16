@@ -1,0 +1,10 @@
+<mvc:View
+  controllerName="cloneTelegramApp.cloneTelegram.controller.Autorization"
+  xmlns:mvc="sap.ui.core.mvc"
+  displayBlock="true"
+  xmlns="sap.m"
+  xmlns:f="sap.f"
+  xmlns:tnt="sap.tnt"
+>
+
+</mvc:View>

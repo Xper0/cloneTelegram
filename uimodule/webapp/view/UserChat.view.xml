@@ -1,0 +1,84 @@
+<mvc:View
+  controllerName="cloneTelegramApp.cloneTelegram.controller.UserChat"
+  xmlns="sap.m"
+  xmlns:f="sap.f"
+  xmlns:mvc="sap.ui.core.mvc"
+  xmlns:u="sap.ui.unified"
+>
+  <Page
+    title="Chat: {messageUsersModelius>/nameChat}"
+    class="sapUiContentPadding sapUiResponsivePadding--header sapUiResponsivePadding--subHeader sapUiResponsivePadding--content sapUiResponsivePadding--footer"
+    showNavButton="true" >
+    <headerContent>
+      <Button icon="sap-icon://action" tooltip="Share" />
+    </headerContent>
+    <content>
+      <List
+        id="ListMessages"
+        growingScrollToLoad="true"
+        growingThreshold="5"
+        items="{
+					path : 'messageUsersModelius>/message/messages',
+					sorter : {
+						path : 'date'
+					}
+				}"
+      >
+          <FeedListItem
+        sender="{
+            parts: [
+             {path: 'messageUsersModelius>fromId'},
+             {path: 'messageUsersModelius>/message/users'}
+          ],
+
+					    	formatter : '.formatter.getUser'}"
+        icon="{AuthorPicUrl}"
+        senderPress="onSenderPress"
+        iconPress="onIconPress"
+        iconDensityAware="false"
+        info="{Type}"
+        timestamp="{
+        path : 'messageUsersModelius>date',
+					    	formatter : '.formatter.getData'
+        }"
+        text="{messageUsersModelius>message}"
+        convertLinksToAnchorTags="All"/>
+      </List>
+    </content>
+    <footer>
+      <Toolbar height="150px">
+        <VBox>
+          <HBox>
+            <FeedInput
+              post="onPost"
+              icon="{messageUsersModelius>/img}"
+              class="sapUiSmallMarginTopBottom"
+            />
+<!--            <Input-->
+<!--              value="{/InputValue}"-->
+<!--              valueLiveUpdate="{/ValueLiveUpdate}"-->
+<!--              liveChange="onPost" />-->
+<!--            <u:FileUploader-->
+<!--              id="fileUploader1"-->
+<!--              buttonOnly="true"-->
+<!--              icon="sap-icon://attachment"-->
+<!--              iconOnly="true"-->
+<!--              name="myFileUpload"-->
+<!--              uploadUrl="upload/"-->
+<!--              tooltip="Upload your file to the local server"-->
+<!--              uploadComplete="handleUploadComplete"-->
+<!--            />-->
+<!--            <Button icon="sap-icon://microphone"-->
+<!--            />-->
+          </HBox>
+        </VBox>
+
+      </Toolbar>
+    </footer>
+
+  </Page>
+
+
+
+
+</mvc:View>

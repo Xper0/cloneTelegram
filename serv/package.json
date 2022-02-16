@@ -1,0 +1,17 @@
+{
+  "name": "serv",
+  "version": "1.0.0",
+  "description": "",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node --experimental-modules server.js"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "tdl": "^7.0.0",
+    "tdl-tdlib-addon": "^1.0.1"
+  }
+}

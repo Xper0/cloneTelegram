@@ -1,0 +1,50 @@
+<mvc:View
+  controllerName="cloneTelegramApp.cloneTelegram.controller.Contacts"
+  xmlns="sap.m"
+  xmlns:f="sap.f"
+  xmlns:mvc="sap.ui.core.mvc">
+  <Page id="dynamicPageId"
+        title="Contacts">
+  <!-- DynamicPage Title -->
+
+    <!-- DynamicPage Content -->
+    <content>
+        <Toolbar class="sapFDynamicPageAlignContent">
+          <SearchField liveChange="onSearch" />
+          <Button icon="sap-icon://add" text="Add" type="Transparent" press=".onAdd"/>
+        </Toolbar>
+        <Table
+          id="ContactsTable"
+          inset="false"
+          items="{
+						path: 'UsersModel>/chats',
+						sorter: {
+							path: 'Name'
+						}
+					}"
+          class="sapFDynamicPageAlignContent"
+          width="auto">
+          <columns>
+            <Column width="12em">
+              <Text text="Contact"/>
+            </Column>
+            <Column	hAlign="End">
+              <Text text="Phone"/>
+            </Column>
+          </columns>
+          <items>
+            <ColumnListItem type="Navigation" press=".onListItemPress">
+              <cells>
+                <ObjectIdentifier title="{UsersModel>title}" text="{Contacts>Contacts}"/>
+                <ObjectNumber
+                  number="{
+                  path:'UsersModel>phone'
+                  }"
+                  unit="{products>CurrencyCode}"/>
+              </cells>
+            </ColumnListItem>
+          </items>
+        </Table>
+    </content>
+</Page>
+</mvc:View>

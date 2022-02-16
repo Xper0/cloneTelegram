@@ -31,7 +31,10 @@
     "dependencies": {
       "minUI5Version": "1.60",
       "libs": {
-        "sap.ui.core": {}
+        "sap.ui.core": {},
+        "sap.f": {},
+        "sap.ui.unified": {},
+        "sap.tnt": {}
       }
     },
     "contentDensities": {
@@ -44,6 +47,14 @@
         "settings": {
           "bundleName": "cloneTelegramApp.cloneTelegram.i18n.i18n"
         }
+      },
+      "Contacts": {
+        "type": "sap.ui.model.json.JSONModel",
+        "uri": "../localService/metadata/Contacts.json"
+      },
+      "MessageUsers": {
+        "type": "sap.ui.model.json.JSONModel",
+        "uri": "../localService/metadata/MessageUsers.json"
       }
     },
     "resources": {
@@ -59,16 +70,45 @@
         "viewType": "XML",
         "async": true,
         "viewPath": "cloneTelegramApp.cloneTelegram.view",
-        "controlAggregation": "pages",
-        "controlId": "app",
+        "controlId": "appContainer",
         "clearControlAggregation": false
       },
       "routes": [
         {
-          "name": "RouteMainView",
-          "pattern": "RouteMainView",
+          "name": "MainView",
+          "pattern": "",
           "target": [
-            "TargetMainView"
+            "Init"
+          ]
+        },
+        {
+          "pattern": "Init",
+          "name": "Init",
+          "target": [
+            "Init"
+          ]
+        },
+        {
+          "pattern": "Authorization",
+          "name": "Authorization",
+          "target": [
+            "Authorization"
+          ]
+        },
+        {
+          "pattern": "Contacts/{UserContacts}",
+          "name": "Contacts",
+          "target": [
+            "Contacts",
+            "UserChat"
+          ]
+        },
+        {
+          "pattern": "UserChat/{UserChatId}",
+          "name": "UserChat",
+          "target": [
+            "Contacts",
+            "UserChat"
           ]
         }
       ],
@@ -76,9 +116,37 @@
         "TargetMainView": {
           "viewType": "XML",
           "transition": "slide",
+          "viewLevel": 1,
           "clearControlAggregation": false,
           "viewId": "MainView",
-          "viewName": "MainView"
+          "viewName": "MainView",
+          "controlAggregation": "detailPages"
+        },
+        "Init": {
+          "viewType": "XML",
+          "viewId": "Init",
+          "viewName": "Init",
+          "controlAggregation": "detailPages"
+        },
+        "Authorization" : {
+          "viewType": "XML",
+          "transition": "slide",
+          "clearControlAggregation": false,
+          "viewId": "Authorization",
+          "viewName": "Authorization",
+          "controlAggregation": "detailPages"
+        },
+        "Contacts": {
+          "viewType": "XML",
+          "viewName": "Contacts",
+          "transition": "slide",
+          "controlAggregation": "masterPages"
+        },
+        "UserChat": {
+          "viewType": "XML",
+          "viewName": "UserChat",
+          "transition": "slide",
+          "controlAggregation": "detailPages"
         }
       }
     },
@@ -86,7 +154,7 @@
       "viewName": "cloneTelegramApp.cloneTelegram.view.MainView",
       "type": "XML",
       "async": true,
-      "id": "MainView"
+      "id": "app"
     }
   }
 }

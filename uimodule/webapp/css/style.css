@@ -1,1 +1,100 @@
 /* Enter your custom styles here */
+.Init .sapMPageEnableScrolling {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.Init-flex .sapMFlexBox{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 500px;
+  height: 500px;
+  border-radius: 150px;
+  box-shadow: 6px 11px 35px black;
+  border: 5px solid #ffffee;
+}
+
+.Form{
+  font-size: 25px;
+  color: #fbe54e;
+  letter-spacing: 3px;
+  font-weight: 300;
+  text-shadow:
+  1px 1px 1px #2b63a8,
+  2px -1px 2px #2b63a8,
+  2px -2px 3px #2b63a8,
+  1px 22px 10px rgba(16,16,16,0.2);
+  /*transform: perspective(300px) rotateX(15deg) scaleY(0.8);*/
+  transition: all 0.5s;
+  /*text-shadow: 0 0 10px rgba(0, 0, 0, 0.9), 0 10px 0 #BFE2FF;*/
+  font-family: cursive;
+  text-align: center !important;
+  /*margin: 30px 0;*/
+}
+.sapMBtnInner{
+  /*color: #fbe54e;*/
+  letter-spacing: 3px;
+  text-shadow:
+    1px 1px 1px #2b63a8,
+    2px -1px 2px #2b63a8,
+    2px -2px 3px #2b63a8,
+    1px 22px 10px rgba(16,16,16,0.2);
+}
+
+.Form-user .sapMPanelContent{
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  border: none;
+  margin-top: 50px;
+}
+/*.Form:after{*/
+/*  font-family: cursive;*/
+/*  font-size: 24px;*/
+/*  content: 'Welcome to our messenger';*/
+/*  height: 100%;*/
+/*  width: 100%;*/
+/*  color: #2b63a8;*/
+/*  !* text-shadow: 4px 0 10px rgb(0 0 0 / 13%); *!*/
+/*  letter-spacing: 3px;*/
+/*  position: absolute;*/
+/*  left: -1px;*/
+/*  top: 2px;*/
+/*  z-index: -1;*/
+
+/*}*/
+
+.Form__text{
+  font-size: 15px;
+  color: #0e0e0e;
+  opacity: 0.8;
+
+}
+.Form-button{
+  min-width: 300px;
+  margin: 7px 0;
+}
+.Form-button .sapMBtnInner{
+  background: transparent;
+  /*border: 1px solid #0095ff47;*/
+  box-shadow: 1px 1px 2px 1px #0e0e0e;
+}
+.Form-button .sapMBtnInner:hover,
+.Form-button .sapMBtn:hover,
+.Form-button .sapMBtnHoverable:hover {
+  background: linear-gradient(90deg, rgba(131,58,180,1) 0%, rgba(253,29,29,1) 50%, rgba(252,176,69,1) 100%);
+  border-color: #0854a0;
+  color: #ffffee;
+}
+/*.Form-button .sapMBtnInner:hover{*/
+/*  background: linear-gradient(90deg, rgba(131,58,180,1) 0%, rgba(253,29,29,1) 50%, rgba(252,176,69,1) 100%);*/
+
+/*}*/
+
+.Form-box{
+  border-radius: 5px;
+  background: radial-gradient(circle, rgba(174,188,238,1) 4%, rgba(164,236,219,1) 33%, rgba(148,187,233,1) 100%);
+  background: linear-gradient(90deg, rgba(121,87,144,1) 0%, rgba(137,120,149,1) 14%, rgba(159,103,155,1) 100%);
+}

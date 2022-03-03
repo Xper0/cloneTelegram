@@ -93,7 +93,7 @@ sap.ui.define([
         oRouter.navTo("Contacts", {
           UserContacts: userPhone
         })
-        let url = "http://127.0.0.1:5000/logIn";
+        let url = "http://127.0.0.1:5000";
         fetch(url)
       },
       _onObjectMatched: function (oEvent) {

@@ -49,6 +49,7 @@ sap.ui.define([
       },
       onListItemPress: function (oEvent) {
         let oItem = oEvent.getSource().getBindingContext("UsersModel").getObject();
+
         let getMessageChats = "http://127.0.0.1:5000/chats"
         // let oItem = oEvent.getSource().getBindingContext("Contacts").getObject()
         let oRouter = this.getOwnerComponent().getRouter();

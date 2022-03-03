@@ -22,6 +22,8 @@ sap.ui.define([
                 // call the base component's init function
                 UIComponent.prototype.init.apply(this, arguments);
                 // formatter.ioSocket()
+                this.oTaskModel = this.getModel("ListTasks");
+
                 this.socket = new WebSocket("ws://127.0.0.1:4000");
                 let oEventBus = sap.ui.getCore().getEventBus()
               this.socket.onopen = (msg) => {
@@ -65,7 +67,43 @@ sap.ui.define([
 
                 // set the device model
                 this.setModel(models.createDeviceModel(), "device");
-            }
+              this.loadTasks()
+            },
+          loadTasks:  function () {
+            return new Promise( async (res, rej) => {
+              let userAuthorization = "Александр Павлов"
+              const urls = " http://127.0.0.1:5000/tasksList";
+              this.oTaskModel = this.getModel("ListTasks");
+              let datas = await fetch(urls);
+              let tasksList = await datas.json();
+              let taskGroups = [
+                {
+                  title: "Все",
+                  key: "All"
+                },
+                {
+                  title: "Назначенные мне",
+                  key: "toMe"
+                },
+                {
+                  title: "Назначенные мной",
+                  key: "onMe"
+                },
+                {
+                  title: "Закрытые",
+                  key: "CloseTask"
+                },
+              ];
+              this.oTaskModel.setProperty("/tasksList", tasksList.result);
+              this.oTaskModel.setProperty("/tasksGroups", taskGroups)
+              console.log( this.oTaskModel)
+
+              // let oEventBus = sap.ui.getCore().getEventBus();
+              // oEventBus.publish("tasks", "tasksLoaded" );
+              res()
+            })
+
+          }
         });
     }
 );

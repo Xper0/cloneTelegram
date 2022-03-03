@@ -1,0 +1,310 @@
+<mvc:View
+  xmlns="sap.m"
+  xmlns:f="sap.ui.layout.form"
+  xmlns:mvc="sap.ui.core.mvc"
+  xmlns:core="sap.ui.core"
+  xmlns:commons="sap.suite.ui.commons"
+  xmlns:u="sap.ui.unified"
+  controllerName='cloneTelegramApp.cloneTelegram.controller.AboutTask'>
+  <Page
+    title="Подробнее о  задаче"
+    showNavButton="true"
+    navButtonPress=".onNavBack"
+  >
+<!--    <Table-->
+<!--      id="AboutTask"-->
+<!--      inset="false"-->
+<!--      items="{-->
+<!--						path: 'aboutModel>/aboutTask',-->
+<!--						sorter: {-->
+<!--							path: 'Name'-->
+<!--						}-->
+<!--					}"-->
+<!--      class="sapFDynamicPageAlignContent"-->
+<!--      width="auto">-->
+<!--      <columns>-->
+<!--        <Column	hAlign="Begin">-->
+<!--          <Text text="Название"/>-->
+<!--        </Column>-->
+<!--        <Column	hAlign="Begin">-->
+<!--          <Text text="Дедлайн"/>-->
+<!--        </Column>-->
+<!--        <Column	hAlign="Begin">-->
+<!--          <Text text="Статус"/>-->
+<!--        </Column>-->
+<!--        <Column	hAlign="Begin">-->
+<!--          <Text text="Важность"/>-->
+<!--        </Column>-->
+<!--        <Column	hAlign="Begin">-->
+<!--          <Text text="Назначающий"/>-->
+<!--        </Column>-->
+<!--        <Column	hAlign="Begin">-->
+<!--          <Text text="Исполнитель"/>-->
+<!--        </Column>-->
+<!--      </columns>-->
+
+<!--      <items>-->
+<!--        <ColumnListItem  type="DetailAndActive" press=".onEdit" >-->
+<!--          <cells>-->
+<!--            &lt;!&ndash;            <ObjectIdentifier title="{categoryTasksModel>id}" />&ndash;&gt;-->
+<!--            <ObjectIdentifier title="{aboutModel>title}" />-->
+<!--            &lt;!&ndash;            <ObjectIdentifier title="{categoryTasksModel>description}" />&ndash;&gt;-->
+<!--            <ObjectIdentifier-->
+<!--              title="-->
+<!--              {-->
+<!--                path : 'aboutModel>date',-->
+<!--					    	formatter : '.formatter.getData'-->
+<!--              }"-->
+<!--            />-->
+<!--            <commons:MicroProcessFlow renderType="NoWrap">-->
+<!--              <commons:content>-->
+<!--                <commons:MicroProcessFlowItem state="Error" press="itemPress"/>-->
+<!--                <commons:MicroProcessFlowItem state="Success" press="itemPress"/>-->
+<!--                <commons:MicroProcessFlowItem state="Warning" press="itemPress"/>-->
+<!--                <commons:MicroProcessFlowItem state="Information" press="itemPress"/>-->
+<!--&lt;!&ndash;                <MicroProcessFlowItem state="Success" press="itemPress"/>&ndash;&gt;-->
+<!--&lt;!&ndash;                <MicroProcessFlowItem state="Warning" press="itemPress"/>&ndash;&gt;-->
+<!--&lt;!&ndash;                <MicroProcessFlowItem state="Information" press="itemPress"/>&ndash;&gt;-->
+<!--              </commons:content>-->
+<!--            </commons:MicroProcessFlow>-->
+<!--            <ObjectNumber-->
+<!--              unit="{aboutModel>importance}"-->
+<!--              state="{-->
+<!--						  path : 'aboutModel>importance',-->
+<!--							formatter: '.formatter.getImportance'-->
+<!--						  }"-->
+<!--            />-->
+<!--&lt;!&ndash;            <ObjectIdentifier title="{aboutModel>importance}" />&ndash;&gt;-->
+<!--            <ObjectIdentifier title="{aboutModel>supervisor}" />-->
+<!--            <ObjectIdentifier title="{aboutModel>responsible}" />-->
+<!--          </cells>-->
+<!--        </ColumnListItem>-->
+<!--      </items>-->
+<!--    </Table>-->
+    <content>
+    <FlexBox justifyContent="Center" height="100%"  >
+      <VBox >
+        <!--    <content>-->
+        <f:Form id="editFormTask"
+                editable="true"
+                ariaLabelledBy="Title1">
+          <f:layout>
+            <f:ColumnLayout
+              columnsM="2"
+              columnsL="3"
+              columnsXL="4"
+            />
+          </f:layout>
+          <f:formContainers >
+            <f:FormContainer id="form" ariaLabelledBy="Title2">
+              <f:formElements>
+                <f:FormElement label="Название задачи"  >
+                  <f:fields>
+                    <Text text="{ListTasks>title}" />
+<!--                    <TextArea-->
+<!--                      value="{-->
+<!--                    path:  'ListTasks>title'-->
+
+<!--                  }"-->
+<!--                      id="titleTask"-->
+<!--                      valueStateText="Name must not be empty. Maximum 10 characters."-->
+<!--                      placeholder="Введите задачу"-->
+<!--                      change= ".onNameChange"-->
+<!--                    />-->
+                  </f:fields>
+                </f:FormElement>
+                <f:FormElement label="Описание задачи">
+                  <f:fields>
+                    <Text text="{ListTasks>description}" />
+                  </f:fields>
+                </f:FormElement>
+                <f:FormElement label="Дедлайн">
+                  <f:fields>
+                    <Text text="{ListTasks>date}" />
+                  </f:fields>
+                </f:FormElement>
+                <f:FormElement label="Важность">
+                  <f:fields>
+                    <Text text="{ListTasks>importance}" />
+                  </f:fields>
+                </f:FormElement>
+                <f:FormElement label="Постановщик">
+                  <f:fields>
+                    <Text text="{ListTasks>supervisor}" />
+                  </f:fields>
+                </f:FormElement>
+                <f:FormElement label="Ответсвенный">
+                  <f:fields>
+                    <Text text="{ListTasks>responsible}" />
+                  </f:fields>
+                </f:FormElement>
+              </f:formElements>
+            </f:FormContainer>
+          </f:formContainers>
+        </f:Form>
+        <!--    </content>-->
+        <!--    <footer>-->
+        <HBox justifyContent="SpaceAround" >
+          <Button text="Редактировать задачу" type="Emphasized" press="onAddListTask" />
+          <Button text="Завершить" />
+        </HBox>
+        <!--    </footer>-->
+      </VBox>
+    </FlexBox>
+    </content>
+    <footer>
+      <Toolbar height="450px">
+        <ScrollContainer
+          height="100%"
+          width="100%"
+          vertical="true"
+          focusable="true"
+        >
+        <IconTabBar
+          id="iconTabBar"
+          headerBackgroundDesign="Transparent"
+          class="sapUiResponsiveContentPadding"
+          binding="{Resume}"
+          select=".onTabSelect"
+          selectedKey="{view>/selectedTabKey}">
+          <items>
+            <IconTabFilter id="infoTab" text="Комментарии" key="Info">
+              <List>
+                <FeedListItem
+                  sender="{
+            parts: [
+             {path: 'messageUsersModelius>fromId'},
+             {path: 'messageUsersModelius>/message/users'}
+          ],
+
+					    	formatter : '.formatter.getUser'}"
+                  icon="{AuthorPicUrl}"
+                  senderPress="onSenderPress"
+                  iconPress="onIconPress"
+                  iconDensityAware="false"
+                  info="{Type}"
+                  timestamp="{
+        path : 'messageUsersModelius>date',
+					    	formatter : '.formatter.getData'
+        }"
+                  text="{messageUsersModelius>message}"
+                  convertLinksToAnchorTags="All"/>
+                <FeedListItem
+                  sender="{
+            parts: [
+             {path: 'messageUsersModelius>fromId'},
+             {path: 'messageUsersModelius>/message/users'}
+          ],
+
+					    	formatter : '.formatter.getUser'}"
+                  icon="{AuthorPicUrl}"
+                  senderPress="onSenderPress"
+                  iconPress="onIconPress"
+                  iconDensityAware="false"
+                  info="{Type}"
+                  timestamp="{
+        path : 'messageUsersModelius>date',
+					    	formatter : '.formatter.getData'
+        }"
+                  text="первый"
+                  convertLinksToAnchorTags="All"/>
+                <FeedListItem
+                  sender="{
+            parts: [
+             {path: 'messageUsersModelius>fromId'},
+             {path: 'messageUsersModelius>/message/users'}
+          ],
+
+					    	formatter : '.formatter.getUser'}"
+                  icon="{AuthorPicUrl}"
+                  senderPress="onSenderPress"
+                  iconPress="onIconPress"
+                  iconDensityAware="false"
+                  info="{Type}"
+                  timestamp="{
+        path : 'messageUsersModelius>date',
+					    	formatter : '.formatter.getData'
+        }"
+                  text="Второй"
+                  convertLinksToAnchorTags="All"/>
+                <FeedListItem
+                  sender="{
+            parts: [
+             {path: 'messageUsersModelius>fromId'},
+             {path: 'messageUsersModelius>/message/users'}
+          ],
+
+					    	formatter : '.formatter.getUser'}"
+                  icon="{AuthorPicUrl}"
+                  senderPress="onSenderPress"
+                  iconPress="onIconPress"
+                  iconDensityAware="false"
+                  info="{Type}"
+                  timestamp="{
+        path : 'messageUsersModelius>date',
+					    	formatter : '.formatter.getData'
+        }"
+                  text="Второй"
+                  convertLinksToAnchorTags="All"/>
+                <FeedListItem
+                  sender="{
+            parts: [
+             {path: 'messageUsersModelius>fromId'},
+             {path: 'messageUsersModelius>/message/users'}
+          ],
+
+					    	formatter : '.formatter.getUser'}"
+                  icon="{AuthorPicUrl}"
+                  senderPress="onSenderPress"
+                  iconPress="onIconPress"
+                  iconDensityAware="false"
+                  info="{Type}"
+                  timestamp="{
+        path : 'messageUsersModelius>date',
+					    	formatter : '.formatter.getData'
+        }"
+                  text="Второй"
+                  convertLinksToAnchorTags="All"/>
+                <FeedListItem
+                  sender="{
+            parts: [
+             {path: 'messageUsersModelius>fromId'},
+             {path: 'messageUsersModelius>/message/users'}
+          ],
+
+					    	formatter : '.formatter.getUser'}"
+                  icon="{AuthorPicUrl}"
+                  senderPress="onSenderPress"
+                  iconPress="onIconPress"
+                  iconDensityAware="false"
+                  info="{Type}"
+                  timestamp="{
+        path : 'messageUsersModelius>date',
+					    	formatter : '.formatter.getData'
+        }"
+                  text="Второй"
+                  convertLinksToAnchorTags="All"/>
+
+              </List>
+              <VBox>
+                <HBox>
+                  <FeedInput
+                    post="onPost"
+                    icon="{messageUsersModelius>/img}"
+                    class="sapUiSmallMarginTopBottom"
+                  />
+                </HBox>
+              </VBox>
+            </IconTabFilter>
+            <IconTabFilter id="projectsTab" text="История" key="Projects">
+              <Text text="История"/>
+            </IconTabFilter>
+          </items>
+        </IconTabBar>
+      </ScrollContainer>
+      </Toolbar>
+    </footer>
+  </Page>
+
+</mvc:View>
+

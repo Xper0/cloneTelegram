@@ -7,7 +7,7 @@
   xmlns:core="sap.ui.core"
   xmlns:tnt="sap.tnt"
 >
-  <Page
+  <ScrollContainer
     title="Authorization Page"
     class=" sapUiContentPadding sapUiResponsivePadding--header sapUiResponsivePadding--subHeader sapUiResponsivePadding--content sapUiResponsivePadding--footer"
   >
@@ -84,6 +84,6 @@
       </Wizard>
       </FlexBox>
     </content>
-  </Page>
+  </ScrollContainer>
 
 </mvc:View>

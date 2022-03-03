@@ -2,17 +2,49 @@
   controllerName="cloneTelegramApp.cloneTelegram.controller.Contacts"
   xmlns="sap.m"
   xmlns:f="sap.f"
-  xmlns:mvc="sap.ui.core.mvc">
-  <Page id="dynamicPageId"
-        title="Contacts">
-  <!-- DynamicPage Title -->
+  xmlns:mvc="sap.ui.core.mvc"
+  xmlns:tnt="sap.tnt"
+>
+<!--  <ScrollContainer-->
 
-    <!-- DynamicPage Content -->
-    <content>
-        <Toolbar class="sapFDynamicPageAlignContent">
-          <SearchField liveChange="onSearch" />
-          <Button icon="sap-icon://add" text="Add" type="Transparent" press=".onAdd"/>
-        </Toolbar>
+<!--    class=" sapUiContentPadding sapUiResponsivePadding&#45;&#45;header sapUiResponsivePadding&#45;&#45;subHeader sapUiResponsivePadding&#45;&#45;content sapUiResponsivePadding&#45;&#45;footer"-->
+<!--  >-->
+<!--  <Page id="dynamicPageId"-->
+<!--        title="Contacts">-->
+<!--  &lt;!&ndash; DynamicPage Title &ndash;&gt;-->
+
+<!--    &lt;!&ndash; DynamicPage Content &ndash;&gt;-->
+<!--      <tnt:NavigationList-->
+<!--        id="ContactsTable"-->
+<!--        items="{-->
+<!--						path: 'UsersModel>/chats',-->
+<!--						sorter: {-->
+<!--							path: 'Name'-->
+<!--						}-->
+<!--					}">-->
+<!--        <tnt:NavigationListItem-->
+<!--          text="{UsersModel>title}"-->
+<!--          enabled="{enabled}"-->
+<!--          expanded="{expanded}"-->
+<!--          items="{items}"-->
+<!--          key="{key}">-->
+<!--          <tnt:NavigationListItem-->
+<!--            text="{title}"-->
+<!--            key="{key}"-->
+<!--            enabled="{enabled}" />-->
+<!--        </tnt:NavigationListItem>-->
+<!--      </tnt:NavigationList>-->
+<!--      -->
+<!--      -->
+<!--      -->
+
+
+
+<!--    <content>-->
+<!--        <Toolbar class="sapFDynamicPageAlignContent">-->
+<!--          <SearchField liveChange="onSearch" />-->
+<!--          <Button icon="sap-icon://add" text="Add" type="Transparent" press=".onAdd"/>-->
+<!--        </Toolbar>-->
         <Table
           id="ContactsTable"
           inset="false"
@@ -45,6 +77,8 @@
             </ColumnListItem>
           </items>
         </Table>
-    </content>
-</Page>
+<!--    </content>-->
+<!--    </tnt:SideNavigation>-->
+<!--</Page>-->
+<!--  </ScrollContainer>-->
 </mvc:View>

@@ -1,0 +1,23 @@
+<mvc:View
+  xmlns="sap.m"
+  xmlns:f="sap.f"
+  xmlns:mvc="sap.ui.core.mvc"
+  controllerName='cloneTelegramApp.cloneTelegram.controller.CreateTask'>
+  <Page title="Создать задачу" id="addTask"
+        showNavButton="true"
+        navButtonPress=".onNavBack">
+    <customHeader >
+      <Bar >
+        <contentLeft>
+          <Button id="back" icon="sap-icon://nav-back"  press="onNavBack" />
+          <Text text="Создать задачу" />
+        </contentLeft>
+        <contentRight>
+          <Button id="edit" text="Предосмотр" enabled="false" press="handleEditPress" />
+          <Button id="save" text="Save" type="Emphasized" visible="false" press="handleSavePress" />
+          <Button id="cancel" text="Cancel" visible="false" press="handleCancelPress" />
+        </contentRight>
+      </Bar>
+    </customHeader>
+  </Page>
+</mvc:View>

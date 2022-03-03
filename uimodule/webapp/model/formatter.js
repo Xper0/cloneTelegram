@@ -1,3 +1,4 @@
+
 sap.ui.define([
   "sap/ui/core/format/NumberFormat",
   "sap/ui/core/BusyIndicator",
@@ -10,6 +11,7 @@ sap.ui.define([
       return user
     },
     getData: function (data) {
+      console.log(data)
       var oFormat = DateFormat.getDateTimeInstance({ style: "medium" });
       var oDate = new Date(data * 1000);
       var sDate = oFormat.format(oDate);
@@ -43,10 +45,6 @@ sap.ui.define([
       // console.log(usersMessage)
       // let fil = data.find( item =>usersMessage.map( id => id === item.id))
       // console.log(fil)
-
-
-
-
      // let User = users.users
      //  let userId = User.map( item => item.id)
      //  console.log(User)
@@ -75,8 +73,119 @@ sap.ui.define([
       // console.log(idUser)
       // return `${User[1].firstName} ${User[1].lastName}`
     },
+    getTask: function () {
+    },
+    getCountTask: function (listTasks, valuesTask) {
+      console.log(listTasks)
+      console.log(valuesTask)
+      let user = "Александр Павлов";
+      let data =  {
+        All: valuesTask,
+        toMe: [],
+        onMe: [],
+        CloseTask: [],
+      };
+      valuesTask.forEach(task => {
+            if (task.supervisor === user) {
+              return  data.toMe.push(task)
+            }
+            if (task.status === "Закрыт") {
+              return data.CloseTask.push(task)
+            }
+            else {
+              return data.onMe.push(task)
+            }
+      });
+       let  countTask = 0
+      listTasks.forEach(item => {
+        let category = listTasks.find( cat => cat.key == item.key)
+          if (category.key === "All"){
+           countTask = data.All.length;
+          }
+          if (category.key === "toMe") {
+            countTask = data.toMe.length;
+          }
+      })
+
+      // listTasks.forEach(category => {
+      //   if (category.key === "All"){
+      //     listTasks.forEach(item => {
+      //       countTask = valuesTasks.All;
+      //     })
+      //   }
+      //   if (category.key === "toMe"){
+      //     listTasks.forEach(item => {
+      //       countTask = valuesTasks.toMe;
+      //     })
+      //   }
+      // })
+
+
+      // if (countCategory) {
+      //   if (countCategory.key === "All"){
+      //     countTask = valuesTasks.All;
+      //   }
+      //   if (countCategory.key === "toMe") {
+      //     countTask = valuesTasks.toMe;
+      //   }
+      // }
+      // listTasks.forEach( category => {
+      //     if (category.key === "All"){
+      //       countTask = valuesTasks.All;
+      //     }
+      //     if (category.key === "toMe"){
+      //       countTask = valuesTasks.toMe;
+      //     }
+      //     if (category.key === "onMe"){
+      //       countTask = valuesTasks.onMe;
+      //     }
+      //     if (category.key === "CloseTask"){
+      //       countTask = valuesTasks.CloseTask;
+      //     }
+      // });
+      return `(${countTask})`;
+      // let categoryTask =  listTasks.find(task => ))
+      // console.log(categoryTask)
+      // if (categoryTask) {
+      //   let countTask = 0
+      //   if (categoryTask === "allTask") {
+      //     countTask = data.All.length
+      //   }
+      //   if (categoryTask === "myTask" ){
+      //     countTask = data.toMe.length
+      //   }
+      //   if (categoryTask === "forMeTask" ){
+      //     countTask = data.onMe.length
+      //   }
+      //   if (categoryTask === "closeTask" ){
+      //     countTask = data.CloseTask.length
+      //   }
+      //   return `(${countTask})`
+      // }
+      // return `(${countTask})`
+    },
     getTitle: function (title) {
       return `Чат № ${title.idChat}`
+    },
+    getStatus: function (oStatus) {
+      if (oStatus === "Выполняется") {
+        return "Success";
+      }
+      if (oStatus === "Закрыт") {
+        return "None";
+      }
+    },
+    getImportance:  function (oImportance) {
+      console .log(oImportance)
+      if (oImportance === "Низкий") {
+        return "Success";
+      }
+      if (oImportance === "Средний") {
+        return "Warning";
+      }
+      if (oImportance === "Критичный") {
+        return "Error";
+      }
     }
 
     // ioSocket: function () {

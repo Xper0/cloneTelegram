@@ -34,7 +34,9 @@
         "sap.ui.core": {},
         "sap.f": {},
         "sap.ui.unified": {},
-        "sap.tnt": {}
+        "sap.tnt": {},
+        "sap.suite.ui.commons": {},
+        "sap.ui.layout": {}
       }
     },
     "contentDensities": {
@@ -55,6 +57,9 @@
       "MessageUsers": {
         "type": "sap.ui.model.json.JSONModel",
         "uri": "../localService/metadata/MessageUsers.json"
+      },
+      "ListTasks" : {
+        "type": "sap.ui.model.json.JSONModel"
       }
     },
     "resources": {
@@ -70,7 +75,7 @@
         "viewType": "XML",
         "async": true,
         "viewPath": "cloneTelegramApp.cloneTelegram.view",
-        "controlId": "appContainer",
+        "controlId": "splitContainer",
         "clearControlAggregation": false
       },
       "routes": [
@@ -101,6 +106,36 @@
           "target": [
             "Contacts",
             "UserChat"
+          ]
+        },
+        {
+          "pattern": "Tasks",
+          "name": "Tasks",
+          "target": [
+            "Tasks",
+            "DetailTasks"
+          ]
+        },
+        {
+          "pattern": "createTask",
+          "name": "createTask",
+          "target": [
+            "createTask"
+          ]
+        },
+        {
+          "pattern": "DetailTasks/{detailCategory}",
+          "name": "DetailTasks",
+          "target": [
+            "Tasks",
+            "DetailTasks"
+          ]
+        },
+        {
+          "pattern": "AboutTask/{AboutTaskId}",
+          "name": "AboutTask",
+          "target": [
+            "AboutTask"
           ]
         },
         {
@@ -136,11 +171,36 @@
           "viewName": "Authorization",
           "controlAggregation": "detailPages"
         },
+
         "Contacts": {
           "viewType": "XML",
           "viewName": "Contacts",
           "transition": "slide",
           "controlAggregation": "masterPages"
+        },
+        "Tasks": {
+          "viewType": "XML",
+          "viewName": "Tasks",
+          "transition": "slide",
+          "controlAggregation": "masterPages"
+        },
+        "createTask": {
+          "viewType": "XML",
+          "viewName": "createTask",
+          "transition": "slide",
+          "controlAggregation": "detailPages"
+        },
+        "DetailTasks": {
+          "viewType": "XML",
+          "viewName": "DetailTasks",
+          "transition": "slide",
+          "controlAggregation": "detailPages"
+        },
+        "AboutTask" : {
+          "viewType": "XML",
+          "viewName": "AboutTask",
+          "transition": "slide",
+          "controlAggregation": "detailPages"
         },
         "UserChat": {
           "viewType": "XML",

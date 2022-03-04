@@ -11,17 +11,18 @@ sap.ui.define([
    */
   function (Controller, formatter, JSONModel, History ) {
     "use strict";
-    return Controller.extend("cloneTelegramApp.cloneTelegram.controller.Tasks", {
+    return Controller.extend("cloneTelegramApp.cloneTelegram.controller.EditTask", {
       formatter: formatter,
       onInit :  function () {
         let oRouter =  this.getOwnerComponent().getRouter();
-        oRouter.getRoute("AboutTask").attachMatched(this._onObjectMatched, this);
+        oRouter.getRoute("EditTask").attachMatched(this._onObjectMatched, this);
       },
-      _onObjectMatched: async function (oEvent) {
-        let sTaskId = oEvent.getParameter("arguments").AboutTaskId;
+      _onObjectMatched: function (oEvent) {
+        let sTaskId = oEvent.getParameter("arguments").editTaskId;
         this.getOwnerComponent().loadTasks().then(() => {
           let aTasks = this.getOwnerComponent().getModel("ListTasks").getData().tasksList;
           let nTaskIndex = aTasks.findIndex(taskId => taskId.id == sTaskId)
+          console.log(nTaskIndex)
           let sPath = `/tasksList/${nTaskIndex}`
           // UsersModel.loadData(url1, null, true, "GET", null, false);
           // console.log(UsersModel.result)
@@ -31,14 +32,6 @@ sap.ui.define([
             model: "ListTasks"
           });
         });
-        this.oCommentsTask = this.getOwnerComponent().getModel("CommentsTask");
-        let chatId = 7730
-        let urlId = `http://127.0.0.1:5000/getCommentTask?commentTaskId=${sTaskId}`;
-        let data = await fetch(urlId)
-        let result = await data.json();
-        console.log(result)
-        this.oCommentsTask.setProperty("/comments", result.message)
-        console.log(this.oCommentsTask)
         // let oEventBus = sap.ui.getCore().getEventBus();
         // oEventBus.subscribe("tasks", "tasksLoaded",
         // })
@@ -53,23 +46,6 @@ sap.ui.define([
         //   });
         // console.log(oModel)
       },
-      onNavBack: function ( ) {
-        let oRouter = this.getOwnerComponent().getRouter();
-        let sPreviousHash = History.getInstance().getPreviousHash();
-        console.log(sPreviousHash)
-        if (sPreviousHash !== undefined) {
-          window.history.back();
-        } else {
-          oRouter.navTo("Tasks", {}, true /*no history*/);
-        }
-      },
-      onEditTask: function (oEventTask) {
-        let oRouter = this.getOwnerComponent().getRouter();
-        const oItem = oEventTask.getSource().getBindingContext("ListTasks").getObject();
-        oRouter.navTo("EditTask", {
-          editTaskId: oItem.id
-        })
-      }
 
     });
   });

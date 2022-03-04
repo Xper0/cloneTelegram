@@ -21,9 +21,9 @@ sap.ui.define([
             init: function () {
                 // call the base component's init function
                 UIComponent.prototype.init.apply(this, arguments);
-                // formatter.ioSocket()
+                // formatter.ioSocket();
                 this.oTaskModel = this.getModel("ListTasks");
-
+                this.oCommentsTask = this.getModel("CommentsTask");
                 this.socket = new WebSocket("ws://127.0.0.1:4000");
                 let oEventBus = sap.ui.getCore().getEventBus()
               this.socket.onopen = (msg) => {

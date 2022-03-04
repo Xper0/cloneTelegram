@@ -1,0 +1,121 @@
+<mvc:View
+  xmlns="sap.m"
+  xmlns:f="sap.ui.layout.form"
+  xmlns:mvc="sap.ui.core.mvc"
+  xmlns:core="sap.ui.core"
+  xmlns:commons="sap.suite.ui.commons"
+  xmlns:u="sap.ui.unified"
+  controllerName='cloneTelegramApp.cloneTelegram.controller.EditTask'>
+  <Page
+    title="Редактировать  задачу"
+  >
+    <content>
+      <FlexBox justifyContent="Center" height="100%"  >
+        <VBox >
+          <!--    <content>-->
+          <f:Form id="editTask"
+                  editable="true"
+                  ariaLabelledBy="Title1">
+            <f:layout>
+              <f:ColumnLayout
+                columnsM="2"
+                columnsL="3"
+                columnsXL="4"
+              />
+            </f:layout>
+            <f:formContainers >
+              <f:FormContainer id="form" ariaLabelledBy="Title2">
+                <f:formElements>
+                  <f:FormElement label="Название задачи"  >
+                    <f:fields>
+                      <TextArea
+                        value="{ListTasks>title}"
+                        id="titleTask"
+                        valueStateText="Name must not be empty. Maximum 10 characters."
+                        placeholder="Введите задачу"
+                        change=".onNameChange"
+                      />
+                    </f:fields>
+                  </f:FormElement>
+                  <f:FormElement label="Описание задачи">
+                    <f:fields>
+                      <TextArea id="descTask"
+                                value="{ListTasks>description}"
+                                valueLiveUpdate="{/ValueLiveUpdate}"
+                                liveChange="handleLiveChange"
+                                placeholder="Введите описание задачи"
+                                growing="true"
+                                growingMaxLines="7"
+                      />
+                    </f:fields>
+                  </f:FormElement>
+                  <f:FormElement label="Дедлайн">
+                    <f:fields>
+                      <DatePicker
+                        id="DP2"
+                        value="{ListTasks>date}" valueFormat="yyyy-MM-dd" displayFormat="long"
+                        change="handleChange"
+                        class="sapUiSmallMarginBottom"/>
+                    </f:fields>
+                  </f:FormElement>
+                  <f:FormElement label="Важность">
+                    <f:fields>
+                      <ComboBox
+                        id="idComboBoxImportance"
+                        change="handleChange"
+                        showClearIcon="true"
+                        value="{ListTasks>importance}"
+                      >
+                        <core:Item text="Низкий" key="Низкий" />
+                        <core:Item text="Средний" key="Средний" />
+                        <core:Item text="Критичный" key="Критичный" />
+                      </ComboBox>
+                    </f:fields>
+                  </f:FormElement>
+                  <f:FormElement label="Постановщик">
+                    <f:fields>
+                      <ComboBox
+                        id="idComboBoxUser"
+                        value="{ListTasks>supervisor}"
+                        items="{
+				            path: 'ListTasks>/users',
+			              sorter: { path: 'text' }
+			              }"
+                        change="handleChange"
+                        showClearIcon="true"
+                      >
+                        <core:Item
+                          text="{ListTasks>supervisor}"
+                          key="{ListTasks>supervisor}" />
+                      </ComboBox>
+                    </f:fields>
+                  </f:FormElement>
+                  <f:FormElement label="Ответсвенный">
+                    <f:fields>
+                      <ComboBox
+                        id="idComboBox"
+                         value="{ListTasks>responsible}"
+                        showClearIcon="true"
+                        placeholder="Выберете ответсвенного"
+                        change="handleChange">
+                        <core:Item text="{ListTasks>responsible}"
+                                   key="{ListTasks>responsible}" />
+                      </ComboBox>
+                    </f:fields>
+                  </f:FormElement>
+                </f:formElements>
+              </f:FormContainer>
+            </f:formContainers>
+          </f:Form>
+        </VBox>
+      </FlexBox>
+    </content>
+    <footer>
+      <Toolbar>
+        <Button text="Сохранить" type="Success" />
+        <Button text="Отменить" type="Reject"/>
+      </Toolbar>
+    </footer>
+  </Page>
+</mvc:View>
+

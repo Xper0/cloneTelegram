@@ -10,6 +10,7 @@ let router = express.Router();
 import path from "path";
 import * as fs from "fs";
 import cors from "cors";
+import messageList from "./messageList.js";
 
 
 
@@ -345,7 +346,6 @@ const start =  () => {
         if (idChat) {
           console.log(idChat);
           //история сообщений
-
           const result = await client.invoke(
             new Api.messages.GetHistory({
               peer: idChat,
@@ -357,70 +357,6 @@ const start =  () => {
               minId: 0,
               hash: 0,
             }));
-
-          // const resultPhoto = await client.invoke(
-          //   new Api.photos.GetUserPhotos({
-          //     userId: "1136552348",
-          //     offset: 0,
-          //     maxId: 0,
-          //     limit: 100,
-          //   })
-          // );
-
-          // const resultPhoto = await client.invoke(
-          //   new Api.photos.getUserProfilePhotos({
-          //     userId: "1136552348",
-          //     offset: 0,
-          //     limit: 100,
-          //   })
-          // );
-
-          //  console.log(resultPhoto)
-          //
-          // let buffer = resultPhoto.photos[0].fileReference
-          // let decode = new Buffer.from(buffer)
-          // console.log(decode)
-          // let string = buffer.toString("utf-8", 0, 21)
-          // console.log(typeof buffer.data)
-          // function bufferFromBufferString(bufferStr) {
-          //  console.log(typeof bufferStr)
-          //   return Buffer.from(
-          //     bufferStr
-          //       .split(' ') // create an array splitting it by space
-          //       .slice(1) // remove Buffer word from an array
-          //       .reduce((acc, val) =>
-          //         acc.concat(parseInt(val, 16)), [])  // convert all strings of numbers to hex numbers
-          //   )
-          // }
-          // let deCode = bufferFromBufferString(buffer)
-          // let string = buffer.toString("utf-8")
-          // console.log(string)
-          // let byte = string.length
-          // console.log(string.length )
-          // console.log(deCode)
-          // console.log(buffer.toString("utf-16"))
-          // let decode = new Buffer.from(buffer)
-          // console.log(decode)
-          // let path = decode.toString("utf-8")
-          // console.log(path)
-          // console.log(new Buffer.from(buffer).toString("utf-8"));
-          //  // let bufferOriginal = Buffer.from(JSON.parse(buffer).data);
-          //  console.log(buffer)
-          //  let bufferOriginal = Buffer.from(JSON.parse(buffer).data);
-          // console.log(bufferOriginal)
-
-          // const resultPh = await client.invoke(
-          //   new Api.upload.GetFile({
-          //     location: new Api.InputPhotoFileLocation({
-          //       fileReference: Buffer.from(buffer),
-          //     }),
-          //     // file_reference: resultPhoto.photos[0].fileReference,
-          //     id: resultPhoto.photos[0].id,
-          //     access_hash: resultPhoto.photos[0].accessHash,
-          //     thumbSize: "a"
-          //   })
-          // );
-          // console.log(resultPh)
           return res.json(
             {
               messages: result,
@@ -433,6 +369,22 @@ const start =  () => {
           });
         }
       });
+      app.get("/getCommentTask", async (req, res) => {
+        let idChat = req.query.commentTaskId;
+        if (idChat) {
+          let findChat = messageList.find( chat => chat.channelId == idChat)
+          return res.json({
+            status: "ok",
+            message: findChat
+          })
+        }
+        else{
+          res.json({
+            status: "ok",
+            message: "ошибка чата"
+          })
+        }
+       })
       app.post("/sendMessage" , async (req, res) => {
         let { message, idChat } = JSON.parse(req.body)
         // let {chatid} = JSON.parse(chatId)

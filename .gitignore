@@ -9,4 +9,5 @@ deployer/resources/
 Makefile*
 mta-*
 approuter/*/webapp/
+server/
 config.json

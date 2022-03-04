@@ -60,6 +60,9 @@
       },
       "ListTasks" : {
         "type": "sap.ui.model.json.JSONModel"
+      },
+      "CommentsTask" : {
+        "type": "sap.ui.model.json.JSONModel"
       }
     },
     "resources": {
@@ -139,6 +142,13 @@
           ]
         },
         {
+          "pattern": "EditTask/{editTaskId}",
+          "name": "EditTask",
+          "target": [
+            "EditTask"
+          ]
+        },
+        {
           "pattern": "UserChat/{UserChatId}",
           "name": "UserChat",
           "target": [
@@ -201,6 +211,12 @@
           "viewName": "AboutTask",
           "transition": "slide",
           "controlAggregation": "detailPages"
+        },
+        "EditTask" : {
+            "viewType": "XML",
+            "viewName": "EditTask",
+            "transition": "slide",
+            "controlAggregation": "detailPages"
         },
         "UserChat": {
           "viewType": "XML",

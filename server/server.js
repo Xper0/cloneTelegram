@@ -11,12 +11,14 @@ import path from "path";
 import * as fs from "fs";
 import cors from "cors";
 import messageList from "./messageList.js";
+import TaskList from "./taskList.js";
 
 
 
 
 const __dirname = path.dirname(process.argv[1])
 let oConfig = JSON.parse(fs.readFileSync(path.join(__dirname, "./config.json"), "utf-8"));
+let oTaskList = fs.readFileSync(path.join(__dirname, "./tasks.js"), "utf-8");
 
 
 const app = express();
@@ -65,6 +67,10 @@ const LimitMessage = 15
 function _saveConfig() {
   fs.writeFileSync("./config.json", JSON.stringify(oConfig), {encoding: "utf-8"});
 }
+function _saveList() {
+  fs.writeFileSync("./tasks.js", JSON.stringify(tasks), {encoding: "utf-8"});
+}
+
 
 const client = new TelegramClient(stringSession, apiId, apiHash, {
   connectionRetries: 5,
@@ -309,11 +315,30 @@ const start =  () => {
         })
       })
     app.get("/tasksList", async (req,  res) => {
-      // console.log(req.query.category)
+      console.log(req.query.category)
      return res.json({
         status: "ok",
         result: tasksList
       })
+    })
+    app.post("/tasksList", async (req,  res) => {
+      // console.log(req.query.category)
+      let { task } = JSON.parse(req.body)
+      let taskOnList = tasksList.findIndex( taskId => Number(taskId.id) === Number(task.id))
+      if (taskOnList) {
+        // tasksList[taskOnList] = task
+        [...tasksList, tasksList[taskOnList] = task]
+        console.log(tasksList)
+        return res.json({
+          status: "ok",
+          result: "Задача изменена"
+        })
+      }else {
+        return res.json({
+          status: "ok",
+          result: tasksList
+        })
+      }
     })
 
       app.get("/tasks", async (req,  res) => {
@@ -372,11 +397,31 @@ const start =  () => {
       app.get("/getCommentTask", async (req, res) => {
         let idChat = req.query.commentTaskId;
         if (idChat) {
-          let findChat = messageList.find( chat => chat.channelId == idChat)
-          return res.json({
-            status: "ok",
-            message: findChat
-          })
+          // let findChat = messageList.find( chat => chat.channelId == idChat);
+          let findChat = TaskList.find( chat => chat.id == idChat);
+          if (findChat.chatId) {
+            const historyTask = await client.invoke(
+              new Api.messages.GetHistory({
+                peer: findChat.chatId,
+                offsetId: 0,
+                offsetDate: 0,
+                addOffset: 0,
+                limit: LimitMessage,
+                maxId: 0,
+                minId: 0,
+                hash: 0,
+              }));
+            return res.json({
+              status: "ok",
+              message: historyTask
+            })
+          }
+          else {
+            return res.json({
+              status: "ok",
+              message: findChat
+            })
+          }
         }
         else{
           res.json({
@@ -388,33 +433,57 @@ const start =  () => {
       app.post("/sendMessage" , async (req, res) => {
         let { message, idChat } = JSON.parse(req.body)
         // let {chatid} = JSON.parse(chatId)
-        let newTask = {
-          title: message.title,
-          description: message.description,
-          status: "Выполняется",
-          importance: message.status,
-          supervisor: message.supervisor,
-          responsible: message.responsible
-        }
-        tasksList.push(newTask)
-        if (idChat) {
+        let newRandomId = Math.ceil(Math.random() * 70);
+        let taskOnList = tasksList.find( taskId => taskId.id === newRandomId)
+        if (!taskOnList && idChat ) {
+          const telegramChatId = await client.invoke(
+            new Api.channels.CreateChannel({
+              title: `Задача #${newRandomId}`,
+              about: "Канал для задачи",
+              geoPoint: new Api.InputGeoPoint({
+                lat: 8.24,
+                long: 8.24,
+                accuracyRadius: 43,
+              }),
+              address: "туту",
+            })
+          );
+          // console.log(result.chats[0].id.value)
+          let newTask = {
+            id: Number(newRandomId),
+            chatId: `${telegramChatId.chats[0].id.value}`,
+            title: message.title,
+            description: message.description,
+            status: "Выполняется",
+            importance: message.importance,
+            supervisor: message.supervisor,
+            responsible: message.responsible
+          }
+          tasksList.push(newTask)
+          console.log(tasksList)
           const result = await client.invoke(
             new Api.messages.SendMessage({
-              peer: idChat,
+              peer: `${telegramChatId.chats[0].id.value}`,
               message: `Вам назначена новая задача:
               ${message.title}
               ${message.date}
               ${message.description}
-              ${message.status}
+              ${message.importance}
+              http://127.0.0.1:8080/index.html#/AboutTask/${newRandomId}
               `,
               noWebpage: true,
               scheduleDate: 43,
             })
           );
+          return res.json({
+            status: "ok",
+            msg: "сообщение отправлено"
+          })
+
         }
         return res.json({
           status: "ok",
-          msg: "сообщение отправлено"
+          msg: "ошибка сообщения"
         })
       })
       // ws.on("message", async (body) => {

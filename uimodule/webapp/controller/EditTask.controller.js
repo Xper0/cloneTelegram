@@ -46,6 +46,55 @@ sap.ui.define([
         //   });
         // console.log(oModel)
       },
+      onSaveTask: async function () {
+        let pathId = this.getOwnerComponent().getRouter().oHashChanger.hash.substr(9);
+        let form = this.byId("editTask");
+        let elements = form.getFormContainers()[0].getFormElements();
+        let formData = {};
+        let oRouter =  this.getOwnerComponent().getRouter();
+        const url = " http://127.0.0.1:5000/tasksList";
+        let sHeaders = {
+          "Accept": "application/json",
+          "Access-Control-Allow-Origin": "*",
+          "X-Requested-With": "XMLHttpRequest",
+          "Access-Control-Allow-Methods": "GET,POST,PUT,DELETE,OPTIONS",
+          "Access-Control-Allow-Headers": "Content-Type, Access-Control-Allow-Headers, Authorization, X-Requested-With"
+        };
+         elements.forEach(item => {
+          if (item.getLabel() === "Название задачи") {
+            formData.title = item.getFields()[0].getProperty("value");
+          }
+          if (item.getLabel() === "Описание задачи") {
+            formData.description = item.getFields()[0].getProperty("value");
+          }
+          if (item.getLabel() === "Крайний срок") {
+            formData.date = item.getFields()[0].getProperty("value");
+          }
+          if (item.getLabel() === "Важность") {
+            formData.status = item.getFields()[0].getProperty("value");
+          }
+          if (item.getLabel() === "Постановщик") {
+            formData.supervisor = item.getFields()[0].getProperty("value");
+          }
+          if (item.getLabel() === "Ответсвенный") {
+            formData.responsible = item.getFields()[0].getProperty("value");
+          }
+          formData.id = pathId
+         });
 
+        let datas = await fetch( url, {
+            method: "POST",
+            headers: sHeaders,
+            body: JSON.stringify({
+              task: formData,
+            })
+          });
+          let result = await datas.json()
+          console.log(result)
+          oRouter.navTo("Tasks")
+      },
+      onCancel: function () {
+
+      }
     });
   });

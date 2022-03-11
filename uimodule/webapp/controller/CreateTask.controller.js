@@ -148,7 +148,7 @@ sap.ui.define([
               formData.date = item.getFields()[0].getProperty("value");
             }
             if (item.getLabel() === "Важность") {
-              formData.status = item.getFields()[0].getProperty("value");
+              formData.importance = item.getFields()[0].getProperty("value");
             }
             if (item.getLabel() === "Постановщик") {
               formData.supervisor = item.getFields()[0].getProperty("value");

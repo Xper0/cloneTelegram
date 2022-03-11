@@ -12,7 +12,13 @@ const taskList = [
     status: "Выполняется",
     importance: "Критичный",
     supervisor: "Александр Павлов",
-    responsible: "Александр"
+    responsible: "Александр",
+    progress: [
+      {
+        state: "Neutral",
+        value: 100
+      }
+    ]
   },
   {
     id: 2,
@@ -22,7 +28,27 @@ const taskList = [
     status: "Выполняется",
     importance: "Критичный",
     supervisor: "Александр Павлов",
-    responsible: "Александр"
+    responsible: "Александр",
+    progress: [
+      {
+        "position": 0,
+        "state": [
+          {
+            "state": "Positive",
+            "value": 0
+          }
+        ]
+      },
+      {
+        "position": 1,
+        "state": [
+          {
+            "state": "Positive",
+            "value": 0
+          }
+        ]
+      },
+    ]
   },
   {
     id: 8330,
@@ -32,7 +58,27 @@ const taskList = [
     status: "Выполняется",
     importance: "Средний",
     supervisor: "Александр Павлов",
-    responsible: "Александр"
+    responsible: "Александр",
+    progress: [
+      {
+        "position": 0,
+        "state": [
+          {
+            "state": "Positive",
+            "value": 100
+          }
+        ]
+      },
+      {
+        "position": 1,
+        "state": [
+          {
+            "state": "Negative",
+            "value": 100
+          }
+        ]
+      }
+    ]
   },
   {
     id: 3,

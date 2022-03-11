@@ -55,7 +55,6 @@ sap.ui.define([
                 oRouter.navTo("Init");
                 break;
               case "Задачи":
-                console.log("задачи")
                 oRouter.navTo("Tasks");
                 break;
               default:

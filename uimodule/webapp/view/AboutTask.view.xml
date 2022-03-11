@@ -8,175 +8,158 @@
   controllerName='cloneTelegramApp.cloneTelegram.controller.AboutTask'>
   <Page
     title="{ListTasks>title}"
+    enableScrolling="true"
     showNavButton="true"
     navButtonPress=".onNavBack"
+    class="sapUiContentPadding sapUiResponsivePadding--header sapUiResponsivePadding--subHeader sapUiResponsivePadding--content sapUiResponsivePadding--footer"
   >
-<!--    <Table-->
-<!--      id="AboutTask"-->
-<!--      inset="false"-->
-<!--      items="{-->
-<!--						path: 'aboutModel>/aboutTask',-->
-<!--						sorter: {-->
-<!--							path: 'Name'-->
-<!--						}-->
-<!--					}"-->
-<!--      class="sapFDynamicPageAlignContent"-->
-<!--      width="auto">-->
-<!--      <columns>-->
-<!--        <Column	hAlign="Begin">-->
-<!--          <Text text="Название"/>-->
-<!--        </Column>-->
-<!--        <Column	hAlign="Begin">-->
-<!--          <Text text="Дедлайн"/>-->
-<!--        </Column>-->
-<!--        <Column	hAlign="Begin">-->
-<!--          <Text text="Статус"/>-->
-<!--        </Column>-->
-<!--        <Column	hAlign="Begin">-->
-<!--          <Text text="Важность"/>-->
-<!--        </Column>-->
-<!--        <Column	hAlign="Begin">-->
-<!--          <Text text="Назначающий"/>-->
-<!--        </Column>-->
-<!--        <Column	hAlign="Begin">-->
-<!--          <Text text="Исполнитель"/>-->
-<!--        </Column>-->
-<!--      </columns>-->
-
-<!--      <items>-->
-<!--        <ColumnListItem  type="DetailAndActive" press=".onEdit" >-->
-<!--          <cells>-->
-<!--            &lt;!&ndash;            <ObjectIdentifier title="{categoryTasksModel>id}" />&ndash;&gt;-->
-<!--            <ObjectIdentifier title="{aboutModel>title}" />-->
-<!--            &lt;!&ndash;            <ObjectIdentifier title="{categoryTasksModel>description}" />&ndash;&gt;-->
-<!--            <ObjectIdentifier-->
-<!--              title="-->
-<!--              {-->
-<!--                path : 'aboutModel>date',-->
-<!--					    	formatter : '.formatter.getData'-->
-<!--              }"-->
-<!--            />-->
-<!--            <commons:MicroProcessFlow renderType="NoWrap">-->
-<!--              <commons:content>-->
-<!--                <commons:MicroProcessFlowItem state="Error" press="itemPress"/>-->
-<!--                <commons:MicroProcessFlowItem state="Success" press="itemPress"/>-->
-<!--                <commons:MicroProcessFlowItem state="Warning" press="itemPress"/>-->
-<!--                <commons:MicroProcessFlowItem state="Information" press="itemPress"/>-->
-<!--&lt;!&ndash;                <MicroProcessFlowItem state="Success" press="itemPress"/>&ndash;&gt;-->
-<!--&lt;!&ndash;                <MicroProcessFlowItem state="Warning" press="itemPress"/>&ndash;&gt;-->
-<!--&lt;!&ndash;                <MicroProcessFlowItem state="Information" press="itemPress"/>&ndash;&gt;-->
-<!--              </commons:content>-->
-<!--            </commons:MicroProcessFlow>-->
-<!--            <ObjectNumber-->
-<!--              unit="{aboutModel>importance}"-->
-<!--              state="{-->
-<!--						  path : 'aboutModel>importance',-->
-<!--							formatter: '.formatter.getImportance'-->
-<!--						  }"-->
-<!--            />-->
-<!--&lt;!&ndash;            <ObjectIdentifier title="{aboutModel>importance}" />&ndash;&gt;-->
-<!--            <ObjectIdentifier title="{aboutModel>supervisor}" />-->
-<!--            <ObjectIdentifier title="{aboutModel>responsible}" />-->
-<!--          </cells>-->
-<!--        </ColumnListItem>-->
-<!--      </items>-->
-<!--    </Table>-->
     <content>
-    <FlexBox justifyContent="Center" height="100%" direction="Column"  >
+      <ObjectHeader
+        responsive="true"
+        backgroundDesign="Solid"
+        fullScreenOptimized="false"
+        class="sapUiResponsivePadding--header formLabel formText "
+      >
+        <headerContainer>
+          <HeaderContainer  id="headerContainer">
+            <commons:ProcessFlow
+              id="processflow"
+              nodePress="onNodePress"
+            >
+              <commons:lanes>
+                <commons:ProcessFlowLaneHeader
+                  id="LaneHeader"
+                  iconSrc="sap-icon://message-success"
+                  text="Новая"
+                  position="0"
+                />
+                <commons:ProcessFlowLaneHeader
+                  iconSrc="sap-icon://message-success"
+                  text="Назначено "
+                  position="1"
+                />
+                <commons:ProcessFlowLaneHeader
+                  iconSrc="sap-icon://message-success"
+                  text="Взят в работу"
+                  position="2"
+                />
+                <commons:ProcessFlowLaneHeader
+                  iconSrc="sap-icon://laptop"
+                  text="Выполлнено"
+                  position="3" />
+                <commons:ProcessFlowLaneHeader
+                  iconSrc="sap-icon://message-success"
+                  text="Закрыто"
+                  position="4"
+                />
+              </commons:lanes>
+            </commons:ProcessFlow>
+          </HeaderContainer>
+        </headerContainer>
+        <attributes>
+          <ObjectAttribute
+            class="formText"
+            title="Постановщик"
+            text="{ListTasks>supervisor}"/>
+          <ObjectAttribute
+            title="Ответсвенный"
+            text="{ListTasks>responsible}"/>
+        </attributes>
+        <ObjectAttribute
+          title="Дедлайн"
+          text="{
+        path : 'ListTasks>date',
+        formatter : '.formatter.getData'
+        }"/>
+        <statuses>
+          <ObjectStatus
+            class="formLabel"
+            title="Важность"
+            text="{ListTasks>importance}"
+            state="{  path : 'ListTasks>importance',
+							formatter: '.formatter.getImportance'}"/>
+        </statuses>
+      </ObjectHeader>
+    <FlexBox justifyContent="Center" direction="Column"  >
       <VBox justifyContent="Center" alignItems="Center">
-        <commons:ProcessFlow
-          id="processflow"
-          nodePress="onNodePress"
-        >
-          <commons:lanes>
-            <commons:ProcessFlowLaneHeader
-              laneId="{id}"
-              iconSrc="sap-icon://message-success"
-              text="Взят в работу"
-              position="0"
-            />
-            <commons:ProcessFlowLaneHeader
-              laneId="{id1}"
-              iconSrc="sap-icon://laptop"
-              text="На тестировании"
-              position="1" />
-          </commons:lanes>
-        </commons:ProcessFlow>
+<!--        <commons:ProcessFlow-->
+<!--          id="processflow1"-->
+<!--          nodePress="onNodePress"-->
+<!--        >-->
+<!--          <commons:lanes>-->
+<!--            <commons:ProcessFlowLaneHeader-->
+<!--              id="LaneHeader"-->
+<!--              iconSrc="sap-icon://message-success"-->
+<!--              text="Взят в работу"-->
+<!--              position="0"-->
+<!--            />-->
+<!--            <commons:ProcessFlowLaneHeader-->
+<!--              laneId="{id1}"-->
+<!--              iconSrc="sap-icon://laptop"-->
+<!--              text="На тестировании"-->
+<!--              position="1" />-->
+<!--          </commons:lanes>-->
+<!--        </commons:ProcessFlow>-->
       </VBox>
       <VBox justifyContent="SpaceAround" alignItems="SpaceAround" >
         <!--    <content>-->
         <f:Form id="editFormTask"
                 editable="true"
                 ariaLabelledBy="Title1"
-                class="formLabel formText"
+                class="formLabel formText "
         >
           <f:layout>
             <f:ColumnLayout
               columnsM="1"
-              columnsL="2"
-              columnsXL="6"
+              columnsL="1"
+              columnsXL="1"
             />
           </f:layout>
           <f:formContainers >
             <f:FormContainer id="form" ariaLabelledBy="Title2">
               <f:formElements>
-<!--                <f:FormElement label="Название задачи"  >-->
-<!--                  <f:fields>-->
-<!--                    <Text text="{ListTasks>title}" />-->
-<!--&lt;!&ndash;                    <TextArea&ndash;&gt;-->
-<!--&lt;!&ndash;                      value="{&ndash;&gt;-->
-<!--&lt;!&ndash;                    path:  'ListTasks>title'&ndash;&gt;-->
-
-<!--&lt;!&ndash;                  }"&ndash;&gt;-->
-<!--&lt;!&ndash;                      id="titleTask"&ndash;&gt;-->
-<!--&lt;!&ndash;                      valueStateText="Name must not be empty. Maximum 10 characters."&ndash;&gt;-->
-<!--&lt;!&ndash;                      placeholder="Введите задачу"&ndash;&gt;-->
-<!--&lt;!&ndash;                      change= ".onNameChange"&ndash;&gt;-->
-<!--&lt;!&ndash;                    />&ndash;&gt;-->
-<!--                  </f:fields>-->
-<!--                </f:FormElement>-->
                 <f:FormElement label="Описание задачи">
                   <f:fields>
                     <Text text="{ListTasks>description}" />
                   </f:fields>
                 </f:FormElement>
-                <f:FormElement label="Дедлайн">
-                  <f:fields>
-                    <Text text="{
-                                   path : 'ListTasks>date',
-					    	formatter : '.formatter.getData'
-                    }" />
-<!--                    <ObjectIdentifier-->
-<!--                      title="-->
-<!--              {-->
-<!--                path : 'ListTasks>date',-->
+<!--                <f:FormElement label="Дедлайн">-->
+<!--                  <f:fields>-->
+<!--                    <Text text="{-->
+<!--                                   path : 'ListTasks>date',-->
 <!--					    	formatter : '.formatter.getData'-->
-<!--              }"-->
+<!--                    }" />-->
+<!--&lt;!&ndash;                    <ObjectIdentifier&ndash;&gt;-->
+<!--&lt;!&ndash;                      title="&ndash;&gt;-->
+<!--&lt;!&ndash;              {&ndash;&gt;-->
+<!--&lt;!&ndash;                path : 'ListTasks>date',&ndash;&gt;-->
+<!--&lt;!&ndash;					    	formatter : '.formatter.getData'&ndash;&gt;-->
+<!--&lt;!&ndash;              }"&ndash;&gt;-->
+<!--&lt;!&ndash;                    />&ndash;&gt;-->
+<!--                  </f:fields>-->
+<!--                </f:FormElement>-->
+<!--                <f:FormElement label="Важность">-->
+<!--                  <f:fields>-->
+<!--&lt;!&ndash;                    <Text text="{ListTasks>importance}" />&ndash;&gt;-->
+<!--                    <ObjectNumber-->
+<!--                      unit="{ListTasks>importance}"-->
+<!--                      state="{-->
+<!--						  path : 'ListTasks>importance',-->
+<!--							formatter: '.formatter.getImportance'-->
+<!--						  }"-->
 <!--                    />-->
-                  </f:fields>
-                </f:FormElement>
-                <f:FormElement label="Важность">
-                  <f:fields>
-<!--                    <Text text="{ListTasks>importance}" />-->
-                    <ObjectNumber
-                      unit="{ListTasks>importance}"
-                      state="{
-						  path : 'ListTasks>importance',
-							formatter: '.formatter.getImportance'
-						  }"
-                    />
-                  </f:fields>
-                </f:FormElement>
-                <f:FormElement label="Постановщик">
-                  <f:fields>
-                    <Text text="{ListTasks>supervisor}" />
-                  </f:fields>
-                </f:FormElement>
-                <f:FormElement label="Ответсвенный">
-                  <f:fields>
-                    <Text text="{ListTasks>responsible}" />
-                  </f:fields>
-                </f:FormElement>
+<!--                  </f:fields>-->
+<!--                </f:FormElement>-->
+<!--                <f:FormElement label="Постановщик">-->
+<!--                  <f:fields>-->
+<!--                    <Text text="{ListTasks>supervisor}" />-->
+<!--                  </f:fields>-->
+<!--                </f:FormElement>-->
+<!--                <f:FormElement label="Ответсвенный">-->
+<!--                  <f:fields>-->
+<!--                    <Text text="{ListTasks>responsible}" />-->
+<!--                  </f:fields>-->
+<!--                </f:FormElement>-->
               </f:formElements>
             </f:FormContainer>
           </f:formContainers>
@@ -190,7 +173,6 @@
         <!--    </footer>-->
       </VBox>
       <VBox>
-        <Toolbar height="450px">
           <IconTabBar
             id="iconTabBar"
             headerBackgroundDesign="Transparent"
@@ -200,6 +182,10 @@
             selectedKey="{view>/selectedTabKey}">
             <items>
               <IconTabFilter id="infoTab" text="Комментарии" key="Info">
+                <ScrollContainer>
+
+                </ScrollContainer>
+                <VBox>
                 <List
                   growingScrollToLoad="true"
                   growingThreshold="5"
@@ -229,16 +215,15 @@
         }"
                     text="{CommentsTask>message}"
                     convertLinksToAnchorTags="All"/>
-
                 </List>
-                <VBox>
-                  <HBox>
+                </VBox>
+                <VBox  width="100%">
                     <FeedInput
+                      width="100%"
                       post="onPost"
                       icon="{CommentsTask>/img}"
                       class="sapUiSmallMarginTopBottom"
                     />
-                  </HBox>
                 </VBox>
               </IconTabFilter>
               <IconTabFilter id="projectsTab" text="История" key="Projects">
@@ -246,14 +231,16 @@
               </IconTabFilter>
             </items>
           </IconTabBar>
-      </Toolbar>
       </VBox>
     </FlexBox>
     </content>
     <footer>
       <Toolbar>
-        <Button text="Редактировать задачу" type="Emphasized" press="onEditTask" />
-        <Button text="Завершить" />
+        <Button text="Начать выполнение" type="Accept" press="onBeginTask" />
+        <Button text="Завершить задачу" type="Success"/>
+        <ToolbarSpacer/>
+        <Button text="Редактировать задачу" type="Attention" press="onEditTask" />
+
       </Toolbar>
     </footer>
   </Page>

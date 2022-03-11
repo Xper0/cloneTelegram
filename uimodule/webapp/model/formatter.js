@@ -186,6 +186,9 @@ sap.ui.define([
       if (oImportance === "Критичный") {
         return "Error";
       }
+    },
+    getState: function (oList) {
+      console.log(oList)
     }
 
     // ioSocket: function () {

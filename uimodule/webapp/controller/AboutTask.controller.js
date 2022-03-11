@@ -13,26 +13,44 @@ sap.ui.define([
     "use strict";
     return Controller.extend("cloneTelegramApp.cloneTelegram.controller.Tasks", {
       formatter: formatter,
-      onInit :  function () {
+      onInit:  function () {
+        let processFlow = this.byId("processflow");
+        let lanes = processFlow.getAggregation("lanes");
+        let state = [
+          {
+            "state": "Neutral",
+            "value": 55
+          }
+        ];
+        lanes[0].setProperty("state", state)
+        // console.log(processFlow)
         let oRouter =  this.getOwnerComponent().getRouter();
         oRouter.getRoute("AboutTask").attachMatched(this._onObjectMatched, this);
       },
       _onObjectMatched: async function (oEvent) {
+        let processFlow = this.byId("processflow");
         let sTaskId = oEvent.getParameter("arguments").AboutTaskId;
+        let aTasks = this.getOwnerComponent().getModel("ListTasks").getData().tasksList;
+        console.log(aTasks)
+        let nTaskIndex = aTasks.findIndex(taskId => taskId.id == sTaskId)
+        console.log(aTasks[nTaskIndex].chatId)
         this.getOwnerComponent().loadTasks().then(() => {
-          let aTasks = this.getOwnerComponent().getModel("ListTasks").getData().tasksList;
-          let nTaskIndex = aTasks.findIndex(taskId => taskId.id == sTaskId)
+          // let aTasks = this.getOwnerComponent().getModel("ListTasks").getData().tasksList;
+          // console.log(aTasks)
+          // let nTaskIndex = aTasks.findIndex(taskId => taskId.id == sTaskId)
+          // console.log(aTasks[nTaskIndex].chatId)
           let sPath = `/tasksList/${nTaskIndex}`
           // UsersModel.loadData(url1, null, true, "GET", null, false);
           // console.log(UsersModel.result)
           // this.getView().setModel(aboutModel, "aboutModel");
+          let processFlowLaneHeader = this.byId("LaneHeader");
+          console.log(processFlowLaneHeader)
           this.getView().bindElement({
             path: sPath,
             model: "ListTasks"
           });
         });
         this.oCommentsTask = this.getOwnerComponent().getModel("CommentsTask");
-        let chatId = 7730
         let urlId = `http://127.0.0.1:5000/getCommentTask?commentTaskId=${sTaskId}`;
         let data = await fetch(urlId)
         let result = await data.json();
@@ -68,7 +86,18 @@ sap.ui.define([
         const oItem = oEventTask.getSource().getBindingContext("ListTasks").getObject();
         oRouter.navTo("EditTask", {
           editTaskId: oItem.id
-        })
+        });
+      },
+      onBeginTask: function () {
+        let processFlow = this.byId("processflow");
+        let lanes = processFlow.getAggregation("lanes");
+        let state = [
+          {
+            "state": "Positive",
+            "value": 100
+          }
+        ];
+        lanes[0].setProperty("state", state)
       }
 
     });

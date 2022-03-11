@@ -22,34 +22,35 @@ sap.ui.define([
       _onObjectMatched: async function (oEvent) {
         let oContainer = this.byId("DetailTaskTAble");
         let oBinding = oContainer.getBinding("items");
-        // let sCategory = oBinding.oList
-        // console.log(sCategory)
-        console.log(oBinding)
-        // let oModel = this.getView().getModel("taskModel").getData();
-       // debugger
-        let oItem, oView;
-        // debugger
-
         let sKey = oEvent.getParameter("arguments").detailCategory; // Получение detailCategory
-        let aFilters = []
+        let aTasksCategory = this.getOwnerComponent().getModel("ListTasks").getData().tasksGroups;
+        let nTaskIndex = aTasksCategory.findIndex(taskCategory => taskCategory.key == sKey);
+        let sPath = `/tasksGroups/${nTaskIndex}`;
+        this.getView().bindElement({
+          path: sPath,
+          model: "ListTasks"
+        });
+
+
+        let aFilters = [];
         let eq = sap.ui.model.FilterOperator.EQ;
         let sUser = "Александр Павлов";
         let filter = (path, eq , value ) => {
           let oFilters = new sap.ui.model.Filter(`${path}`, eq, value);
           aFilters.push(oFilters)
-        }
+        };
         switch (sKey){
           case "All":
             break;
           case "toMe":
-            filter("supervisor", eq, sUser)
+            filter("supervisor", eq, sUser);
             break;
           case  "onMe":
-            filter("responsible", eq, sUser)
+            filter("responsible", eq, sUser);
             break
           case "CloseTask":
             let status = "Закрыт"
-            filter("status", eq, status)
+            filter("status", eq, status);
         }
         //
         // this.oTaskModel = this.getOwnerComponent().getModel("ListTasks").getData().tasksList;

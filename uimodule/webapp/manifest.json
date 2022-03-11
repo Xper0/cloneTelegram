@@ -123,6 +123,7 @@
           "pattern": "createTask",
           "name": "createTask",
           "target": [
+            "Tasks",
             "createTask"
           ]
         },
@@ -138,6 +139,7 @@
           "pattern": "AboutTask/{AboutTaskId}",
           "name": "AboutTask",
           "target": [
+            "Tasks",
             "AboutTask"
           ]
         },
@@ -145,6 +147,7 @@
           "pattern": "EditTask/{editTaskId}",
           "name": "EditTask",
           "target": [
+            "Tasks",
             "EditTask"
           ]
         },

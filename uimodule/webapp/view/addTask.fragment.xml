@@ -10,7 +10,9 @@
 <!--    <content>-->
     <f:Form id="editFormTask"
             editable="true"
-            ariaLabelledBy="Title1">
+            ariaLabelledBy="Title1"
+            class="formLabel"
+    >
       <f:layout>
         <f:ResponsiveGridLayout
           labelSpanXL="4"
@@ -149,8 +151,8 @@
 <!--    </content>-->
 <!--    <footer>-->
       <HBox justifyContent="SpaceAround" >
-        <Button text="Добавить задачу" press="onAddListTask" />
-        <Button text="Отменить" />
+        <Button text="Добавить задачу" press="onAddListTask" type="Accept" />
+        <Button text="Отменить" type="Reject" />
       </HBox>
 <!--    </footer>-->
  </VBox>

@@ -15,7 +15,9 @@
           <!--    <content>-->
           <f:Form id="editTask"
                   editable="true"
-                  ariaLabelledBy="Title1">
+                  ariaLabelledBy="Title1"
+                  class="formLabel"
+          >
             <f:layout>
               <f:ColumnLayout
                 columnsM="2"
@@ -53,7 +55,11 @@
                     <f:fields>
                       <DatePicker
                         id="DP2"
-                        value="{ListTasks>date}" valueFormat="yyyy-MM-dd" displayFormat="long"
+                        value="{ path: 'ListTasks>date',
+                        	formatter : '.formatter.getData'
+                        }"
+                        valueFormat="yyyy-MM-dd"
+                        displayFormat="long"
                         change="handleChange"
                         class="sapUiSmallMarginBottom"/>
                     </f:fields>
@@ -112,8 +118,8 @@
     </content>
     <footer>
       <Toolbar>
-        <Button text="Сохранить" type="Success" />
-        <Button text="Отменить" type="Reject"/>
+        <Button text="Сохранить" type="Success" press="onSaveTask" />
+        <Button text="Отменить" type="Reject" press="onCancel"/>
       </Toolbar>
     </footer>
   </Page>

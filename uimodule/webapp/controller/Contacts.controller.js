@@ -27,7 +27,7 @@ sap.ui.define([
         };
         let data = await fetch(urlChat)
         let res = await data.json()
-        // console.log(res)
+        console.log(res)
         let asseptChat = [436411050, 730832139, 787817835, 1513492075]
         let filterChat = res.result.chats.filter( chat => asseptChat.find( id => id == chat.id))
         let UsersModel = new JSONModel({

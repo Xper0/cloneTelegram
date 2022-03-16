@@ -12,7 +12,24 @@ const taskList = [
     status: "Выполняется",
     importance: "Критичный",
     supervisor: "Александр Павлов",
+    idSupervisor: 213214,
     responsible: "Александр",
+    subtasks: [
+      {
+        title: "Создание подзадачи",
+        state: true
+      },
+      {
+        title: "Вывод подзадачи",
+        state: false
+      },
+      {
+        title: "Вывод подзадачи2",
+        state: false
+      },
+
+    ],
+
     progress: [
       {
         state: "Neutral",
@@ -58,6 +75,7 @@ const taskList = [
     status: "Выполняется",
     importance: "Средний",
     supervisor: "Александр Павлов",
+    idSupervisor: 213214,
     responsible: "Александр",
     progress: [
       {
@@ -108,6 +126,17 @@ const taskList = [
     status: "Закрыт",
     importance: "Средний",
     supervisor: "Александр",
+    responsible: "Александр Павлов"
+  },
+  {
+    id: 4,
+    title: "Сделать detailPage",
+    description: "Доработать роутинг detailPage",
+    date: 1612612400,
+    status: "Закрыт",
+    importance: "Средний",
+    idSupervisor: 3432432,
+    supervisor: "Иван Пупкин",
     responsible: "Александр Павлов"
   }
 ]

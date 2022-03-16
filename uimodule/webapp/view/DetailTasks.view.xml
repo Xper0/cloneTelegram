@@ -22,17 +22,11 @@
           <content>
             <Title text="Задачи" level="H2"/>
             <ToolbarSpacer />
-
-            <Button
-              id="sortButton"
-              press=".handleSortButtonPressed"
-              icon="sap-icon://sort"
-              type="Transparent"/>
             <Button
               id="filterButton"
               press=".handleFilterButtonPressed"
               icon="sap-icon://filter"
-              type="Transparent"/>
+              type="Ghost"/>
           </content>
         </OverflowToolbar>
       </headerToolbar>

@@ -325,7 +325,7 @@ const start =  () => {
       // console.log(req.query.category)
       let { task } = JSON.parse(req.body)
       let taskOnList = tasksList.findIndex( taskId => Number(taskId.id) === Number(task.id))
-      if (taskOnList) {
+      if (taskOnList !== undefined) {
         // tasksList[taskOnList] = task
         [...tasksList, tasksList[taskOnList] = task]
         console.log(tasksList)

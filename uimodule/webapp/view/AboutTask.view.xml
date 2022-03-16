@@ -5,6 +5,7 @@
   xmlns:core="sap.ui.core"
   xmlns:commons="sap.suite.ui.commons"
   xmlns:u="sap.ui.unified"
+  xmlns:upload="sap.m.upload"
   controllerName='cloneTelegramApp.cloneTelegram.controller.AboutTask'>
   <Page
     title="{ListTasks>title}"
@@ -22,6 +23,7 @@
       >
         <headerContainer>
           <HeaderContainer  id="headerContainer">
+            <FlexBox  renderType="Bare">
             <commons:ProcessFlow
               id="processflow"
               nodePress="onNodePress"
@@ -54,6 +56,7 @@
                 />
               </commons:lanes>
             </commons:ProcessFlow>
+            </FlexBox>
           </HeaderContainer>
         </headerContainer>
         <attributes>
@@ -101,69 +104,117 @@
 <!--          </commons:lanes>-->
 <!--        </commons:ProcessFlow>-->
       </VBox>
-      <VBox justifyContent="SpaceAround" alignItems="SpaceAround" >
+      <VBox class="sapUiMediumMarginTop" justifyContent="SpaceAround"  >
         <!--    <content>-->
-        <f:Form id="editFormTask"
-                editable="true"
-                ariaLabelledBy="Title1"
-                class="formLabel formText "
+
+        <Text class="formText" text="{ListTasks>description}" />
+<!--        <f:Form id="editFormTask"-->
+<!--                editable="true"-->
+<!--                ariaLabelledBy="Title1"-->
+<!--                class="formLabel formText "-->
+<!--        >-->
+<!--          <f:layout>-->
+<!--            <f:ColumnLayout-->
+<!--              columnsM="1"-->
+<!--              columnsL="1"-->
+<!--              columnsXL="1"-->
+<!--            />-->
+<!--          </f:layout>-->
+<!--          <f:formContainers >-->
+<!--            <f:FormContainer id="form" ariaLabelledBy="Title2">-->
+<!--              <f:formElements>-->
+<!--                <f:FormElement label="Описание задачи">-->
+<!--                  <f:fields>-->
+<!--                    <Text text="{ListTasks>description}" />-->
+<!--                  </f:fields>-->
+<!--                </f:FormElement>-->
+
+<!--              </f:formElements>-->
+<!--            </f:FormContainer>-->
+<!--          </f:formContainers>-->
+<!--        </f:Form>-->
+        <List
+          id="ProductList"
+          includeItemInSelection="true"
+          items="{ListTasks>subtasks}"
         >
-          <f:layout>
-            <f:ColumnLayout
-              columnsM="1"
-              columnsL="1"
-              columnsXL="1"
-            />
-          </f:layout>
-          <f:formContainers >
-            <f:FormContainer id="form" ariaLabelledBy="Title2">
-              <f:formElements>
-                <f:FormElement label="Описание задачи">
-                  <f:fields>
-                    <Text text="{ListTasks>description}" />
-                  </f:fields>
-                </f:FormElement>
-<!--                <f:FormElement label="Дедлайн">-->
-<!--                  <f:fields>-->
-<!--                    <Text text="{-->
-<!--                                   path : 'ListTasks>date',-->
-<!--					    	formatter : '.formatter.getData'-->
-<!--                    }" />-->
-<!--&lt;!&ndash;                    <ObjectIdentifier&ndash;&gt;-->
-<!--&lt;!&ndash;                      title="&ndash;&gt;-->
-<!--&lt;!&ndash;              {&ndash;&gt;-->
-<!--&lt;!&ndash;                path : 'ListTasks>date',&ndash;&gt;-->
-<!--&lt;!&ndash;					    	formatter : '.formatter.getData'&ndash;&gt;-->
-<!--&lt;!&ndash;              }"&ndash;&gt;-->
-<!--&lt;!&ndash;                    />&ndash;&gt;-->
-<!--                  </f:fields>-->
-<!--                </f:FormElement>-->
-<!--                <f:FormElement label="Важность">-->
-<!--                  <f:fields>-->
-<!--&lt;!&ndash;                    <Text text="{ListTasks>importance}" />&ndash;&gt;-->
-<!--                    <ObjectNumber-->
-<!--                      unit="{ListTasks>importance}"-->
-<!--                      state="{-->
-<!--						  path : 'ListTasks>importance',-->
-<!--							formatter: '.formatter.getImportance'-->
-<!--						  }"-->
-<!--                    />-->
-<!--                  </f:fields>-->
-<!--                </f:FormElement>-->
-<!--                <f:FormElement label="Постановщик">-->
-<!--                  <f:fields>-->
-<!--                    <Text text="{ListTasks>supervisor}" />-->
-<!--                  </f:fields>-->
-<!--                </f:FormElement>-->
-<!--                <f:FormElement label="Ответсвенный">-->
-<!--                  <f:fields>-->
-<!--                    <Text text="{ListTasks>responsible}" />-->
-<!--                  </f:fields>-->
-<!--                </f:FormElement>-->
-              </f:formElements>
-            </f:FormContainer>
-          </f:formContainers>
-        </f:Form>
+          <headerToolbar>
+            <OverflowToolbar>
+              <content>
+                <Title text="Подзадачи" level="H2" />
+<!--                <Button-->
+<!--                  icon="sap-icon://add"-->
+<!--                  text="Чек-лиcт"-->
+<!--                  press="onAddCheckList" />-->
+                <ToolbarSpacer />
+              </content>
+            </OverflowToolbar>
+          </headerToolbar>
+                    <InputListItem
+                      label="{ListTasks>title}"
+                      highlight="{
+                        path: 'ListTasks>state',
+                        formatter: '.formatter.getSubTaskState'
+                      }"
+                    >
+                                    <CheckBox
+                                      enabled="false"
+                                      selected="{ListTasks>state}"
+                                      valueState="Warning"
+
+                                    />
+                    </InputListItem >
+<!--              <CheckBox-->
+<!--                text="{ListTasks>title}"-->
+<!--                selected="{ListTasks>state}"-->
+<!--              />-->
+
+
+
+<!--          <InputListItem-->
+<!--            label="Подзадача1"-->
+<!--            type="Detail"-->
+<!--            detailPress="onEdit"-->
+<!--            highlight="Success"-->
+<!--          >-->
+<!--            <Switch type="AcceptReject" state="true" />-->
+<!--          </InputListItem>-->
+<!--          <InputListItem-->
+<!--            label="Подзадача2"-->
+<!--            type="Detail"-->
+<!--            detailPress="onEdit"-->
+<!--            highlight="Error"-->
+<!--          >-->
+<!--            <Switch type="AcceptReject" state="false" />-->
+<!--          </InputListItem>-->
+<!--          <InputListItem-->
+<!--            label="Подзадача3"-->
+<!--            type="Detail"-->
+<!--            detailPress="onEdit"-->
+<!--            highlight="Error"-->
+<!--          >-->
+<!--            <Switch type="AcceptReject" state="false" />-->
+<!--          </InputListItem>-->
+<!--          <InputListItem >-->
+<!--            <Input width="30%" />-->
+<!--            <Switch type="AcceptReject" state="true" />-->
+<!--          </InputListItem>-->
+<!--          <StandardListItem-->
+<!--            title="Подзадача2"-->
+<!--            iconDensityAware="false"-->
+<!--            iconInset="true"-->
+<!--            type="Detail"-->
+<!--            highlight="Error"-->
+<!--          >-->
+<!--          </StandardListItem>-->
+<!--          <StandardListItem-->
+<!--            title="Подзадача3"-->
+<!--            iconDensityAware="true"-->
+<!--            iconInset="true" />-->
+        </List>
+
+
+
         <!--    </content>-->
         <!--    <footer>-->
 <!--        <HBox justifyContent="SpaceAround" >-->
@@ -219,7 +270,6 @@
                 </VBox>
                 <VBox  width="100%">
                     <FeedInput
-                      width="100%"
                       post="onPost"
                       icon="{CommentsTask>/img}"
                       class="sapUiSmallMarginTopBottom"

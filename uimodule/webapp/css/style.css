@@ -107,7 +107,7 @@
 .formLabel .sapMObjectAttributeTitle,
 .formLabel .formLabel
 {
-  font-size: 18px;
+  font-size: .875rem;
   text-shadow:
     -1px -1px #F5F5F5,
     0 1px 0 #000000;
@@ -120,7 +120,8 @@
 
 }
 .formText .sapMText,
-.formText .sapMObjectAttributeText {
+.formText .sapMObjectAttributeText,
+.formText .sapMText {
   font-family: "Franklin Gothic Medium", serif !important;
   font-size: 16px ;
   color:#4567B4 !important;

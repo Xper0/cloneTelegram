@@ -47,6 +47,20 @@ sap.ui.define([
         // console.log(oModel)
       },
       onSaveTask: async function () {
+        let listSubtasks = this.byId("listSubtasks");
+        let subtasks = [];
+        let itemAgregation = listSubtasks.getAggregation("items");
+        itemAgregation.forEach( agregation => {
+          let itemElement = agregation.getAggregation("content");
+          // itemElement[0].getProperty("selected");
+          // itemElement[1].getProperty("value");
+          subtasks.push({
+            title:  itemElement[1].getProperty("value"),
+            state:   itemElement[0].getProperty("selected")
+          });
+        });
+        console.log(subtasks)
+        // debugger
         let pathId = this.getOwnerComponent().getRouter().oHashChanger.hash.substr(9);
         let form = this.byId("editTask");
         let elements = form.getFormContainers()[0].getFormElements();
@@ -60,6 +74,7 @@ sap.ui.define([
           "Access-Control-Allow-Methods": "GET,POST,PUT,DELETE,OPTIONS",
           "Access-Control-Allow-Headers": "Content-Type, Access-Control-Allow-Headers, Authorization, X-Requested-With"
         };
+        debugger
          elements.forEach(item => {
           if (item.getLabel() === "Название задачи") {
             formData.title = item.getFields()[0].getProperty("value");
@@ -67,11 +82,12 @@ sap.ui.define([
           if (item.getLabel() === "Описание задачи") {
             formData.description = item.getFields()[0].getProperty("value");
           }
-          if (item.getLabel() === "Крайний срок") {
-            formData.date = item.getFields()[0].getProperty("value");
+          if (item.getLabel() === "Дедлайн") {
+            let convertTime = Math.floor(new Date(item.getFields()[0].getProperty("value")).getTime() / 1000)
+            formData.date = convertTime;
           }
           if (item.getLabel() === "Важность") {
-            formData.status = item.getFields()[0].getProperty("value");
+            formData.importance = item.getFields()[0].getProperty("value");
           }
           if (item.getLabel() === "Постановщик") {
             formData.supervisor = item.getFields()[0].getProperty("value");
@@ -81,7 +97,8 @@ sap.ui.define([
           }
           formData.id = pathId
          });
-
+          formData.subtasks = subtasks
+        console.log(formData)
         let datas = await fetch( url, {
             method: "POST",
             headers: sHeaders,

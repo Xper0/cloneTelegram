@@ -18,11 +18,12 @@ sap.ui.define([
         let lanes = processFlow.getAggregation("lanes");
         let state = [
           {
-            "state": "Neutral",
-            "value": 55
+            "state": "Positive",
+            "value": 100
           }
         ];
         lanes[0].setProperty("state", state)
+        lanes[1].setProperty("state", state)
         // console.log(processFlow)
         let oRouter =  this.getOwnerComponent().getRouter();
         oRouter.getRoute("AboutTask").attachMatched(this._onObjectMatched, this);
@@ -97,8 +98,68 @@ sap.ui.define([
             "value": 100
           }
         ];
-        lanes[0].setProperty("state", state)
-      }
+        lanes[2].setProperty("state", state)
+      },
+      onEdit: function (oEvent) {
+        let tableContainer = this.byId("ProductList");
+        let itemsTable = tableContainer.getAggregation("items");
 
+        let bindLabel = oEvent.getSource().getProperty("label")
+
+        let inputList = new sap.m.InputListItem({
+          label: "Подзадача6",
+          type: sap.m.ListType.Detail,
+          highlight: "Error",
+          press: this.onEdit
+        });
+        let inputField = new sap.m.Input({
+            value: bindLabel
+          });
+        inputList.addContent(new sap.m.Switch({
+          type: sap.m.SwitchType.AcceptReject,
+          state: false
+        }));
+        inputList.addContent(inputField)
+        tableContainer.insertItem(inputList)
+        // tableContainer.addContent(inputList)
+
+        console.log(inputList)
+        // tableContainer.bindItems({
+        //   template: inputList
+        // })
+        // this.oTable.bindItems({
+        //   path: "/ProductCollection",
+        //   template: oTemplate,
+        //   templateShareable: true,
+        //   key: "ProductId"
+        // }).setKeyboardMode(sKeyboardMode);
+        // console.log(oEvent)
+        // console.log(inputList)
+        // console.log(itemsTable)
+
+        // let value = new sap.m.Input();
+        // oEvent.getSource().setProperty("label", value);
+        // oEvent.getSource().setProperty("highlight", "Error");
+      },
+      onAddCheckList: function () {
+        let tableContainer = this.byId("ProductList");
+        let inputList = new sap.m.InputListItem({
+          label: "",
+          type: sap.m.ListType.Detail,
+          highlight: "Error",
+          press: this.onEdit
+        });
+        let inputField = new sap.m.Input({
+          value: "",
+          width: "30%"
+        });
+        inputList.addContent(inputField);
+        inputList.addContent(new sap.m.Switch({
+          type: sap.m.SwitchType.AcceptReject,
+          state: false
+        }));
+
+        tableContainer.addItem(inputList)
+      }
     });
   });

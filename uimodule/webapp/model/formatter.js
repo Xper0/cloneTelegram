@@ -189,6 +189,14 @@ sap.ui.define([
     },
     getState: function (oList) {
       console.log(oList)
+    },
+    getSubTaskState: function (oState){
+      if (!oState) {
+        return "Error";
+      }
+      else {
+         return "Success";
+      }
     }
 
     // ioSocket: function () {

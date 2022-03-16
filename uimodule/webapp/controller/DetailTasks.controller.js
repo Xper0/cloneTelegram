@@ -4,11 +4,12 @@ sap.ui.define([
     "../model/formatter",
     "sap/ui/model/Filter",
     "sap/ui/model/FilterOperator",
+    "sap/ui/core/Fragment"
   ],
   /**
    * @param {typeof sap.ui.core.mvc.Controller} Controller
    */
-  function (Controller, JSONModel, formatter, Filter, FilterOperator) {
+  function (Controller, JSONModel, formatter, Filter, FilterOperator, Fragment) {
     "use strict";
 
     return Controller.extend("cloneTelegramApp.cloneTelegram.controller.DetailTasks", {
@@ -108,6 +109,68 @@ sap.ui.define([
         oRouter.navTo("AboutTask", {
           AboutTaskId: oItem.id
         })
+      },
+      handleFilterButtonPressed: function () {
+        if (!this._pCategoryFilterDialog) {
+          this._pCategoryFilterDialog = Fragment.load({
+            id: this.getView().getId(),
+            name: "cloneTelegramApp.cloneTelegram.view.TaskFilter",
+            controller: this
+          }).then(function(oDialog){
+            // connect dialog to the root view of this component (models, lifecycle)
+            this.getView().addDependent(oDialog);
+            return oDialog;
+          }.bind(this));
+        }
+        this._pCategoryFilterDialog.then(function(oDialog) {
+          oDialog.open();
+        });
+      },
+      handleConfirm: function (oEvent) {
+        this._applyFilter(oEvent);
+      },
+      _applyFilter: function (oEvent) {
+        let oList = this.byId("DetailTaskTAble"),
+          oBinding = oList.getBinding("items"),
+          aSelectedFilterItems = oEvent.getParameter("filterItems"),
+          oCustomFilter =  this.byId("categoryFilterDialog").getFilterItems()[1], //
+          oFilter,
+          oCustomKeys = {},
+          aFilters = [],
+          aSupervisorFilters = [],
+          aPriceFilters = [],
+          aSupplierFilters = [];
+          console.log(oBinding)
+        aSelectedFilterItems.forEach( oItem =>  {
+          let sFilterKey = oItem.getProperty("key")
+          console.log(sFilterKey)
+          oFilter = new Filter("idSupervisor", FilterOperator.EQ, sFilterKey);
+          aSupervisorFilters.push(oFilter);
+          // switch (sFilterKey) {
+          //   case "Available":
+          //     oFilter = new Filter("lastName", FilterOperator.EQ, "A");
+          //     aAvailableFilters.push(oFilter);
+          //     break;
+          //
+          //   case "OutOfStock":
+          //     oFilter = new Filter("Status", FilterOperator.EQ, "O");
+          //     aAvailableFilters.push(oFilter);
+          //     break;
+          //
+          //   case "Discontinued":
+          //     oFilter = new Filter("Status", FilterOperator.EQ, "D");
+          //     aAvailableFilters.push(oFilter);
+          //     break;
+          //   default:
+          //     oFilter = new Filter("SupplierName", FilterOperator.EQ, sFilterKey);
+          //     aSupplierFilters.push(oFilter);
+          //
+          // }
+        });
+
+        oFilter = new Filter({filters: aSupervisorFilters, and: true});
+        oBinding.filter(oFilter);
+
       }
     });
   });

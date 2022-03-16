@@ -1,0 +1,239 @@
+{
+  "_version": "1.12.0",
+  "sap.app": {
+    "id": "cloneTelegramApp.cloneTelegram",
+    "type": "application",
+    "i18n": "i18n/i18n.properties",
+    "applicationVersion": {
+      "version": "0.0.1"
+    },
+    "title": "{{appTitle}}",
+    "description": "{{appDescription}}"
+  },
+  "sap.ui": {
+    "technology": "UI5",
+    "icons": {
+      "icon": "",
+      "favIcon": "",
+      "phone": "",
+      "phone@2": "",
+      "tablet": "",
+      "tablet@2": ""
+    },
+    "deviceTypes": {
+      "desktop": true,
+      "tablet": true,
+      "phone": true
+    }
+  },
+  "sap.ui5": {
+    "flexEnabled": true,
+    "dependencies": {
+      "minUI5Version": "1.60",
+      "libs": {
+        "sap.ui.core": {},
+        "sap.f": {},
+        "sap.ui.unified": {},
+        "sap.tnt": {},
+        "sap.suite.ui.commons": {},
+        "sap.ui.layout": {}
+      }
+    },
+    "contentDensities": {
+      "compact": true,
+      "cozy": true
+    },
+    "models": {
+      "i18n": {
+        "type": "sap.ui.model.resource.ResourceModel",
+        "settings": {
+          "bundleName": "cloneTelegramApp.cloneTelegram.i18n.i18n"
+        }
+      },
+      "Contacts": {
+        "type": "sap.ui.model.json.JSONModel",
+        "uri": "../localService/metadata/Contacts.json"
+      },
+      "MessageUsers": {
+        "type": "sap.ui.model.json.JSONModel",
+        "uri": "../localService/metadata/MessageUsers.json"
+      },
+      "ListTasks" : {
+        "type": "sap.ui.model.json.JSONModel"
+      },
+      "CommentsTask" : {
+        "type": "sap.ui.model.json.JSONModel"
+      }
+    },
+    "resources": {
+      "css": [
+        {
+          "uri": "css/style.css"
+        }
+      ]
+    },
+    "routing": {
+      "config": {
+        "routerClass": "sap.m.routing.Router",
+        "viewType": "XML",
+        "async": true,
+        "viewPath": "cloneTelegramApp.cloneTelegram.view",
+        "controlId": "splitContainer",
+        "clearControlAggregation": false
+      },
+      "routes": [
+        {
+          "name": "MainView",
+          "pattern": "",
+          "target": [
+            "Init"
+          ]
+        },
+        {
+          "pattern": "Init",
+          "name": "Init",
+          "target": [
+            "Init"
+          ]
+        },
+        {
+          "pattern": "Authorization",
+          "name": "Authorization",
+          "target": [
+            "Authorization"
+          ]
+        },
+        {
+          "pattern": "Contacts/{UserContacts}",
+          "name": "Contacts",
+          "target": [
+            "Contacts",
+            "UserChat"
+          ]
+        },
+        {
+          "pattern": "Tasks",
+          "name": "Tasks",
+          "target": [
+            "Tasks",
+            "DetailTasks"
+          ]
+        },
+        {
+          "pattern": "createTask",
+          "name": "createTask",
+          "target": [
+            "Tasks",
+            "createTask"
+          ]
+        },
+        {
+          "pattern": "DetailTasks/{detailCategory}",
+          "name": "DetailTasks",
+          "target": [
+            "Tasks",
+            "DetailTasks"
+          ]
+        },
+        {
+          "pattern": "AboutTask/{AboutTaskId}",
+          "name": "AboutTask",
+          "target": [
+            "Tasks",
+            "AboutTask"
+          ]
+        },
+        {
+          "pattern": "EditTask/{editTaskId}",
+          "name": "EditTask",
+          "target": [
+            "Tasks",
+            "EditTask"
+          ]
+        },
+        {
+          "pattern": "UserChat/{UserChatId}",
+          "name": "UserChat",
+          "target": [
+            "Contacts",
+            "UserChat"
+          ]
+        }
+      ],
+      "targets": {
+        "TargetMainView": {
+          "viewType": "XML",
+          "transition": "slide",
+          "viewLevel": 1,
+          "clearControlAggregation": false,
+          "viewId": "MainView",
+          "viewName": "MainView",
+          "controlAggregation": "detailPages"
+        },
+        "Init": {
+          "viewType": "XML",
+          "viewId": "Init",
+          "viewName": "Init",
+          "controlAggregation": "detailPages"
+        },
+        "Authorization" : {
+          "viewType": "XML",
+          "transition": "slide",
+          "clearControlAggregation": false,
+          "viewId": "Authorization",
+          "viewName": "Authorization",
+          "controlAggregation": "detailPages"
+        },
+
+        "Contacts": {
+          "viewType": "XML",
+          "viewName": "Contacts",
+          "transition": "slide",
+          "controlAggregation": "masterPages"
+        },
+        "Tasks": {
+          "viewType": "XML",
+          "viewName": "Tasks",
+          "transition": "slide",
+          "controlAggregation": "masterPages"
+        },
+        "createTask": {
+          "viewType": "XML",
+          "viewName": "createTask",
+          "transition": "slide",
+          "controlAggregation": "detailPages"
+        },
+        "DetailTasks": {
+          "viewType": "XML",
+          "viewName": "DetailTasks",
+          "transition": "slide",
+          "controlAggregation": "detailPages"
+        },
+        "AboutTask" : {
+          "viewType": "XML",
+          "viewName": "AboutTask",
+          "transition": "slide",
+          "controlAggregation": "detailPages"
+        },
+        "EditTask" : {
+            "viewType": "XML",
+            "viewName": "EditTask",
+            "transition": "slide",
+            "controlAggregation": "detailPages"
+        },
+        "UserChat": {
+          "viewType": "XML",
+          "viewName": "UserChat",
+          "transition": "slide",
+          "controlAggregation": "detailPages"
+        }
+      }
+    },
+    "rootView": {
+      "viewName": "cloneTelegramApp.cloneTelegram.view.MainView",
+      "type": "XML",
+      "async": true,
+      "id": "app"
+    }
+  }
+}

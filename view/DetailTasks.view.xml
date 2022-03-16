@@ -1,0 +1,98 @@
+
+<mvc:View
+  xmlns="sap.m"
+  xmlns:f="sap.f"
+  xmlns:mvc="sap.ui.core.mvc"
+  controllerName='cloneTelegramApp.cloneTelegram.controller.DetailTasks'>
+  <Page title="Категория: {ListTasks>title}">
+
+    <Table
+      id="DetailTaskTAble"
+      inset="false"
+      items="{
+						path: 'ListTasks>/tasksList',
+						sorter: {
+							path: 'Name'
+						}
+					}"
+      class="sapFDynamicPageAlignContent"
+      width="auto">
+      <headerToolbar>
+        <OverflowToolbar>
+          <content>
+            <Title text="Задачи" level="H2"/>
+            <ToolbarSpacer />
+            <Button
+              id="filterButton"
+              press=".handleFilterButtonPressed"
+              icon="sap-icon://filter"
+              type="Ghost"/>
+          </content>
+        </OverflowToolbar>
+      </headerToolbar>
+
+
+      <columns>
+        <Column	hAlign="Begin">
+          <Text text="Название"/>
+        </Column>
+        <Column	hAlign="Begin">
+          <Text text="Дедлайн"/>
+        </Column>
+        <Column	hAlign="Begin">
+          <Text text="Статус"/>
+        </Column>
+        <Column	hAlign="Begin">
+          <Text text="Важность"/>
+        </Column>
+        <Column	hAlign="Begin">
+          <Text text="Назначающий"/>
+        </Column>
+        <Column	hAlign="Begin">
+          <Text text="Исполнитель"/>
+        </Column>
+      </columns>
+
+      <items>
+        <ColumnListItem  type="Navigation" press=".onListItemPress" >
+          <cells>
+<!--            <ObjectIdentifier title="{categoryTasksModel>id}" />-->
+            <ObjectIdentifier title="{ListTasks>title}" />
+<!--            <ObjectIdentifier title="{categoryTasksModel>description}" />-->
+            <ObjectIdentifier
+              title="
+              {
+                path : 'ListTasks>date',
+					    	formatter : '.formatter.getData'
+              }"
+            />
+            <ObjectNumber
+              unit="{ListTasks>status}"
+              state="{
+						  path : 'ListTasks>status',
+							formatter: '.formatter.getStatus'
+						  }"
+            />
+            <ObjectNumber
+              unit="{ListTasks>importance}"
+              state="{
+						  path : 'ListTasks>importance',
+							formatter: '.formatter.getImportance'
+						  }"
+            />
+<!--            <ObjectIdentifier title="{ListTasks>status}" />-->
+<!--            <ObjectIdentifier title="{ListTasks>importance}" />-->
+            <ObjectIdentifier title="{ListTasks>supervisor}" />
+            <ObjectIdentifier title="{ListTasks>responsible}" />
+          </cells>
+        </ColumnListItem>
+      </items>
+    </Table>
+
+
+  </Page>
+
+
+
+</mvc:View>
+

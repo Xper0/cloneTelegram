@@ -1,0 +1,1 @@
+sap.ui.define(["sap/ui/test/Opa5"],function(e){"use strict";return e.extend("cloneTelegramApp.cloneTelegram.test.integration.arrangements.Startup",{iStartMyApp:function(){this.iStartMyUIComponent({componentConfig:{name:"cloneTelegramApp.cloneTelegram",async:true,manifest:true}})}})});

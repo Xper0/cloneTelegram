@@ -1,0 +1,84 @@
+<mvc:View
+  controllerName="cloneTelegramApp.cloneTelegram.controller.Contacts"
+  xmlns="sap.m"
+  xmlns:f="sap.f"
+  xmlns:mvc="sap.ui.core.mvc"
+  xmlns:tnt="sap.tnt"
+>
+<!--  <ScrollContainer-->
+
+<!--    class=" sapUiContentPadding sapUiResponsivePadding&#45;&#45;header sapUiResponsivePadding&#45;&#45;subHeader sapUiResponsivePadding&#45;&#45;content sapUiResponsivePadding&#45;&#45;footer"-->
+<!--  >-->
+<!--  <Page id="dynamicPageId"-->
+<!--        title="Contacts">-->
+<!--  &lt;!&ndash; DynamicPage Title &ndash;&gt;-->
+
+<!--    &lt;!&ndash; DynamicPage Content &ndash;&gt;-->
+<!--      <tnt:NavigationList-->
+<!--        id="ContactsTable"-->
+<!--        items="{-->
+<!--						path: 'UsersModel>/chats',-->
+<!--						sorter: {-->
+<!--							path: 'Name'-->
+<!--						}-->
+<!--					}">-->
+<!--        <tnt:NavigationListItem-->
+<!--          text="{UsersModel>title}"-->
+<!--          enabled="{enabled}"-->
+<!--          expanded="{expanded}"-->
+<!--          items="{items}"-->
+<!--          key="{key}">-->
+<!--          <tnt:NavigationListItem-->
+<!--            text="{title}"-->
+<!--            key="{key}"-->
+<!--            enabled="{enabled}" />-->
+<!--        </tnt:NavigationListItem>-->
+<!--      </tnt:NavigationList>-->
+<!--      -->
+<!--      -->
+<!--      -->
+
+
+
+<!--    <content>-->
+<!--        <Toolbar class="sapFDynamicPageAlignContent">-->
+<!--          <SearchField liveChange="onSearch" />-->
+<!--          <Button icon="sap-icon://add" text="Add" type="Transparent" press=".onAdd"/>-->
+<!--        </Toolbar>-->
+        <Table
+          id="ContactsTable"
+          inset="false"
+          items="{
+						path: 'UsersModel>/chats',
+						sorter: {
+							path: 'Name'
+						}
+					}"
+          class="sapFDynamicPageAlignContent"
+          width="auto">
+          <columns>
+            <Column width="12em">
+              <Text text="Contact"/>
+            </Column>
+            <Column	hAlign="End">
+              <Text text="Phone"/>
+            </Column>
+          </columns>
+          <items>
+            <ColumnListItem type="Navigation" press=".onListItemPress">
+              <cells>
+                <ObjectIdentifier title="{UsersModel>title}" text="{Contacts>Contacts}"/>
+                <ObjectNumber
+                  number="{
+                  path:'UsersModel>phone'
+                  }"
+                  unit="{products>CurrencyCode}"/>
+              </cells>
+            </ColumnListItem>
+          </items>
+        </Table>
+<!--    </content>-->
+<!--    </tnt:SideNavigation>-->
+<!--</Page>-->
+<!--  </ScrollContainer>-->
+</mvc:View>

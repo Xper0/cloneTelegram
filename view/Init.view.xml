@@ -1,0 +1,47 @@
+<mvc:View
+  xmlns="sap.m"
+  xmlns:f="sap.f"
+  xmlns:mvc="sap.ui.core.mvc"
+  controllerName='cloneTelegramApp.cloneTelegram.controller.Init'>
+  <Page title="Init" class="Init" showHeader="false">
+      <FlexBox class="Init-flex"   >
+        <VBox  alignItems="Center" class="Form-box">
+          <Text
+            class="Form"
+            text="Welcome to our messenger"
+          />
+<!--          <Button press="show" text="visible" />-->
+<!--          <BusyIndicator text="... something is happening" class="sapUiTinyMarginBottom" />-->
+            <Panel id="User-panel" class="Form-user">
+              <Avatar />
+              <Button
+                class="Form-button"
+                text="Sign In"
+                press=".onSignIn"
+              />
+            </Panel>
+<!--            <Avatar />-->
+<!--            <Button-->
+<!--              class="Form-button"-->
+<!--              text="Sign In"-->
+<!--              press=".onSignIn"-->
+<!--            />-->
+<!--          <Button-->
+<!--            class="Form-button"-->
+<!--            text="Sign In"-->
+<!--            press=".onSignIn"-->
+<!--          />-->
+<!--          <Text-->
+<!--            class="Form__text"-->
+<!--            text="don't  have account?"-->
+<!--          />-->
+<!--          <Button-->
+<!--            class="Form-button"-->
+<!--            text="Sign UP NOW"-->
+<!--          />-->
+        </VBox>
+      </FlexBox>
+
+  </Page>
+
+</mvc:View>

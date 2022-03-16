@@ -1,0 +1,87 @@
+<mvc:View
+  xmlns="sap.m"
+  xmlns:f="sap.f"
+  xmlns:mvc="sap.ui.core.mvc"
+  controllerName='cloneTelegramApp.cloneTelegram.controller.Tasks'>
+  <Page title="Задачи">
+        <content>
+            <Toolbar class="sapFDynamicPageAlignContent">
+<!--              <SearchField liveChange="onSearch" />-->
+              <Button icon="sap-icon://add"
+                      text="Создать задачу"
+                      type="Transparent"
+                      press=".onAddTask"/>
+            </Toolbar>
+<!--          <List-->
+<!--            items="{taskModel>/tasks}"-->
+<!--          >-->
+          <List
+            items="{ListTasks>/tasksGroups}"
+          >
+<!--            <StandardListItem title="1" press=".q">-->
+<!--            </StandardListItem>-->
+            <StandardListItem
+              press="onListItemPress1"
+              title="{ListTasks>title}"
+              info="{
+             parts: [
+                {path: 'ListTasks>/tasksGroups'},
+                 {path: 'ListTasks>/tasksList'}
+                 ],
+                 formatter : '.formatter.getCountTask'}"
+              type="Navigation" >
+            </StandardListItem>
+
+
+
+<!--            <StandardListItem-->
+<!--              press="onListItemPress1"-->
+<!--              title="{-->
+<!--              parts: [-->
+<!--                {path: 'ListTasks>'},-->
+<!--                 {path: 'ListTasks>/tasksList'}-->
+<!--              ],-->
+
+<!--              formatter: '.formatter.getTask'-->
+<!--              }"-->
+<!--              description="{0/ProductId}"-->
+<!--              info="{-->
+<!--                 parts: [-->
+<!--              {path: 'ListTasks>'},-->
+<!--                 {path: 'ListTasks>/tasksList'}-->
+<!--          ],-->
+<!--					    	formatter : '.formatter.getCountTask'}"-->
+<!--              icon="{0/ProductPicUrl}"-->
+
+<!--              type="Navigation" >-->
+<!--            </StandardListItem>-->
+<!--            <StandardListItem-->
+<!--              title="Назначенные мне"-->
+<!--              description="{0/ProductId}"-->
+<!--              info="(1)"-->
+<!--              icon="{0/ProductPicUrl}"-->
+<!--              iconDensityAware="false"-->
+<!--              iconInset="false"-->
+<!--              type="Navigation" >-->
+<!--            </StandardListItem>-->
+<!--            <StandardListItem-->
+<!--              title="Назначенные мной"-->
+<!--              description="{1/ProductId}"-->
+<!--              icon="{1/ProductPicUrl}"-->
+<!--              iconDensityAware="false"-->
+<!--              iconInset="false"-->
+<!--              type="Navigation" />-->
+<!--            <StandardListItem-->
+<!--              title="Закрытые"-->
+<!--              description="{2/ProductId}"-->
+<!--              icon="{2/ProductPicUrl}"-->
+<!--              iconDensityAware="false"-->
+<!--              iconInset="false" />-->
+          </List>
+        </content>
+
+  </Page>
+
+
+
+</mvc:View>

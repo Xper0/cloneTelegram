@@ -1,0 +1,299 @@
+<mvc:View
+  xmlns="sap.m"
+  xmlns:f="sap.ui.layout.form"
+  xmlns:mvc="sap.ui.core.mvc"
+  xmlns:core="sap.ui.core"
+  xmlns:commons="sap.suite.ui.commons"
+  xmlns:u="sap.ui.unified"
+  xmlns:upload="sap.m.upload"
+  controllerName='cloneTelegramApp.cloneTelegram.controller.AboutTask'>
+  <Page
+    title="{ListTasks>title}"
+    enableScrolling="true"
+    showNavButton="true"
+    navButtonPress=".onNavBack"
+    class="sapUiContentPadding sapUiResponsivePadding--header sapUiResponsivePadding--subHeader sapUiResponsivePadding--content sapUiResponsivePadding--footer"
+  >
+    <content>
+      <ObjectHeader
+        responsive="true"
+        backgroundDesign="Solid"
+        fullScreenOptimized="false"
+        class="sapUiResponsivePadding--header formLabel formText "
+      >
+        <headerContainer>
+          <HeaderContainer  id="headerContainer">
+            <FlexBox  renderType="Bare">
+            <commons:ProcessFlow
+              id="processflow"
+              nodePress="onNodePress"
+            >
+              <commons:lanes>
+                <commons:ProcessFlowLaneHeader
+                  id="LaneHeader"
+                  iconSrc="sap-icon://message-success"
+                  text="Новая"
+                  position="0"
+                />
+                <commons:ProcessFlowLaneHeader
+                  iconSrc="sap-icon://message-success"
+                  text="Назначено "
+                  position="1"
+                />
+                <commons:ProcessFlowLaneHeader
+                  iconSrc="sap-icon://message-success"
+                  text="Взят в работу"
+                  position="2"
+                />
+                <commons:ProcessFlowLaneHeader
+                  iconSrc="sap-icon://laptop"
+                  text="Выполлнено"
+                  position="3" />
+                <commons:ProcessFlowLaneHeader
+                  iconSrc="sap-icon://message-success"
+                  text="Закрыто"
+                  position="4"
+                />
+              </commons:lanes>
+            </commons:ProcessFlow>
+            </FlexBox>
+          </HeaderContainer>
+        </headerContainer>
+        <attributes>
+          <ObjectAttribute
+            class="formText"
+            title="Постановщик"
+            text="{ListTasks>supervisor}"/>
+          <ObjectAttribute
+            title="Ответсвенный"
+            text="{ListTasks>responsible}"/>
+        </attributes>
+        <ObjectAttribute
+          title="Дедлайн"
+          text="{
+        path : 'ListTasks>date',
+        formatter : '.formatter.getData'
+        }"/>
+        <statuses>
+          <ObjectStatus
+            class="formLabel"
+            title="Важность"
+            text="{ListTasks>importance}"
+            state="{  path : 'ListTasks>importance',
+							formatter: '.formatter.getImportance'}"/>
+        </statuses>
+      </ObjectHeader>
+    <FlexBox justifyContent="Center" direction="Column"  >
+      <VBox justifyContent="Center" alignItems="Center">
+<!--        <commons:ProcessFlow-->
+<!--          id="processflow1"-->
+<!--          nodePress="onNodePress"-->
+<!--        >-->
+<!--          <commons:lanes>-->
+<!--            <commons:ProcessFlowLaneHeader-->
+<!--              id="LaneHeader"-->
+<!--              iconSrc="sap-icon://message-success"-->
+<!--              text="Взят в работу"-->
+<!--              position="0"-->
+<!--            />-->
+<!--            <commons:ProcessFlowLaneHeader-->
+<!--              laneId="{id1}"-->
+<!--              iconSrc="sap-icon://laptop"-->
+<!--              text="На тестировании"-->
+<!--              position="1" />-->
+<!--          </commons:lanes>-->
+<!--        </commons:ProcessFlow>-->
+      </VBox>
+      <VBox class="sapUiMediumMarginTop" justifyContent="SpaceAround"  >
+        <!--    <content>-->
+
+        <Text class="formText" text="{ListTasks>description}" />
+<!--        <f:Form id="editFormTask"-->
+<!--                editable="true"-->
+<!--                ariaLabelledBy="Title1"-->
+<!--                class="formLabel formText "-->
+<!--        >-->
+<!--          <f:layout>-->
+<!--            <f:ColumnLayout-->
+<!--              columnsM="1"-->
+<!--              columnsL="1"-->
+<!--              columnsXL="1"-->
+<!--            />-->
+<!--          </f:layout>-->
+<!--          <f:formContainers >-->
+<!--            <f:FormContainer id="form" ariaLabelledBy="Title2">-->
+<!--              <f:formElements>-->
+<!--                <f:FormElement label="Описание задачи">-->
+<!--                  <f:fields>-->
+<!--                    <Text text="{ListTasks>description}" />-->
+<!--                  </f:fields>-->
+<!--                </f:FormElement>-->
+
+<!--              </f:formElements>-->
+<!--            </f:FormContainer>-->
+<!--          </f:formContainers>-->
+<!--        </f:Form>-->
+        <List
+          id="ProductList"
+          includeItemInSelection="true"
+          items="{ListTasks>subtasks}"
+        >
+          <headerToolbar>
+            <OverflowToolbar>
+              <content>
+                <Title text="Подзадачи" level="H2" />
+<!--                <Button-->
+<!--                  icon="sap-icon://add"-->
+<!--                  text="Чек-лиcт"-->
+<!--                  press="onAddCheckList" />-->
+                <ToolbarSpacer />
+              </content>
+            </OverflowToolbar>
+          </headerToolbar>
+                    <InputListItem
+                      label="{ListTasks>title}"
+                      highlight="{
+                        path: 'ListTasks>state',
+                        formatter: '.formatter.getSubTaskState'
+                      }"
+                    >
+                                    <CheckBox
+                                      enabled="false"
+                                      selected="{ListTasks>state}"
+                                      valueState="Warning"
+
+                                    />
+                    </InputListItem >
+<!--              <CheckBox-->
+<!--                text="{ListTasks>title}"-->
+<!--                selected="{ListTasks>state}"-->
+<!--              />-->
+
+
+
+<!--          <InputListItem-->
+<!--            label="Подзадача1"-->
+<!--            type="Detail"-->
+<!--            detailPress="onEdit"-->
+<!--            highlight="Success"-->
+<!--          >-->
+<!--            <Switch type="AcceptReject" state="true" />-->
+<!--          </InputListItem>-->
+<!--          <InputListItem-->
+<!--            label="Подзадача2"-->
+<!--            type="Detail"-->
+<!--            detailPress="onEdit"-->
+<!--            highlight="Error"-->
+<!--          >-->
+<!--            <Switch type="AcceptReject" state="false" />-->
+<!--          </InputListItem>-->
+<!--          <InputListItem-->
+<!--            label="Подзадача3"-->
+<!--            type="Detail"-->
+<!--            detailPress="onEdit"-->
+<!--            highlight="Error"-->
+<!--          >-->
+<!--            <Switch type="AcceptReject" state="false" />-->
+<!--          </InputListItem>-->
+<!--          <InputListItem >-->
+<!--            <Input width="30%" />-->
+<!--            <Switch type="AcceptReject" state="true" />-->
+<!--          </InputListItem>-->
+<!--          <StandardListItem-->
+<!--            title="Подзадача2"-->
+<!--            iconDensityAware="false"-->
+<!--            iconInset="true"-->
+<!--            type="Detail"-->
+<!--            highlight="Error"-->
+<!--          >-->
+<!--          </StandardListItem>-->
+<!--          <StandardListItem-->
+<!--            title="Подзадача3"-->
+<!--            iconDensityAware="true"-->
+<!--            iconInset="true" />-->
+        </List>
+
+
+
+        <!--    </content>-->
+        <!--    <footer>-->
+<!--        <HBox justifyContent="SpaceAround" >-->
+<!--          <Button text="Редактировать задачу" type="Emphasized" press="onEditTask" />-->
+<!--          <Button text="Завершить" />-->
+<!--        </HBox>-->
+        <!--    </footer>-->
+      </VBox>
+      <VBox>
+          <IconTabBar
+            id="iconTabBar"
+            headerBackgroundDesign="Transparent"
+            class="sapUiResponsiveContentPadding"
+            binding="{Resume}"
+            select=".onTabSelect"
+            selectedKey="{view>/selectedTabKey}">
+            <items>
+              <IconTabFilter id="infoTab" text="Комментарии" key="Info">
+                <ScrollContainer>
+
+                </ScrollContainer>
+                <VBox>
+                <List
+                  growingScrollToLoad="true"
+                  growingThreshold="5"
+                  items="{
+					path : 'CommentsTask>/comments/messages',
+					sorter : {
+						path : 'date'
+					}
+				}"
+                >
+                  <FeedListItem
+                    sender="{
+            parts: [
+             {path: 'CommentsTask>fromId'},
+             {path: 'CommentsTask>/comments/users'}
+          ],
+
+					    	formatter : '.formatter.getUser'}"
+                    icon="{AuthorPicUrl}"
+                    senderPress="onSenderPress"
+                    iconPress="onIconPress"
+                    iconDensityAware="false"
+                    info="{Type}"
+                    timestamp="{
+        path : 'CommentsTask>date',
+					    	formatter : '.formatter.getData'
+        }"
+                    text="{CommentsTask>message}"
+                    convertLinksToAnchorTags="All"/>
+                </List>
+                </VBox>
+                <VBox  width="100%">
+                    <FeedInput
+                      post="onPost"
+                      icon="{CommentsTask>/img}"
+                      class="sapUiSmallMarginTopBottom"
+                    />
+                </VBox>
+              </IconTabFilter>
+              <IconTabFilter id="projectsTab" text="История" key="Projects">
+                <Text text="История"/>
+              </IconTabFilter>
+            </items>
+          </IconTabBar>
+      </VBox>
+    </FlexBox>
+    </content>
+    <footer>
+      <Toolbar>
+        <Button text="Начать выполнение" type="Accept" press="onBeginTask" />
+        <Button text="Завершить задачу" type="Success"/>
+        <ToolbarSpacer/>
+        <Button text="Редактировать задачу" type="Attention" press="onEditTask" />
+
+      </Toolbar>
+    </footer>
+  </Page>
+
+</mvc:View>
+

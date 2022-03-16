@@ -1,0 +1,269 @@
+<mvc:View
+    controllerName="cloneTelegramApp.cloneTelegram.controller.MainView"
+    xmlns:mvc="sap.ui.core.mvc"
+    displayBlock="true"
+    xmlns="sap.m"
+    xmlns:f="sap.f"
+    xmlns:tnt="sap.tnt"
+>
+    <Shell id="shell" appWidthLimited="false">
+<!--      <tnt:ToolPage id="toolPage">-->
+<!--        <tnt:header>-->
+<!--          <tnt:ToolHeader>-->
+<!--            <Image height="1.5rem"-->
+<!--                   class="sapUiSmallMarginBegin"-->
+<!--                   src="https://www.sap.com/dam/application/shared/logos/sap-logo-svg.svg" />-->
+<!--            <Title level="H1" text="Product Name">-->
+<!--              <layoutData>-->
+<!--                <OverflowToolbarLayoutData shrinkable="true" />-->
+<!--              </layoutData>-->
+<!--            </Title>-->
+<!--            <Title level="H3" titleStyle="H6" text="Second Title">-->
+<!--              <layoutData>-->
+<!--                <OverflowToolbarLayoutData shrinkable="true" />-->
+<!--              </layoutData>-->
+<!--            </Title>-->
+<!--            <ToolbarSpacer>-->
+<!--              <layoutData>-->
+<!--                <OverflowToolbarLayoutData priority="NeverOverflow" minWidth="20px" />-->
+<!--              </layoutData>-->
+<!--            </ToolbarSpacer>-->
+<!--            <tnt:ToolHeaderUtilitySeparator />-->
+<!--            <OverflowToolbarButton text="Search" tooltip="Search" icon="sap-icon://search" type="Transparent" />-->
+<!--            <OverflowToolbarButton text="Tasks" tooltip="Tasks" icon="sap-icon://circle-task" type="Transparent" />-->
+<!--            <OverflowToolbarButton text="Notifications" tooltip="Notifications" icon="sap-icon://bell" type="Transparent" />-->
+<!--            <Avatar src="test-resources/sap/tnt/images/John_Miller.png"-->
+<!--                    displaySize="XS">-->
+<!--              <layoutData>-->
+<!--                <OverflowToolbarLayoutData priority="NeverOverflow" />-->
+<!--              </layoutData>-->
+<!--            </Avatar>-->
+<!--            <OverflowToolbarButton-->
+<!--              id="searchField"-->
+<!--              text="Custom Action"-->
+<!--              tooltip="Custom Action"-->
+<!--              icon="sap-icon://grid"-->
+<!--              type="Transparent"-->
+<!--              press="showSearch"-->
+<!--            />-->
+
+<!--          </tnt:ToolHeader>-->
+<!--        </tnt:header>-->
+<!--        <tnt:subHeader>-->
+<!--          <tnt:ToolHeader>-->
+<!--            <IconTabHeader-->
+<!--              selectedKey="{/selectedKey}"-->
+<!--              items="{path: '/navigation'}"-->
+<!--              select=".onItemSelect"-->
+<!--              mode="Inline">-->
+<!--              <layoutData>-->
+<!--                <OverflowToolbarLayoutData priority="NeverOverflow" shrinkable="true" />-->
+<!--              </layoutData>-->
+<!--              <items>-->
+<!--                <IconTabFilter-->
+<!--                  items="{items}"-->
+<!--                  text="{title}"-->
+<!--                  key="{key}">-->
+<!--                  <items>-->
+<!--                    <IconTabFilter-->
+<!--                      text="{title}"-->
+<!--                      key="{key}">-->
+<!--                    </IconTabFilter>-->
+<!--                  </items>-->
+<!--                </IconTabFilter>-->
+<!--              </items>-->
+<!--            </IconTabHeader>-->
+<!--          </tnt:ToolHeader>-->
+<!--        </tnt:subHeader>-->
+<!--        <tnt:mainContents>-->
+<!--          <NavContainer id="pageContainer" initialPage="page1">-->
+<!--            <pages>-->
+<!--              <ScrollContainer-->
+<!--                id="page1"-->
+<!--                horizontal="false"-->
+<!--                vertical="true"-->
+<!--                height="100%">-->
+<!--                <Text text="Home" />-->
+<!--              </ScrollContainer>-->
+<!--              <ScrollContainer-->
+<!--                id="page2"-->
+<!--                horizontal="false"-->
+<!--                vertical="true"-->
+<!--                height="100%">-->
+<!--                <Text text="Applications" />-->
+<!--              </ScrollContainer>-->
+<!--              <ScrollContainer-->
+<!--                id="page3"-->
+<!--                horizontal="false"-->
+<!--                vertical="true"-->
+<!--                height="100%">-->
+<!--                <Text text="Users and Groups" />-->
+<!--              </ScrollContainer>-->
+<!--              <ScrollContainer-->
+<!--                id="page4"-->
+<!--                horizontal="false"-->
+<!--                vertical="true"-->
+<!--                height="100%">-->
+<!--                <Text text="Identity" />-->
+<!--              </ScrollContainer>-->
+<!--              <ScrollContainer-->
+<!--                id="page5"-->
+<!--                horizontal="false"-->
+<!--                vertical="true"-->
+<!--                height="100%">-->
+<!--                <Text text="Provisioning" />-->
+<!--              </ScrollContainer>-->
+<!--              <ScrollContainer-->
+<!--                id="page6"-->
+<!--                horizontal="false"-->
+<!--                vertical="true"-->
+<!--                height="100%">-->
+<!--                <Text text="Monitoring" />-->
+<!--              </ScrollContainer>-->
+<!--            </pages>-->
+<!--          </NavContainer>-->
+<!--        </tnt:mainContents>-->
+<!--      </tnt:ToolPage>-->
+
+<!--      <f:FlexibleColumnLayout id="app" backgroundDesign="Solid">-->
+<!--&lt;!&ndash;        <f:beginColumnPages>&ndash;&gt;-->
+<!--&lt;!&ndash;          <mvc:XMLView id="Authorization" viewName="cloneTelegramApp.cloneTelegram.view.Authorization"/>&ndash;&gt;-->
+<!--&lt;!&ndash;        </f:beginColumnPages>&ndash;&gt;-->
+<!--&lt;!&ndash;        <f:beginColumnPages>&ndash;&gt;-->
+<!--&lt;!&ndash;          <mvc:XMLView id="beginView" viewName="cloneTelegramApp.cloneTelegram.view.Contacts"/>&ndash;&gt;-->
+<!--&lt;!&ndash;        </f:beginColumnPages>&ndash;&gt;-->
+<!--&lt;!&ndash;        <f:midColumnPages>&ndash;&gt;-->
+<!--&lt;!&ndash;          <mvc:XMLView id="detailView" viewName="cloneTelegramApp.cloneTelegram.view.UserChat"/>&ndash;&gt;-->
+<!--&lt;!&ndash;        </f:midColumnPages>&ndash;&gt;-->
+<!--      </f:FlexibleColumnLayout>-->
+
+        <App id="app">
+          <tnt:ToolPage id="appContainer">
+            <tnt:header>
+              <tnt:ToolHeader>
+                <Button
+                  id="sideNavigationToggleButton"
+                  icon="sap-icon://menu2"
+                  type="Transparent"
+                  press=".onSideNavButtonPress">
+                  <layoutData>
+                    <OverflowToolbarLayoutData priority="NeverOverflow" />
+                  </layoutData>
+                </Button>
+                <ToolbarSpacer width="20px" />
+<!--                <Button text="Messages" type="Transparent">-->
+<!--                  <layoutData>-->
+<!--                    <OverflowToolbarLayoutData priority="Low" />-->
+<!--                  </layoutData>-->
+<!--                </Button>-->
+<!--                <Button text="Tasks" type="Transparent">-->
+<!--                  <layoutData>-->
+<!--                    <OverflowToolbarLayoutData priority="Low" />-->
+<!--                  </layoutData>-->
+<!--                </Button>-->
+
+
+                <tnt:ToolHeaderUtilitySeparator />
+                <ToolbarSpacer>
+                  <layoutData>
+                    <OverflowToolbarLayoutData priority="NeverOverflow" minWidth="20px" />
+                  </layoutData>
+                </ToolbarSpacer>
+                <Avatar src="test-resources/sap/tnt/images/John_Miller.png"
+                        displaySize="XS">
+                  <layoutData>
+                    <OverflowToolbarLayoutData priority="NeverOverflow" />
+                  </layoutData>
+                </Avatar>
+                <Button text="Alan Smith" type="Transparent" press=".handleUserNamePress" ariaHasPopup="Menu">
+                  <layoutData>
+                    <OverflowToolbarLayoutData priority="NeverOverflow" />
+                  </layoutData>
+                </Button>
+              </tnt:ToolHeader>
+            </tnt:header>
+            <tnt:subHeader>
+              <tnt:ToolHeader>
+                <IconTabHeader
+                  select=".onItemSelect"
+                  mode="Inline"
+                >
+                  <items>
+                    <IconTabFilter
+                      text="Сообщения"
+                      icon="sap-icon://discussion"
+                    >
+                    </IconTabFilter>
+                    <IconTabFilter
+                      text="Задачи"
+                      icon="sap-icon://activities"
+                    >
+                    </IconTabFilter>
+                  </items>
+                </IconTabHeader>
+
+                <!--                <Button text="Messages" type="Transparent" icon="sap-icon://discussion">-->
+<!--                  <layoutData>-->
+<!--                    <OverflowToolbarLayoutData priority="Low" />-->
+<!--                  </layoutData>-->
+<!--                </Button>-->
+<!--                <Button text="Tasks" type="Transparent" icon="sap-icon://activities">-->
+<!--                  <customData>-->
+<!--                    <BadgeCustomData-->
+<!--                      key="badge"-->
+<!--                      value="1"-->
+<!--                      visible="true"/>-->
+<!--                  </customData>-->
+<!--                </Button>-->
+              </tnt:ToolHeader>
+            </tnt:subHeader>
+
+            <tnt:sideContent>
+              <tnt:SideNavigation>
+                <tnt:NavigationList>
+                  <tnt:NavigationListItem
+                    text="Сообщения"
+                    icon="sap-icon://discussion"
+                  >
+                  </tnt:NavigationListItem>
+                  <tnt:NavigationListItem
+                    text="Задачи"
+                    icon="sap-icon://activities"
+                  >
+                  </tnt:NavigationListItem>
+                </tnt:NavigationList>
+              </tnt:SideNavigation>
+            </tnt:sideContent>
+            <tnt:mainContents>
+              <SplitContainer id="splitContainer">
+
+              </SplitContainer>
+            </tnt:mainContents>
+          </tnt:ToolPage>
+
+
+
+
+
+
+
+
+<!--          <SplitContainer id="appContainer">-->
+<!--&lt;!&ndash;            <masterPages>&ndash;&gt;-->
+<!--&lt;!&ndash;              <mvc:XMLView id="beginView" viewName="cloneTelegramApp.cloneTelegram.view.Contacts"/>&ndash;&gt;-->
+<!--&lt;!&ndash;            </masterPages>&ndash;&gt;-->
+<!--&lt;!&ndash;            <detailPages>&ndash;&gt;-->
+<!--&lt;!&ndash;              <mvc:XMLView id="detailView" viewName="cloneTelegramApp.cloneTelegram.view.UserChat"/>&ndash;&gt;-->
+<!--&lt;!&ndash;            </detailPages>&ndash;&gt;-->
+<!--          </SplitContainer>-->
+<!--          <SplitApp 	id="SplitAppDemo" >-->
+<!--            <masterPages>-->
+<!--              <mvc:XMLView id="beginView" viewName="cloneTelegramApp.cloneTelegram.view.Contacts"/>-->
+<!--            </masterPages>-->
+<!--            <detailPages>-->
+<!--              <mvc:XMLView id="detailView" viewName="cloneTelegramApp.cloneTelegram.view.UserChat"/>-->
+<!--            </detailPages>-->
+<!--          </SplitApp>-->
+        </App>
+    </Shell>
+</mvc:View>

@@ -1,0 +1,107 @@
+<core:FragmentDefinition
+  xmlns="sap.m"
+  xmlns:core="sap.ui.core"
+  xmlns:l="sap.ui.layout"
+  xmlns:f="sap.ui.layout.form"
+  xmlns:u="sap.ui.unified"
+>
+  <VBox>
+    <!--    <content>-->
+    <f:Form id="previewFormTask"
+            editable="false"
+            ariaLabelledBy="Title1">
+      <f:layout>
+        <f:ResponsiveGridLayout
+          labelSpanXL="4"
+          labelSpanL="3"
+          labelSpanM="4"
+          labelSpanS="12"
+          adjustLabelSpan="false"
+          emptySpanXL="0"
+          emptySpanL="4"
+          emptySpanM="0"
+          emptySpanS="0"
+          columnsXL="2"
+          columnsL="1"
+          columnsM="1"
+          singleContainerFullSize="false" />
+      </f:layout>
+      <f:formContainers>
+        <f:FormContainer ariaLabelledBy="Title2">
+          <f:toolbar>
+            <Toolbar>
+              <Title id="Title3" text="Office"/>
+              <ToolbarSpacer />
+              <Button icon="sap-icon://settings"/>
+            </Toolbar>
+          </f:toolbar>
+          <f:formElements>
+            <f:FormElement label="Название задачи">
+              <f:fields>
+                <Text text="{SupplierName}" id="nameText1"  />
+              </f:fields>
+            </f:FormElement>
+            <f:FormElement label="Описание задачи">
+              <f:fields>
+                <Text text="{InputValue}" id="nameText2"  />
+                <u:FileUploader
+                  id="fileUploader3"
+                  name="myFileUpload"
+                  uploadUrl="upload/"
+                  tooltip="Upload your file to the local server"
+                  uploadComplete="handleUploadComplete"
+                  change="handleValueChange"
+                  typeMissmatch="handleTypeMissmatch"
+                  style="Emphasized"
+                  fileType="txt,jpg"
+                  placeholder="Choose a file for Upload...">
+                  <u:parameters>
+                    <u:FileUploaderParameter
+                      name="Accept-CH"
+                      value="Viewport-Width"/>
+                    <u:FileUploaderParameter
+                      name="Accept-CH"
+                      value="Width"/>
+                    <u:FileUploaderParameter
+                      name="Accept-CH-Lifetime"
+                      value="86400"/>
+                  </u:parameters>
+                </u:FileUploader>
+                <Button
+                  text="Upload File"
+                  press="handleUploadPress"/>
+              </f:fields>
+            </f:FormElement>
+            <f:FormElement label="Крайний срок">
+              <f:fields>
+                <Text text="{date}" id="nameText4"  />
+              </f:fields>
+            </f:FormElement>
+            <f:FormElement label="Важность">
+              <f:fields>
+                <Text text="{DescriptionTask}" id="nameText5"  />
+              </f:fields>
+            </f:FormElement>
+            <f:FormElement label="Постановщик">
+              <f:fields>
+                <Text text="{Country}" id="nameText6"  />
+              </f:fields>
+            </f:FormElement>
+            <f:FormElement label="Ответсвенный">
+              <f:fields>
+                <Text text="{Country}" id="nameText7"  />
+              </f:fields>
+            </f:FormElement>
+          </f:formElements>
+        </f:FormContainer>
+      </f:formContainers>
+    </f:Form>
+    <!--    </content>-->
+    <!--    <footer>-->
+<!--    <HBox justifyContent="SpaceAround" >-->
+<!--      <Button text="Добавить задачу" press="onAddListTask" />-->
+<!--      <Button text="Отменить" />-->
+<!--    </HBox>-->
+    <!--    </footer>-->
+  </VBox>
+</core:FragmentDefinition>

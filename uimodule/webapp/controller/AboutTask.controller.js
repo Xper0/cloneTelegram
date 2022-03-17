@@ -14,27 +14,62 @@ sap.ui.define([
     return Controller.extend("cloneTelegramApp.cloneTelegram.controller.Tasks", {
       formatter: formatter,
       onInit:  function () {
-        let processFlow = this.byId("processflow");
-        let lanes = processFlow.getAggregation("lanes");
-        let state = [
-          {
-            "state": "Positive",
-            "value": 100
-          }
-        ];
-        lanes[0].setProperty("state", state)
-        lanes[1].setProperty("state", state)
-        // console.log(processFlow)
+        // let processFlow = this.byId("processflow");
+        // let btnEndTask = this.byId("btn-endTask");
+        // let btnBeginTask = this.byId("btn-beginTask");
+        // let lanes = processFlow.getAggregation("lanes");
+        //
+        // let processFlow1 = this.byId("progress");
+        // debugger
+        // let state = [
+        //   {
+        //     state: "Negative",
+        //     value: 100
+        //   }
+        // ];
+        //
+        // lanes.forEach( lanesItem => {
+        //   let textLanes = lanesItem.getProperty("text");
+        //   let stateLanes = lanesItem.getProperty("state");
+        //   if (textLanes === "Взят в работу" && stateLanes[0].state !== "Positive") {
+        //     btnEndTask.setVisible(false);
+        //     btnBeginTask.setVisible(true);
+        //   }
+        //   else {
+        //     btnEndTask.setVisible(true);
+        //     btnBeginTask.setVisible(false);
+        //   }
+        // });
+
         let oRouter =  this.getOwnerComponent().getRouter();
         oRouter.getRoute("AboutTask").attachMatched(this._onObjectMatched, this);
       },
       _onObjectMatched: async function (oEvent) {
         let processFlow = this.byId("processflow");
+        let btnEndTask = this.byId("btn-endTask");
+        let btnBeginTask = this.byId("btn-beginTask");
+        // debugger
+        let line = processFlow.getLanes()
+        let lanes = processFlow.getAggregation("lanes")
+      console.log(processFlow)
+        console.log(lanes)
+        console.log(line)
+        lanes.forEach( lanesItem => {
+          let textLanes = lanesItem.getProperty("text");
+          let stateLanes = lanesItem.getProperty("state");
+          if (textLanes === "Взят в работу" && stateLanes[0].state !== "Positive") {
+            btnEndTask.setVisible(false);
+            btnBeginTask.setVisible(true);
+          }
+          else {
+            btnEndTask.setVisible(true);
+            btnBeginTask.setVisible(false);
+          }
+        });
+
         let sTaskId = oEvent.getParameter("arguments").AboutTaskId;
         let aTasks = this.getOwnerComponent().getModel("ListTasks").getData().tasksList;
-        console.log(aTasks)
         let nTaskIndex = aTasks.findIndex(taskId => taskId.id == sTaskId)
-        console.log(aTasks[nTaskIndex].chatId)
         this.getOwnerComponent().loadTasks().then(() => {
           // let aTasks = this.getOwnerComponent().getModel("ListTasks").getData().tasksList;
           // console.log(aTasks)
@@ -91,6 +126,8 @@ sap.ui.define([
       },
       onBeginTask: function () {
         let processFlow = this.byId("processflow");
+        let btnEndTask = this.byId("btn-endTask");
+        let btnBeginTask = this.byId("btn-beginTask");
         let lanes = processFlow.getAggregation("lanes");
         let state = [
           {
@@ -98,7 +135,10 @@ sap.ui.define([
             "value": 100
           }
         ];
-        lanes[2].setProperty("state", state)
+        lanes[2].setProperty("state", state);
+        btnEndTask.setVisible(true);
+        btnBeginTask.setVisible(false);
+
       },
       onEdit: function (oEvent) {
         let tableContainer = this.byId("ProductList");

@@ -209,7 +209,12 @@
             id="listSubtasks"
           >
             <items>
-              <InputListItem>
+              <InputListItem
+                highlight="{
+                        path: 'ListTasks>state',
+                        formatter: '.formatter.getSubTaskState'
+                      }"
+              >
                 <content>
                   <CheckBox
                     selected="{ListTasks>state}"

@@ -7,11 +7,9 @@ sap.ui.define([
   "use strict";
   return {
     getDataUser: function (user) {
-      console.log(user)
       return user
     },
     getData: function (data) {
-      console.log(data)
       var oFormat = DateFormat.getDateTimeInstance({ style: "medium" });
       var oDate = new Date(data * 1000);
       var sDate = oFormat.format(oDate);
@@ -76,8 +74,8 @@ sap.ui.define([
     getTask: function () {
     },
     getCountTask: function (listTasks, valuesTask) {
-      console.log(listTasks)
-      console.log(valuesTask)
+      // console.log(listTasks)
+      // console.log(valuesTask)
       let user = "Александр Павлов";
       let data =  {
         All: valuesTask,
@@ -87,82 +85,33 @@ sap.ui.define([
       };
       valuesTask.forEach(task => {
             if (task.supervisor === user) {
-              return  data.toMe.push(task)
+              return  data.toMe.push(task);
             }
             if (task.status === "Закрыт") {
-              return data.CloseTask.push(task)
+              return data.CloseTask.push(task);
             }
             else {
-              return data.onMe.push(task)
+              return data.onMe.push(task);
             }
       });
-       let  countTask = 0
-      listTasks.forEach(item => {
-        let category = listTasks.find( cat => cat.key == item.key)
-          if (category.key === "All"){
-           countTask = data.All.length;
-          }
-          if (category.key === "toMe") {
-            countTask = data.toMe.length;
-          }
-      })
-
-      // listTasks.forEach(category => {
-      //   if (category.key === "All"){
-      //     listTasks.forEach(item => {
-      //       countTask = valuesTasks.All;
-      //     })
-      //   }
-      //   if (category.key === "toMe"){
-      //     listTasks.forEach(item => {
-      //       countTask = valuesTasks.toMe;
-      //     })
-      //   }
-      // })
-
-
-      // if (countCategory) {
-      //   if (countCategory.key === "All"){
-      //     countTask = valuesTasks.All;
-      //   }
-      //   if (countCategory.key === "toMe") {
-      //     countTask = valuesTasks.toMe;
-      //   }
-      // }
-      // listTasks.forEach( category => {
-      //     if (category.key === "All"){
-      //       countTask = valuesTasks.All;
-      //     }
-      //     if (category.key === "toMe"){
-      //       countTask = valuesTasks.toMe;
-      //     }
-      //     if (category.key === "onMe"){
-      //       countTask = valuesTasks.onMe;
-      //     }
-      //     if (category.key === "CloseTask"){
-      //       countTask = valuesTasks.CloseTask;
-      //     }
-      // });
-      return `(${countTask})`;
-      // let categoryTask =  listTasks.find(task => ))
-      // console.log(categoryTask)
-      // if (categoryTask) {
-      //   let countTask = 0
-      //   if (categoryTask === "allTask") {
-      //     countTask = data.All.length
-      //   }
-      //   if (categoryTask === "myTask" ){
-      //     countTask = data.toMe.length
-      //   }
-      //   if (categoryTask === "forMeTask" ){
-      //     countTask = data.onMe.length
-      //   }
-      //   if (categoryTask === "closeTask" ){
-      //     countTask = data.CloseTask.length
-      //   }
-      //   return `(${countTask})`
-      // }
-      // return `(${countTask})`
+      let  countTask = 0;
+      switch (listTasks) {
+        case "All":
+          countTask = data.All.length;
+          break;
+        case "toMe":
+          countTask = data.toMe.length;
+          break;
+        case "onMe":
+          countTask = data.onMe.length;
+          break;
+        case "CloseTask":
+          countTask = data.CloseTask.length;
+          break;
+        default:
+          countTask = 0;
+      }
+      return `(${countTask})`
     },
     getTitle: function (title) {
       return `Чат № ${title.idChat}`
@@ -176,7 +125,7 @@ sap.ui.define([
       }
     },
     getImportance:  function (oImportance) {
-      console .log(oImportance)
+
       if (oImportance === "Низкий") {
         return "Success";
       }
@@ -188,7 +137,7 @@ sap.ui.define([
       }
     },
     getState: function (oList) {
-      console.log(oList)
+
     },
     getSubTaskState: function (oState){
       if (!oState) {

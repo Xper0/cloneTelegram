@@ -29,12 +29,47 @@ const taskList = [
       },
 
     ],
-
     progress: [
       {
-        state: "Neutral",
-        value: 100
-      }
+        position: 0,
+        title: "Новая",
+        state: [{
+          state: "Positive",
+          value: 100
+        }]
+      },
+      {
+        position: 1,
+        title: "Назначено",
+        state: [{
+          state: "Positive",
+          value: 100
+        }]
+      },
+      {
+        position: 2,
+        title: "Взят в работу",
+        state: [{
+          state: "Neutral",
+          value: 100
+        }]
+      },
+      {
+        position: 3,
+        title: "Выполнено",
+        state: [{
+          state: "Neutral",
+          value: 100
+        }]
+      },
+      {
+        position: 4,
+        title: "Закрыто",
+        state: [{
+          state: "Neutral",
+          value: 100
+        }]
+      },
     ]
   },
   {
@@ -48,22 +83,44 @@ const taskList = [
     responsible: "Александр",
     progress: [
       {
-        "position": 0,
-        "state": [
-          {
-            "state": "Positive",
-            "value": 0
-          }
-        ]
+        position: 0,
+        title: "Новая",
+        state: [{
+          state: "Positive",
+          value: 100
+        }]
       },
       {
-        "position": 1,
-        "state": [
-          {
-            "state": "Positive",
-            "value": 0
-          }
-        ]
+        position: 1,
+        title: "Назначено",
+        state: [{
+          state: "Positive",
+          value: 100
+        }]
+      },
+      {
+        position: 2,
+        title: "Взят в работу",
+        state: [{
+          state: "Positive",
+          value: 100
+        }]
+      },
+      {
+        position: 3,
+        title: "Выполнено",
+        state: [{
+          state: "Neutral",
+          value: 100
+        }]
+      },
+      {
+        position: 4,
+        title: "Закрыто",
+        state: [{
+          state: "Neutral",
+          value: 100
+        }]
       },
     ]
   },
@@ -79,44 +136,150 @@ const taskList = [
     responsible: "Александр",
     progress: [
       {
-        "position": 0,
-        "state": [
-          {
-            "state": "Positive",
-            "value": 100
-          }
-        ]
+        position: 0,
+        title: "Новая",
+        state: [{
+          state: "Positive",
+          value: 100
+        }]
       },
       {
-        "position": 1,
-        "state": [
-          {
-            "state": "Negative",
-            "value": 100
-          }
-        ]
-      }
+        position: 1,
+        title: "Назначено",
+        state: [{
+          state: "Positive",
+          value: 100
+        }]
+      },
+      {
+        position: 2,
+        title: "Взят в работу",
+        state: [{
+          state: "Positive",
+          value: 100
+        }]
+      },
+      {
+        position: 3,
+        title: "Выполнено",
+        state: [{
+          state: "Neutral",
+          value: 100
+        }]
+      },
+      {
+        position: 4,
+        title: "Закрыто",
+        state: [{
+          state: "Neutral",
+          value: 100
+        }]
+      },
     ]
   },
   {
     id: 3,
-    title: "Пойти на обед",
-    description: "Пойти на обед и взять сок",
+    title: "Вырубить лес",
+    description: "Вырубить участок леса 22 кв.м",
     date: 1635334225,
     status: "Выполняется",
     importance: "Низкий",
     supervisor: "Александр",
-    responsible: "Александр"
+    responsible: "Александр",
+    progress: [
+      {
+        position: 0,
+        title: "Новая",
+        state: [{
+          state: "Positive",
+          value: 100
+        }]
+      },
+      {
+        position: 1,
+        title: "Назначено",
+        state: [{
+          state: "Positive",
+          value: 100
+        }]
+      },
+      {
+        position: 2,
+        title: "Взят в работу",
+        state: [{
+          state: "Positive",
+          value: 100
+        }]
+      },
+      {
+        position: 3,
+        title: "Выполнено",
+        state: [{
+          state: "Neutral",
+          value: 100
+        }]
+      },
+      {
+        position: 4,
+        title: "Закрыто",
+        state: [{
+          state: "Neutral",
+          value: 100
+        }]
+      },
+    ]
   },
   {
     id: 13,
-    title: "Пойти на ужин",
-    description: "Пойти на ужин",
+    title: "Найти месторождение нефти",
+    description: "Сообщить о ней в компанию",
     date: 1635334225,
     status: "Выполняется",
     importance: "Низкий",
     supervisor: "Александр",
-    responsible: "Александр Павлов"
+    responsible: "Александр Павлов",
+    progress: [
+      {
+        position: 0,
+        title: "Новая",
+        state: [{
+          state: "Positive",
+          value: 100
+        }]
+      },
+      {
+        position: 1,
+        title: "Назначено",
+        state: [{
+          state: "Positive",
+          value: 100
+        }]
+      },
+      {
+        position: 2,
+        title: "Взят в работу",
+        state: [{
+          state: "Positive",
+          value: 100
+        }]
+      },
+      {
+        position: 3,
+        title: "Выполнено",
+        state: [{
+          state: "Neutral",
+          value: 100
+        }]
+      },
+      {
+        position: 4,
+        title: "Закрыто",
+        state: [{
+          state: "Neutral",
+          value: 100
+        }]
+      },
+    ]
   },
   {
     id: 4,
@@ -126,7 +289,49 @@ const taskList = [
     status: "Закрыт",
     importance: "Средний",
     supervisor: "Александр",
-    responsible: "Александр Павлов"
+    responsible: "Александр Павлов",
+    progress: [
+      {
+        position: 0,
+        title: "Новая",
+        state: [{
+          state: "Positive",
+          value: 100
+        }]
+      },
+      {
+        position: 1,
+        title: "Назначено",
+        state: [{
+          state: "Positive",
+          value: 100
+        }]
+      },
+      {
+        position: 2,
+        title: "Взят в работу",
+        state: [{
+          state: "Neutral",
+          value: 100
+        }]
+      },
+      {
+        position: 3,
+        title: "Выполнено",
+        state: [{
+          state: "Neutral",
+          value: 100
+        }]
+      },
+      {
+        position: 4,
+        title: "Закрыто",
+        state: [{
+          state: "Neutral",
+          value: 100
+        }]
+      },
+    ]
   },
   {
     id: 4,
@@ -137,7 +342,49 @@ const taskList = [
     importance: "Средний",
     idSupervisor: 3432432,
     supervisor: "Иван Пупкин",
-    responsible: "Александр Павлов"
+    responsible: "Александр Павлов",
+    progress: [
+      {
+        position: 0,
+        title: "Новая",
+        state: [{
+          state: "Positive",
+          value: 100
+        }]
+      },
+      {
+        position: 1,
+        title: "Назначено",
+        state: [{
+          state: "Positive",
+          value: 100
+        }]
+      },
+      {
+        position: 2,
+        title: "Взят в работу",
+        state: [{
+          state: "Positive",
+          value: 100
+        }]
+      },
+      {
+        position: 3,
+        title: "Выполнено",
+        state: [{
+          state: "Neutral",
+          value: 100
+        }]
+      },
+      {
+        position: 4,
+        title: "Закрыто",
+        state: [{
+          state: "Neutral",
+          value: 100
+        }]
+      },
+    ]
   }
 ]
 

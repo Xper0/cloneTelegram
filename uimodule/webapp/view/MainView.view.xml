@@ -138,7 +138,7 @@
 <!--      </f:FlexibleColumnLayout>-->
 
         <App id="app">
-          <tnt:ToolPage id="appContainer">
+          <tnt:ToolPage id="appContainer" sideExpanded="false">
             <tnt:header>
               <tnt:ToolHeader>
                 <Button

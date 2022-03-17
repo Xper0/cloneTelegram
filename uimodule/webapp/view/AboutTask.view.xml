@@ -27,33 +27,47 @@
             <commons:ProcessFlow
               id="processflow"
               nodePress="onNodePress"
+              lanes="{ListTasks>progress}"
             >
               <commons:lanes>
                 <commons:ProcessFlowLaneHeader
-                  id="LaneHeader"
+                  id="progress"
                   iconSrc="sap-icon://message-success"
-                  text="Новая"
-                  position="0"
+                  text="{ListTasks>title}"
+                  position="{ListTasks>position}"
+                  state="{ListTasks>state}"
                 />
-                <commons:ProcessFlowLaneHeader
-                  iconSrc="sap-icon://message-success"
-                  text="Назначено "
-                  position="1"
-                />
-                <commons:ProcessFlowLaneHeader
-                  iconSrc="sap-icon://message-success"
-                  text="Взят в работу"
-                  position="2"
-                />
-                <commons:ProcessFlowLaneHeader
-                  iconSrc="sap-icon://laptop"
-                  text="Выполлнено"
-                  position="3" />
-                <commons:ProcessFlowLaneHeader
-                  iconSrc="sap-icon://message-success"
-                  text="Закрыто"
-                  position="4"
-                />
+<!--                <commons:ProcessFlowLaneHeader-->
+<!--                  id="LaneHeader"-->
+<!--                  iconSrc="sap-icon://message-success"-->
+<!--                  text="Новая"-->
+<!--                  position="0"-->
+<!--                  state=""-->
+<!--                />-->
+<!--                <commons:ProcessFlowLaneHeader-->
+<!--                  iconSrc="sap-icon://message-success"-->
+<!--                  text="Назначено "-->
+<!--                  position="1"-->
+<!--                  state=""-->
+<!--                />-->
+<!--                <commons:ProcessFlowLaneHeader-->
+<!--                  iconSrc="sap-icon://message-success"-->
+<!--                  text="Взят в работу"-->
+<!--                  position="2"-->
+<!--                  state=""-->
+<!--                />-->
+<!--                <commons:ProcessFlowLaneHeader-->
+<!--                  iconSrc="sap-icon://laptop"-->
+<!--                  text="Выполлнено"-->
+<!--                  position="3"-->
+<!--                  state=""-->
+<!--                />-->
+<!--                <commons:ProcessFlowLaneHeader-->
+<!--                  iconSrc="sap-icon://message-success"-->
+<!--                  text="Закрыто"-->
+<!--                  position="4"-->
+<!--                  state=""-->
+<!--                />-->
               </commons:lanes>
             </commons:ProcessFlow>
             </FlexBox>
@@ -286,8 +300,8 @@
     </content>
     <footer>
       <Toolbar>
-        <Button text="Начать выполнение" type="Accept" press="onBeginTask" />
-        <Button text="Завершить задачу" type="Success"/>
+        <Button id="btn-beginTask" text="Начать выполнение" type="Accept" press="onBeginTask" />
+        <Button id="btn-endTask" text="Завершить задачу" type="Success"/>
         <ToolbarSpacer/>
         <Button text="Редактировать задачу" type="Attention" press="onEditTask" />
 

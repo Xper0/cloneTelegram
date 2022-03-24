@@ -48,12 +48,10 @@ sap.ui.define([
         let processFlow = this.byId("processflow");
         let btnEndTask = this.byId("btn-endTask");
         let btnBeginTask = this.byId("btn-beginTask");
+        btnEndTask.setVisible(false);
         // debugger
         let line = processFlow.getLanes()
         let lanes = processFlow.getAggregation("lanes")
-      console.log(processFlow)
-        console.log(lanes)
-        console.log(line)
         lanes.forEach( lanesItem => {
           let textLanes = lanesItem.getProperty("text");
           let stateLanes = lanesItem.getProperty("state");

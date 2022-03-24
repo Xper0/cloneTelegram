@@ -46,57 +46,12 @@ sap.ui.define([
         // });
       },
       onListItemPress1: function (oEvent) {
-        // console.log(oEvent)
-        // let oItem = oEvent.getSource().getBindingContext("taskModel").getObject();
-        // console.log(oItem)
-        // debugger
-        console.log(oEvent)
         let oItem = oEvent.getSource().getBindingContext("ListTasks");
         let sKey = oItem.getProperty("key");
-
-        // let oItems = oEvent.getSource().getBindingContext("ListTasks").getPath()
-        // console.log(oItems.substr(7))
-       //debugger
-        // let oItem = oEvent.getSource().getBindingContext("Contacts").getObject()
         let oRouter = this.getOwnerComponent().getRouter();
-        console.log(oRouter)
-        // oRouter.navTo("DetailTasks")
         oRouter.navTo("DetailTasks", {
           detailCategory: sKey
-        })
-
-      },
-
-      onAddListTask: async function () {
-        let newTask = {
-          id: 9,
-          title: "Тест задачи",
-          description: "Добвление новых задач",
-          date: 1629795050,
-          status: "Выплняется",
-          importance: "Средняя",
-          supervisor: "Александр",
-          responsible: "Александр"
-        }
-        const url = " http://127.0.0.1:5000/tasks";
-        let sHeaders = {
-          "Accept": "application/json",
-          "Access-Control-Allow-Origin": "*",
-          "X-Requested-With": "XMLHttpRequest",
-          "Access-Control-Allow-Methods": "GET,POST,PUT,DELETE,OPTIONS",
-          "Access-Control-Allow-Headers": "Content-Type, Access-Control-Allow-Headers, Authorization, X-Requested-With"
-        };
-        let data = await fetch(url, {
-          method: "POST",
-          headers: sHeaders,
-          body: JSON.stringify({
-            task: newTask
-          })
         });
-
-       console.log("задача добавлена")
-      }
-
-
+      },
     });
   });

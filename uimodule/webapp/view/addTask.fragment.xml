@@ -148,10 +148,27 @@
         </f:FormContainer>
       </f:formContainers>
     </f:Form>
+   <List
+     id="createListSubtasks"
+     mode="Delete"
+     delete="handleDelete"
+   >
+     <headerToolbar>
+       <OverflowToolbar>
+         <content>
+           <Button
+             icon="sap-icon://add"
+             text="Добавить подзадачу"
+             press="onAddCheckList"/>
+           <ToolbarSpacer/>
+         </content>
+       </OverflowToolbar>
+     </headerToolbar>
+   </List>
 <!--    </content>-->
 <!--    <footer>-->
       <HBox justifyContent="SpaceAround" >
-        <Button text="Добавить задачу" press="onAddListTask" type="Accept" />
+        <Button id="btnAddTask" text="Добавить задачу" press="onAddListTask" type="Accept" />
         <Button text="Отменить" type="Reject" />
       </HBox>
 <!--    </footer>-->

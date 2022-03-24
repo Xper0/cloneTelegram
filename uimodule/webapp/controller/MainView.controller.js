@@ -55,7 +55,9 @@ sap.ui.define([
                 oRouter.navTo("Init");
                 break;
               case "Задачи":
-                oRouter.navTo("Tasks");
+                oRouter.navTo("DetailTasks", {
+                  detailCategory: "All"
+                });
                 break;
               default:
                 sap.m.MessageToast.show("категория не обнаружена")

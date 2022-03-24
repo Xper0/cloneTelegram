@@ -25,6 +25,8 @@ sap.ui.define([
         let oBinding = oContainer.getBinding("items");
         let sKey = oEvent.getParameter("arguments").detailCategory; // Получение detailCategory
         let aTasksCategory = this.getOwnerComponent().getModel("ListTasks").getData().tasksGroups;
+        console.log(aTasksCategory)
+        console.log(sKey)
         let nTaskIndex = aTasksCategory.findIndex(taskCategory => taskCategory.key == sKey);
         let sPath = `/tasksGroups/${nTaskIndex}`;
         this.getView().bindElement({
@@ -139,38 +141,54 @@ sap.ui.define([
           aFilters = [],
           aSupervisorFilters = [],
           aPriceFilters = [],
+          aFilterImportance = [],
           aSupplierFilters = [];
-          console.log(oBinding)
         aSelectedFilterItems.forEach( oItem =>  {
           let sFilterKey = oItem.getProperty("key")
-          console.log(sFilterKey)
-          oFilter = new Filter("idSupervisor", FilterOperator.EQ, sFilterKey);
-          aSupervisorFilters.push(oFilter);
+          // oFilter = new Filter("idSupervisor", FilterOperator.EQ, sFilterKey);
+          // aSupervisorFilters.push(oFilter);
+          if (sFilterKey === "Низкий" || sFilterKey === "Средний" || sFilterKey === "Критичный" ) {
+            oFilter = new Filter("importance", FilterOperator.EQ, sFilterKey);
+            aFilterImportance.push(oFilter);
+          } else {
+            oFilter = new Filter("idSupervisor", FilterOperator.EQ, sFilterKey);
+            aSupervisorFilters.push(oFilter);
+          }
           // switch (sFilterKey) {
-          //   case "Available":
-          //     oFilter = new Filter("lastName", FilterOperator.EQ, "A");
-          //     aAvailableFilters.push(oFilter);
+          //   case "Низкий" || "Средний" || "Критичный":
+          //     oFilter = new Filter("importance", FilterOperator.EQ, sFilterKey);
+          //     aFilterImportance.push(oFilter);
           //     break;
-          //
-          //   case "OutOfStock":
-          //     oFilter = new Filter("Status", FilterOperator.EQ, "O");
-          //     aAvailableFilters.push(oFilter);
-          //     break;
-          //
-          //   case "Discontinued":
-          //     oFilter = new Filter("Status", FilterOperator.EQ, "D");
-          //     aAvailableFilters.push(oFilter);
-          //     break;
+          //   //
+          //   // case "OutOfStock":
+          //   //   oFilter = new Filter("Status", FilterOperator.EQ, "O");
+          //   //   aAvailableFilters.push(oFilter);
+          //   //   break;
+          //   //
+          //   // case "Discontinued":
+          //   //   oFilter = new Filter("Status", FilterOperator.EQ, "D");
+          //   //   aAvailableFilters.push(oFilter);
+          //   //   break;
           //   default:
-          //     oFilter = new Filter("SupplierName", FilterOperator.EQ, sFilterKey);
-          //     aSupplierFilters.push(oFilter);
+          //     oFilter = new Filter("idSupervisor", FilterOperator.EQ, sFilterKey);
+          //     aSupervisorFilters.push(oFilter);
           //
           // }
         });
+        if (aFilterImportance.length > 0) {
+          aFilters.push(new Filter({filters: aFilterImportance}));
+        }
+        if (aSupervisorFilters.length > 0) {
+          aFilters.push(new Filter({filters: aSupervisorFilters}));
+        }
+        oFilter = new Filter({filters: aFilters, and: true});
 
-        oFilter = new Filter({filters: aSupervisorFilters, and: true});
-        oBinding.filter(oFilter);
-
+        if (aFilters.length > 0) {
+          oBinding.filter(oFilter);
+        }
+        else {
+          oBinding.filter(null);
+        }
       }
     });
   });

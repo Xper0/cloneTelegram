@@ -16,11 +16,26 @@
           <ViewSettingsItem text="{ListTasks>firstName} {ListTasks>lastName}" key="{ListTasks>idSupervisor}"/>
         </items>
       </ViewSettingsFilterItem>
-      <ViewSettingsCustomItem
+      <ViewSettingsFilterItem
         text="Важность"
-        key="Price">
+        key="Price"
+      >
+        <items>
+          <ViewSettingsItem
+            text="Низкий"
+            key="Низкий"
+          />
+          <ViewSettingsItem
+            text="Средний"
+            key="Средний"
+          />
+          <ViewSettingsItem
+            text="Критичный"
+            key="Критичный"
+          />
 
-      </ViewSettingsCustomItem>
+        </items>
+      </ViewSettingsFilterItem>
       <ViewSettingsFilterItem
         text="Дата"
         key="supplierKey"

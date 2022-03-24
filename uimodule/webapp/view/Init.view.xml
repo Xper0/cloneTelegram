@@ -2,24 +2,52 @@
   xmlns="sap.m"
   xmlns:f="sap.f"
   xmlns:mvc="sap.ui.core.mvc"
+  xmlns:card="sap.f.cards"
   controllerName='cloneTelegramApp.cloneTelegram.controller.Init'>
   <Page title="Init" class="Init" showHeader="false">
-      <FlexBox class="Init-flex"   >
-        <VBox  alignItems="Center" class="Form-box">
-          <Text
-            class="Form"
-            text="Welcome to our messenger"
-          />
-<!--          <Button press="show" text="visible" />-->
-<!--          <BusyIndicator text="... something is happening" class="sapUiTinyMarginBottom" />-->
-            <Panel id="User-panel" class="Form-user">
-              <Avatar />
-              <Button
-                class="Form-button"
-                text="Sign In"
-                press=".onSignIn"
-              />
-            </Panel>
+      <FlexBox    >
+        <VBox  alignItems="Center" >
+          <f:Card class="sapUiMediumMargin"
+                  width="400px"
+                  justifyContent="Center"
+          >
+            <f:header>
+                <card:Header
+                  title="Welcome to our messenger"
+                  iconSrc="sap-icon://paper-plane"
+                />
+            </f:header>
+            <f:content>
+              <VBox
+                id="User-panel"
+                height="110px"
+                class="sapUiSmallMargin sapFCardContent"
+                justifyContent="SpaceBetween" alignItems="Center">
+                <Avatar />
+                <Button
+                  text="Sign In"
+                  press=".onSignIn"
+                  width="200px"
+                />
+              </VBox>
+            </f:content>
+          </f:Card>
+
+
+
+
+<!--          <Text-->
+<!--            text="Welcome to our messenger"-->
+<!--          />-->
+<!--&lt;!&ndash;          <Button press="show" text="visible" />&ndash;&gt;-->
+<!--&lt;!&ndash;          <BusyIndicator text="... something is happening" class="sapUiTinyMarginBottom" />&ndash;&gt;-->
+<!--            <Panel id="User-panel" class="Form-user">-->
+<!--              <Avatar />-->
+<!--              <Button-->
+<!--                text="Sign In"-->
+<!--                press=".onSignIn"-->
+<!--              />-->
+<!--            </Panel>-->
 <!--            <Avatar />-->
 <!--            <Button-->
 <!--              class="Form-button"-->

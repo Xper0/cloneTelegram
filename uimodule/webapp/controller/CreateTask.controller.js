@@ -20,10 +20,13 @@ sap.ui.define([
         this.byId('edit').setEnabled(true);
         this._showFormFragment("addTask");
         this.oTaskModel = this.getOwnerComponent().getModel("ListTasks");
-        const url = "http://127.0.0.1:5000/usersList"
-        let data = await fetch(url);
-        let users = await data.json();
-        this.oTaskModel.setProperty("/users", Object.assign({}, users.result));
+
+        // const url = "http://127.0.0.1:5000/usersList"
+        // let data = await fetch(url);
+        // let users = await data.json();
+        // this.oTaskModel.setProperty("/users", Object.assign({}, users.result));
+        let btnAddTask = this.byId("btnAddTask")
+        btnAddTask.setEnabled(true)
         console.log(this.oTaskModel)
       },
       handleEditPress : function () {
@@ -77,6 +80,7 @@ sap.ui.define([
           sSelectedKey = oValidatedComboBox.getSelectedKey(),
           sValue = oValidatedComboBox.getValue();
           console.log(sSelectedKey)
+        let btnAddTask = this.byId("btnAddTask")
         if (!sSelectedKey && sValue) {
           oValidatedComboBox.setValueState(ValueState.Error);
           oValidatedComboBox.setValueStateText("Please enter a valid contact!");
@@ -108,7 +112,52 @@ sap.ui.define([
       },
       onAddListTask: async function () {
         let input = this.byId("form");
-        let formData = {};
+        let progress = [
+          {
+            position: 0,
+            title: "Новая",
+            state: [{
+              state: "Positive",
+              value: 100
+            }]
+          },
+          {
+            position: 1,
+            title: "Назначено",
+            state: [{
+              state: "Positive",
+              value: 100
+            }]
+          },
+          {
+            position: 2,
+            title: "Взят в работу",
+            state: [{
+              state: "Neutral",
+              value: 100
+            }]
+          },
+          {
+            position: 3,
+            title: "Выполнено",
+            state: [{
+              state: "Neutral",
+              value: 100
+            }]
+          },
+          {
+            position: 4,
+            title: "Закрыто",
+            state: [{
+              state: "Neutral",
+              value: 100
+            }]
+          }
+        ];
+        let formData = {
+          subtasks: [],
+          progress
+        };
         let form = this.byId("editFormTask");
         let elements = form.getFormContainers()[0].getFormElements();
 
@@ -126,8 +175,19 @@ sap.ui.define([
 
         if (!bValidationError) {
           let oRouter =  this.getOwnerComponent().getRouter();
-          let chatid = ["1513492075", "730832139"]
+          let chatid = ["1513492075", "730832139"];
           const url = " http://127.0.0.1:5000/sendMessage";
+          let subTaskContainer = this.byId("createListSubtasks");
+          let itemSubTask = subTaskContainer.getAggregation("items");
+          if (itemSubTask.length !== 0) {
+            itemSubTask.forEach( item => {
+                let value = item.getAggregation("content")[0].getValue();
+              formData.subtasks.push({
+                title: value,
+                state: false
+              });
+            });
+          }
           let sHeaders = {
             "Accept": "application/json",
             "Access-Control-Allow-Origin": "*",
@@ -136,6 +196,7 @@ sap.ui.define([
             "Access-Control-Allow-Headers": "Content-Type, Access-Control-Allow-Headers, Authorization, X-Requested-With"
           };
 
+          debugger
 
           elements.forEach(item => {
             if (item.getLabel() === "Название задачи") {
@@ -145,7 +206,8 @@ sap.ui.define([
               formData.description = item.getFields()[0].getProperty("value");
             }
             if (item.getLabel() === "Крайний срок") {
-              formData.date = item.getFields()[0].getProperty("value");
+              let convertDate = Math.floor(new Date(item.getFields()[0].getProperty("value")).getTime() / 1000);
+              formData.date = convertDate;
             }
             if (item.getLabel() === "Важность") {
               formData.importance = item.getFields()[0].getProperty("value");
@@ -157,7 +219,6 @@ sap.ui.define([
               formData.responsible = item.getFields()[0].getProperty("value");
             }
           });
-
           let datas = await fetch( url, {
             method: "POST",
             headers: sHeaders,
@@ -173,51 +234,6 @@ sap.ui.define([
         } else {
           MessageBox.alert("A validation error has occurred. Complete your input first.");
         }
-
-
-       //  elements.forEach(item => {
-       //    if (item.getLabel() === "Название задачи") {
-       //      formData.title = item.getFields()[0].getProperty("value");
-       //    }
-       //    if (item.getLabel() === "Описание задачи") {
-       //      formData.description = item.getFields()[0].getProperty("value");
-       //    }
-       //    if (item.getLabel() === "Крайний срок") {
-       //      formData.date = item.getFields()[0].getProperty("value");
-       //    }
-       //    if (item.getLabel() === "Важность") {
-       //      formData.status = item.getFields()[0].getProperty("value");
-       //    }
-       //    if (item.getLabel() === "Постановщик") {
-       //      formData.supervisor = item.getFields()[0].getProperty("value");
-       //    }
-       //    if (item.getLabel() === "Ответсвенный") {
-       //      formData.responsible = item.getFields()[0].getProperty("value");
-       //    }
-       //  });
-       //  console.log(formData)
-       // // debugger
-       //  console.log(input)
-
-        // const url = " http://127.0.0.1:5000/sendMessage";
-        // let sHeaders = {
-        //   "Accept": "application/json",
-        //   "Access-Control-Allow-Origin": "*",
-        //   "X-Requested-With": "XMLHttpRequest",
-        //   "Access-Control-Allow-Methods": "GET,POST,PUT,DELETE,OPTIONS",
-        //   "Access-Control-Allow-Headers": "Content-Type, Access-Control-Allow-Headers, Authorization, X-Requested-With"
-        // };
-        // let chatid = ["1513492075", "730832139"]
-        // let datas = await fetch( url, {
-        //   method: "POST",
-        //   headers: sHeaders,
-        //   body: JSON.stringify({
-        //     message: formData,
-        //     idChat: chatid[0]
-        //   })
-        // });
-        // let result = await datas.json()
-        // console.log(result)
         console.log("add task")
       },
       onNavBack: function ( ) {
@@ -231,7 +247,30 @@ sap.ui.define([
       },
       select: function (oValue) {
         console.log(oValue)
+      },
+      onAddCheckList: function () {
+        let tableContainer = this.byId("createListSubtasks");
+        let inputList = new sap.m.CustomListItem({
+        });
+        let inputField = new sap.m.Input({
+          value: "",
+          width: "50%"
+        });
+        inputField.addStyleClass("inputList")
+        inputList.addContent(inputField);
+
+        tableContainer.addItem(inputList)
+      },
+      handleDelete: function(oEvent) {
+        console.log(oEvent)
+        let oList = oEvent.getSource(),
+          oItem = oEvent.getParameter("listItem")
+
+        // console.log(sPath)
+
+
       }
+
 
     });
   });

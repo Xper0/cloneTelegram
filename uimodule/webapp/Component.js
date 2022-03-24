@@ -34,8 +34,6 @@ sap.ui.define([
               }
               console.log(this.socket)
                 this.socket.onmessage = (msg) => {
-                  console.log(msg)
-                  console.log("connect msg")
                   try {
                     let oMessage = JSON.parse(msg.data)
                     if (oMessage.type == "message") {
@@ -73,9 +71,19 @@ sap.ui.define([
             return new Promise( async (res, rej) => {
               let userAuthorization = "Александр Павлов"
               const urls = " http://127.0.0.1:5000/tasksList";
+              const urlUsers = "http://127.0.0.1:5000/usersList";
               this.oTaskModel = this.getModel("ListTasks");
+              let [users, tasks] = await Promise.all([
+                  fetch(urlUsers),
+                  fetch(urls)
+                ]
+              )
+              // console.log( await users.json());
+              // console.log(await tasks.json());
+              //
               let datas = await fetch(urls);
-              let tasksList = await datas.json();
+              let userList = await users.json();
+              let tasksList = await tasks.json();
               let taskGroups = [
                 {
                   title: "Все",
@@ -95,7 +103,8 @@ sap.ui.define([
                 },
               ];
               this.oTaskModel.setProperty("/tasksList", tasksList.result);
-              this.oTaskModel.setProperty("/tasksGroups", taskGroups)
+              this.oTaskModel.setProperty("/users", userList.result);
+              this.oTaskModel.setProperty("/tasksGroups", taskGroups);
               console.log( this.oTaskModel)
 
               // let oEventBus = sap.ui.getCore().getEventBus();

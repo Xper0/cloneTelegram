@@ -50,6 +50,7 @@ sap.ui.define([
         let listSubtasks = this.byId("listSubtasks");
         let subtasks = [];
         let itemAgregation = listSubtasks.getAggregation("items");
+        debugger
         itemAgregation.forEach( agregation => {
           let itemElement = agregation.getAggregation("content");
           // itemElement[0].getProperty("selected");
@@ -112,6 +113,20 @@ sap.ui.define([
       },
       onCancel: function () {
 
-      }
+      },
+      onAddCheckList: function () {
+        let tableContainer = this.byId("listSubtasks");
+        let inputList = new sap.m.CustomListItem({
+          type: sap.m.ListType.Detail
+        });
+        let inputField = new sap.m.Input({
+          value: "",
+          width: "50%",
+        });
+        inputList.addContent(inputField);
+        inputList.addStyleClass("inputList")
+
+        tableContainer.addItem(inputList)
+      },
     });
   });

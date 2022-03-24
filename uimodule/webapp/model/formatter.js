@@ -146,6 +146,17 @@ sap.ui.define([
       else {
          return "Success";
       }
+    },
+    getStatusFlow: function (oList, oState) {
+
+      // oState.forEach( state => {
+      //   if (state.title == "Взят в работу"){
+      //     return false
+      //   }else {
+      //     return true
+      //   }
+      // })
+      // console.log(oState)
     }
 
     // ioSocket: function () {

@@ -10,332 +10,348 @@
     title="Редактировать  задачу"
   >
     <content>
-      <ObjectHeader
-        responsive="true"
-        backgroundDesign="Solid"
-        fullScreenOptimized="false"
-        class="sapUiResponsivePadding--header formLabel formText "
-        id="headerContainerses"
-      >
-        <headerContainer>
-          <HeaderContainer  id="headerContainer">
-<!--            <FlexBox>-->
-<!--              <VBox>-->
-<!--                <VBox>-->
-<!--                  <Label text="Название задачи:"/>-->
-<!--                  <Input value="{ListTasks>title}"/>-->
-<!--                </VBox>-->
-<!--                <VBox>-->
-<!--                  <Label text="Описание задачи:"/>-->
-<!--                  <TextArea value="{ListTasks>description}"-->
-<!--                            liveChange="handleLiveChange"-->
-<!--                            placeholder="Введите описание задачи"-->
-<!--                            growing="true"-->
+      <FlexBox class="editTaskBox1" alignItems="SpaceAround"  justifyContent="SpaceBetween">
+        <VBox class="editTaskBox1__content editTaskBox1__input" >
+          <Label
+            text="Название задачи"
+            labelFor="NameTask"
+            design="Bold"/>
+          <Input
+            id="NameTask"
+            value="{ListTasks>title}"
+            placeholder="Введите задачу"
+          />
 
-<!--                  />-->
-<!--                </VBox>-->
-<!--              </VBox>-->
-<!--              <HBox>-->
-<!--                <Label text="Название задачи:" />-->
-<!--                <Input value="{ListTasks>title}"/>-->
-<!--              </HBox>-->
-<!--              <HBox>-->
-<!--                <Label text="Название задачи:" />-->
-<!--                <Input value="{ListTasks>title}"/>-->
-<!--              </HBox>-->
-<!--            </FlexBox>-->
-            <f:Form id="editTask"
-                    editable="true"
-                    ariaLabelledBy="Title1"
-                    class="formLabel"
-            >
-              <f:layout>
-                <f:ColumnLayout
-                  columnsM="2"
-                  columnsL="3"
-                  columnsXL="4"
-                />
-              </f:layout>
-              <f:formContainers >
-                <f:FormContainer id="forma" ariaLabelledBy="Title2">
-                  <f:formElements>
-                    <f:FormElement label="Название задачи"  >
-                      <f:fields>
-                        <TextArea
-                          value="{ListTasks>title}"
-                          id="titleTasks"
-                          valueStateText="Name must not be empty. Maximum 10 characters."
-                          placeholder="Введите задачу"
-                          change=".onNameChange"
-                        />
-                      </f:fields>
-                    </f:FormElement>
-                    <f:FormElement label="Описание задачи">
-                      <f:fields>
-                        <TextArea id="descTasks"
-                                  value="{ListTasks>description}"
-                                  valueLiveUpdate="{/ValueLiveUpdate}"
-                                  liveChange="handleLiveChange"
-                                  placeholder="Введите описание задачи"
-                                  growing="true"
-                                  growingMaxLines="7"
-                        />
-                      </f:fields>
-                    </f:FormElement>
-                    <f:FormElement label="Дедлайн">
-                      <f:fields>
-                        <DatePicker
-                          id="DP23"
-                          value="{ path: 'ListTasks>date',
-                        	formatter : '.formatter.getData'
-                        }"
-                          valueFormat="yyyy-MM-dd"
-                          displayFormat="long"
-                          change="handleChange"
-                          class="sapUiSmallMarginBottom"/>
-                      </f:fields>
-                    </f:FormElement>
-                    <f:FormElement label="Важность">
-                      <f:fields>
-                        <ComboBox
-                          id="idComboBoxImportance"
-                          change="handleChange"
-                          showClearIcon="true"
-                          value="{ListTasks>importance}"
-                        >
-                          <core:Item text="Низкий" key="Низкий" />
-                          <core:Item text="Средний" key="Средний" />
-                          <core:Item text="Критичный" key="Критичный" />
-                        </ComboBox>
-                      </f:fields>
-                    </f:FormElement>
-                    <f:FormElement label="Постановщик">
-                      <f:fields>
-                        <ComboBox
-                          id="idComboBoxUsers"
-                          value="{ListTasks>supervisor}"
-                          items="{
+          <Label
+            text="Постановщик"
+            labelFor="Supervisor"
+            design="Bold"/>
+          <ComboBox
+            id="Supervisor"
+            value="{ListTasks>supervisor}"
+            items="{
 				            path: 'ListTasks>/users',
 			              sorter: { path: 'text' }
 			              }"
-                          change="handleChange"
-                          showClearIcon="true"
-                        >
-                          <core:Item
-                            text="{ListTasks>supervisor}"
-                            key="{ListTasks>supervisor}" />
-                        </ComboBox>
-                      </f:fields>
-                    </f:FormElement>
-                    <f:FormElement label="Ответсвенный">
-                      <f:fields>
-                        <ComboBox
-                          id="idComboBoxs"
-                          value="{ListTasks>responsible}"
-                          showClearIcon="true"
-                          placeholder="Выберете ответсвенного"
-                          change="handleChange">
-                          <core:Item text="{ListTasks>responsible}"
-                                     key="{ListTasks>responsible}" />
-                        </ComboBox>
-                      </f:fields>
-                    </f:FormElement>
+            change="handleChange"
+            showClearIcon="true"
+          >
+            <core:Item
+              text="{ListTasks>supervisor}"
+              key="{ListTasks>supervisor}"/>
+          </ComboBox>
 
-                  </f:formElements>
-                </f:FormContainer>
+          <Label
+            text="Ответственный"
+            labelFor="Responsible"
+            design="Bold"/>
+          <ComboBox
+            id="Responsible"
+            value="{ListTasks>responsible}"
+            showClearIcon="true"
+            placeholder="Выберете ответсвенного"
+            change="handleChange">
+            <core:Item text="{ListTasks>responsible}"
+                       key="{ListTasks>responsible}"/>
+          </ComboBox>
+        </VBox>
 
-<!--                <f:FormContainer title="Подзадачи">-->
-<!--                  <f:formElements>-->
-<!--                    <f:FormElement>-->
-<!--                      <f:fields>-->
-<!--                   -->
+        <VBox class="editTaskBox1__content editTaskBox1__input" >
+          <Label
+            text="Дедлайн"
+            labelFor="Date"
+            design="Bold"/>
+          <DatePicker
+            id="Date"
+            value="{ path: 'ListTasks>date',
+                           formatter : '.formatter.getData'
+                  }"
+            valueFormat="yyyy-MM-dd"
+            displayFormat="long"
+            change="handleChange"
+            class="sapUiSmallMarginBottom"/>
+          <Label
+            text="Важность"
+            labelFor="Importance"
+            design="Bold"/>
+          <ComboBox
+            id="Importance"
+            change="handleChange"
+            showClearIcon="true"
+            value="{ListTasks>importance}"
+          >
+            <core:Item text="Низкий" key="Низкий"/>
+            <core:Item text="Средний" key="Средний"/>
+            <core:Item text="Критичный" key="Критичный"/>
+          </ComboBox>
+        </VBox>
 
-<!--&lt;!&ndash;                        <List&ndash;&gt;-->
-<!--&lt;!&ndash;                          id="ProductList"&ndash;&gt;-->
-<!--&lt;!&ndash;                          includeItemInSelection="true"&ndash;&gt;-->
-<!--&lt;!&ndash;                          items="{ListTasks>subtasks}"&ndash;&gt;-->
-<!--&lt;!&ndash;                        >&ndash;&gt;-->
-<!--&lt;!&ndash;                          <InputListItem&ndash;&gt;-->
-<!--&lt;!&ndash;                            label="{ListTasks>title}"&ndash;&gt;-->
-<!--&lt;!&ndash;                            highlight="{&ndash;&gt;-->
-<!--&lt;!&ndash;                                                path: 'ListTasks>state',&ndash;&gt;-->
-<!--&lt;!&ndash;                                                formatter: '.formatter.getSubTaskState'&ndash;&gt;-->
-<!--&lt;!&ndash;                                              }"&ndash;&gt;-->
-<!--&lt;!&ndash;                          >&ndash;&gt;-->
-<!--&lt;!&ndash;                            <CheckBox&ndash;&gt;-->
-<!--&lt;!&ndash;                              enabled="false"&ndash;&gt;-->
-<!--&lt;!&ndash;                              selected="{ListTasks>state}"&ndash;&gt;-->
-<!--&lt;!&ndash;                              valueState="Warning"&ndash;&gt;-->
+        <!--            <FlexBox>-->
+        <!--              <VBox>-->
+        <!--                <VBox>-->
+        <!--                  <Label text="Название задачи:"/>-->
+        <!--                  <Input value="{ListTasks>title}"/>-->
+        <!--                </VBox>-->
+        <!--                <VBox>-->
+        <!--                  <Label text="Описание задачи:"/>-->
+        <!--                  <TextArea value="{ListTasks>description}"-->
+        <!--                            liveChange="handleLiveChange"-->
+        <!--                            placeholder="Введите описание задачи"-->
+        <!--                            growing="true"-->
 
-<!--&lt;!&ndash;                            />&ndash;&gt;-->
-<!--&lt;!&ndash;                          </InputListItem>&ndash;&gt;-->
-<!--&lt;!&ndash;                        </List>&ndash;&gt;-->
+        <!--                  />-->
+        <!--                </VBox>-->
+        <!--              </VBox>-->
+        <!--              <HBox>-->
+        <!--                <Label text="Название задачи:" />-->
+        <!--                <Input value="{ListTasks>title}"/>-->
+        <!--              </HBox>-->
+        <!--              <HBox>-->
+        <!--                <Label text="Название задачи:" />-->
+        <!--                <Input value="{ListTasks>title}"/>-->
+        <!--              </HBox>-->
+        <!--            </FlexBox>-->
+        <!--            <f:Form id="editTask"-->
+        <!--                    editable="true"-->
+        <!--                    ariaLabelledBy="Title1"-->
+        <!--                    class="formLabel"-->
+        <!--            >-->
+        <!--              <f:layout>-->
+        <!--                <f:ColumnLayout-->
+        <!--                  columnsM="2"-->
+        <!--                  columnsL="3"-->
+        <!--                  columnsXL="4"-->
+        <!--                />-->
+        <!--              </f:layout>-->
+        <!--              <f:formContainers >-->
+        <!--                <f:FormContainer id="forma" ariaLabelledBy="Title2">-->
+        <!--                  <f:formElements>-->
+        <!--                    <f:FormElement label="Название задачи"  >-->
+        <!--                      <f:fields>-->
+        <!--                        <TextArea-->
+        <!--                          value="{ListTasks>title}"-->
+        <!--                          id="titleTasks"-->
+        <!--                          valueStateText="Name must not be empty. Maximum 10 characters."-->
+        <!--                          placeholder="Введите задачу"-->
+        <!--                          change=".onNameChange"-->
+        <!--                        />-->
+        <!--                      </f:fields>-->
+        <!--                    </f:FormElement>-->
+        <!--                    <f:FormElement label="Описание задачи">-->
+        <!--                      <f:fields>-->
+        <!--                        <TextArea id="descTasks"-->
+        <!--                                  value="{ListTasks>description}"-->
+        <!--                                  valueLiveUpdate="{/ValueLiveUpdate}"-->
+        <!--                                  liveChange="handleLiveChange"-->
+        <!--                                  placeholder="Введите описание задачи"-->
+        <!--                                  growing="true"-->
+        <!--                                  growingMaxLines="7"-->
+        <!--                        />-->
+        <!--                      </f:fields>-->
+        <!--                    </f:FormElement>-->
+        <!--                    <f:FormElement label="Дедлайн">-->
+        <!--                      <f:fields>-->
+        <!--                        <DatePicker-->
+        <!--                          id="DP23"-->
+        <!--                          value="{ path: 'ListTasks>date',-->
+        <!--                        	formatter : '.formatter.getData'-->
+        <!--                        }"-->
+        <!--                          valueFormat="yyyy-MM-dd"-->
+        <!--                          displayFormat="long"-->
+        <!--                          change="handleChange"-->
+        <!--                          class="sapUiSmallMarginBottom"/>-->
+        <!--                      </f:fields>-->
+        <!--                    </f:FormElement>-->
+        <!--                    <f:FormElement label="Важность">-->
+        <!--                      <f:fields>-->
+        <!--                        <ComboBox-->
+        <!--                          id="idComboBoxImportance"-->
+        <!--                          change="handleChange"-->
+        <!--                          showClearIcon="true"-->
+        <!--                          value="{ListTasks>importance}"-->
+        <!--                        >-->
+        <!--                          <core:Item text="Низкий" key="Низкий" />-->
+        <!--                          <core:Item text="Средний" key="Средний" />-->
+        <!--                          <core:Item text="Критичный" key="Критичный" />-->
+        <!--                        </ComboBox>-->
+        <!--                      </f:fields>-->
+        <!--                    </f:FormElement>-->
+        <!--                    <f:FormElement label="Постановщик">-->
+        <!--                      <f:fields>-->
+        <!--                        <ComboBox-->
+        <!--                          id="idComboBoxUsers"-->
+        <!--                          value="{ListTasks>supervisor}"-->
+        <!--                          items="{-->
+        <!--				            path: 'ListTasks>/users',-->
+        <!--			              sorter: { path: 'text' }-->
+        <!--			              }"-->
+        <!--                          change="handleChange"-->
+        <!--                          showClearIcon="true"-->
+        <!--                        >-->
+        <!--                          <core:Item-->
+        <!--                            text="{ListTasks>supervisor}"-->
+        <!--                            key="{ListTasks>supervisor}" />-->
+        <!--                        </ComboBox>-->
+        <!--                      </f:fields>-->
+        <!--                    </f:FormElement>-->
+        <!--                    <f:FormElement label="Ответсвенный">-->
+        <!--                      <f:fields>-->
+        <!--                        <ComboBox-->
+        <!--                          id="idComboBoxs"-->
+        <!--                          value="{ListTasks>responsible}"-->
+        <!--                          showClearIcon="true"-->
+        <!--                          placeholder="Выберете ответсвенного"-->
+        <!--                          change="handleChange">-->
+        <!--                          <core:Item text="{ListTasks>responsible}"-->
+        <!--                                     key="{ListTasks>responsible}" />-->
+        <!--                        </ComboBox>-->
+        <!--                      </f:fields>-->
+        <!--                    </f:FormElement>-->
 
-<!--                      </f:fields>-->
+        <!--                  </f:formElements>-->
+        <!--                </f:FormContainer>-->
 
-<!--                    </f:FormElement>-->
-<!--                  </f:formElements>-->
-<!--                </f:FormContainer>-->
-              </f:formContainers>
-            </f:Form>
-          </HeaderContainer>
-        </headerContainer>
-<!--        <attributes>-->
-<!--          <ObjectAttribute-->
-<!--            class="formText"-->
-<!--            title="Постановщик"-->
-<!--            text="{ListTasks>supervisor}"/>-->
-<!--          <ObjectAttribute-->
-<!--            title="Ответсвенный"-->
-<!--            text="{ListTasks>responsible}"/>-->
-<!--        </attributes>-->
-<!--        <ObjectAttribute-->
-<!--          title="Дедлайн"-->
-<!--          text="{-->
-<!--        path : 'ListTasks>date',-->
-<!--        formatter : '.formatter.getData'-->
-<!--        }"/>-->
-<!--        <statuses>-->
-<!--          <ObjectStatus-->
-<!--            class="formLabel"-->
-<!--            title="Важность"-->
-<!--            text="{ListTasks>importance}"-->
-<!--            state="{  path : 'ListTasks>importance',-->
-<!--							formatter: '.formatter.getImportance'}"/>-->
-<!--        </statuses>-->
-      </ObjectHeader>
+        <!--                <f:FormContainer title="Подзадачи">-->
+        <!--                  <f:formElements>-->
+        <!--                    <f:FormElement>-->
+        <!--                      <f:fields>-->
+        <!--                   -->
+
+        <!--&lt;!&ndash;                        <List&ndash;&gt;-->
+        <!--&lt;!&ndash;                          id="ProductList"&ndash;&gt;-->
+        <!--&lt;!&ndash;                          includeItemInSelection="true"&ndash;&gt;-->
+        <!--&lt;!&ndash;                          items="{ListTasks>subtasks}"&ndash;&gt;-->
+        <!--&lt;!&ndash;                        >&ndash;&gt;-->
+        <!--&lt;!&ndash;                          <InputListItem&ndash;&gt;-->
+        <!--&lt;!&ndash;                            label="{ListTasks>title}"&ndash;&gt;-->
+        <!--&lt;!&ndash;                            highlight="{&ndash;&gt;-->
+        <!--&lt;!&ndash;                                                path: 'ListTasks>state',&ndash;&gt;-->
+        <!--&lt;!&ndash;                                                formatter: '.formatter.getSubTaskState'&ndash;&gt;-->
+        <!--&lt;!&ndash;                                              }"&ndash;&gt;-->
+        <!--&lt;!&ndash;                          >&ndash;&gt;-->
+        <!--&lt;!&ndash;                            <CheckBox&ndash;&gt;-->
+        <!--&lt;!&ndash;                              enabled="false"&ndash;&gt;-->
+        <!--&lt;!&ndash;                              selected="{ListTasks>state}"&ndash;&gt;-->
+        <!--&lt;!&ndash;                              valueState="Warning"&ndash;&gt;-->
+
+        <!--&lt;!&ndash;                            />&ndash;&gt;-->
+        <!--&lt;!&ndash;                          </InputListItem>&ndash;&gt;-->
+        <!--&lt;!&ndash;                        </List>&ndash;&gt;-->
+
+        <!--                      </f:fields>-->
+
+        <!--                    </f:FormElement>-->
+        <!--                  </f:formElements>-->
+        <!--                </f:FormContainer>-->
+        <!--              </f:formContainers>-->
+        <!--            </f:Form>-->
+      </FlexBox>
+
+
+      <FlexBox direction="Column" class="editTaskBox">
+      <VBox class="editTaskBox1__input">
+        <Label
+          text="Описание задачи"
+          labelFor="Description"
+          design="Bold"/>
+        <TextArea
+          id="Description"
+          value="{ListTasks>description}"
+          placeholder="Введите описание"
+          growing="true"
+          growingMaxLines="7"
+          width="100%"
+          height="150px"
+        />
+      </VBox>
           <List
             items="{ListTasks>subtasks}"
             id="listSubtasks"
+            mode="Delete"
           >
-            <items>
-              <InputListItem
-                highlight="{
-                        path: 'ListTasks>state',
-                        formatter: '.formatter.getSubTaskState'
-                      }"
-              >
+            <headerToolbar>
+              <OverflowToolbar>
                 <content>
-                  <CheckBox
-                    selected="{ListTasks>state}"
-                  />
-                  <Input width="60%" value="{ListTasks>title}" />
+                  <Button
+                    icon="sap-icon://add"
+                    text="Добавить подзадачу"
+                    press="onAddCheckList"/>
+                  <ToolbarSpacer/>
                 </content>
-              </InputListItem>
-<!--              <CheckBox-->
-<!--                label="{ListTasks>title}"-->
-<!--                selected="{ListTasks>state}"-->
-<!--                valueState="Warning"-->
+              </OverflowToolbar>
+            </headerToolbar>
 
-<!--              />-->
+
+            <items>
+              <CustomListItem
+
+              >
+                <Input
+                  value="{ListTasks>title}"
+                  placeholder="Введите подзадачу"
+                />
+              </CustomListItem>
             </items>
           </List>
+      <VBox>
+        <IconTabBar
+          id="iconTabBar"
+          headerBackgroundDesign="Transparent"
+          class="sapUiResponsiveContentPadding"
+          binding="{Resume}"
+          select=".onTabSelect"
+          selectedKey="{view>/selectedTabKey}">
+          <items>
+            <IconTabFilter id="infoTab" text="Комментарии" key="Info">
+              <ScrollContainer>
 
-          <!--    <content>-->
-<!--          <f:Form id="editTask"-->
-<!--                  editable="true"-->
-<!--                  ariaLabelledBy="Title1"-->
-<!--                  class="formLabel"-->
-<!--          >-->
-<!--            <f:layout>-->
-<!--              <f:ColumnLayout-->
-<!--                columnsM="2"-->
-<!--                columnsL="3"-->
-<!--                columnsXL="4"-->
-<!--              />-->
-<!--            </f:layout>-->
-<!--            <f:formContainers >-->
-<!--              <f:FormContainer id="form" ariaLabelledBy="Title2">-->
-<!--                <f:formElements>-->
-<!--                  <f:FormElement label="Название задачи"  >-->
-<!--                    <f:fields>-->
-<!--                      <TextArea-->
-<!--                        value="{ListTasks>title}"-->
-<!--                        id="titleTask"-->
-<!--                        valueStateText="Name must not be empty. Maximum 10 characters."-->
-<!--                        placeholder="Введите задачу"-->
-<!--                        change=".onNameChange"-->
-<!--                      />-->
-<!--                    </f:fields>-->
-<!--                  </f:FormElement>-->
-<!--                  <f:FormElement label="Описание задачи">-->
-<!--                    <f:fields>-->
-<!--                      <TextArea id="descTask"-->
-<!--                                value="{ListTasks>description}"-->
-<!--                                valueLiveUpdate="{/ValueLiveUpdate}"-->
-<!--                                liveChange="handleLiveChange"-->
-<!--                                placeholder="Введите описание задачи"-->
-<!--                                growing="true"-->
-<!--                                growingMaxLines="7"-->
-<!--                      />-->
-<!--                    </f:fields>-->
-<!--                  </f:FormElement>-->
-<!--                  <f:FormElement label="Дедлайн">-->
-<!--                    <f:fields>-->
-<!--                      <DatePicker-->
-<!--                        id="DP2"-->
-<!--                        value="{ path: 'ListTasks>date',-->
-<!--                        	formatter : '.formatter.getData'-->
-<!--                        }"-->
-<!--                        valueFormat="yyyy-MM-dd"-->
-<!--                        displayFormat="long"-->
-<!--                        change="handleChange"-->
-<!--                        class="sapUiSmallMarginBottom"/>-->
-<!--                    </f:fields>-->
-<!--                  </f:FormElement>-->
-<!--                  <f:FormElement label="Важность">-->
-<!--                    <f:fields>-->
-<!--                      <ComboBox-->
-<!--                        id="idComboBoxImportance"-->
-<!--                        change="handleChange"-->
-<!--                        showClearIcon="true"-->
-<!--                        value="{ListTasks>importance}"-->
-<!--                      >-->
-<!--                        <core:Item text="Низкий" key="Низкий" />-->
-<!--                        <core:Item text="Средний" key="Средний" />-->
-<!--                        <core:Item text="Критичный" key="Критичный" />-->
-<!--                      </ComboBox>-->
-<!--                    </f:fields>-->
-<!--                  </f:FormElement>-->
-<!--                  <f:FormElement label="Постановщик">-->
-<!--                    <f:fields>-->
-<!--                      <ComboBox-->
-<!--                        id="idComboBoxUser"-->
-<!--                        value="{ListTasks>supervisor}"-->
-<!--                        items="{-->
-<!--				            path: 'ListTasks>/users',-->
-<!--			              sorter: { path: 'text' }-->
-<!--			              }"-->
-<!--                        change="handleChange"-->
-<!--                        showClearIcon="true"-->
-<!--                      >-->
-<!--                        <core:Item-->
-<!--                          text="{ListTasks>supervisor}"-->
-<!--                          key="{ListTasks>supervisor}" />-->
-<!--                      </ComboBox>-->
-<!--                    </f:fields>-->
-<!--                  </f:FormElement>-->
-<!--                  <f:FormElement label="Ответсвенный">-->
-<!--                    <f:fields>-->
-<!--                      <ComboBox-->
-<!--                        id="idComboBox"-->
-<!--                         value="{ListTasks>responsible}"-->
-<!--                        showClearIcon="true"-->
-<!--                        placeholder="Выберете ответсвенного"-->
-<!--                        change="handleChange">-->
-<!--                        <core:Item text="{ListTasks>responsible}"-->
-<!--                                   key="{ListTasks>responsible}" />-->
-<!--                      </ComboBox>-->
-<!--                    </f:fields>-->
-<!--                  </f:FormElement>-->
-<!--                </f:formElements>-->
-<!--              </f:FormContainer>-->
-<!--            </f:formContainers>-->
-<!--          </f:Form>-->
+              </ScrollContainer>
+              <VBox>
+                <List
+                  growingScrollToLoad="true"
+                  growingThreshold="5"
+                  items="{
+					path : 'CommentsTask>/comments/messages',
+					sorter : {
+						path : 'date'
+					}
+				}"
+                >
+                  <FeedListItem
+                    sender="{
+            parts: [
+             {path: 'CommentsTask>fromId'},
+             {path: 'CommentsTask>/comments/users'}
+          ],
+
+					    	formatter : '.formatter.getUser'}"
+                    icon="{AuthorPicUrl}"
+                    senderPress="onSenderPress"
+                    iconPress="onIconPress"
+                    iconDensityAware="false"
+                    info="{Type}"
+                    timestamp="{
+        path : 'CommentsTask>date',
+					    	formatter : '.formatter.getData'
+        }"
+                    text="{CommentsTask>message}"
+                    convertLinksToAnchorTags="All"/>
+                </List>
+              </VBox>
+            </IconTabFilter>
+            <IconTabFilter id="projectsTab" text="История" key="Projects">
+              <Text text="История"/>
+            </IconTabFilter>
+          </items>
+        </IconTabBar>
+      </VBox>
+      </FlexBox>
+
     </content>
     <footer>
       <Toolbar>
         <Button text="Сохранить" type="Success" press="onSaveTask" />
+        <ToolbarSpacer/>
         <Button text="Отменить" type="Reject" press="onCancel"/>
       </Toolbar>
     </footer>

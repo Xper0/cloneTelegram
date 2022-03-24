@@ -151,6 +151,7 @@
           id="ProductList"
           includeItemInSelection="true"
           items="{ListTasks>subtasks}"
+          mode="MultiSelect"
         >
           <headerToolbar>
             <OverflowToolbar>
@@ -166,17 +167,18 @@
           </headerToolbar>
                     <InputListItem
                       label="{ListTasks>title}"
+                      selected="{ListTasks>state}"
                       highlight="{
                         path: 'ListTasks>state',
                         formatter: '.formatter.getSubTaskState'
                       }"
                     >
-                                    <CheckBox
-                                      enabled="false"
-                                      selected="{ListTasks>state}"
-                                      valueState="Warning"
+<!--                                    <CheckBox-->
+<!--                                      enabled="false"-->
+<!--                                      selected="{ListTasks>state}"-->
+<!--                                      valueState="Warning"-->
 
-                                    />
+<!--                                    />-->
                     </InputListItem >
 <!--              <CheckBox-->
 <!--                text="{ListTasks>title}"-->
@@ -300,7 +302,19 @@
     </content>
     <footer>
       <Toolbar>
-        <Button id="btn-beginTask" text="Начать выполнение" type="Accept" press="onBeginTask" />
+        <Button
+          id="btn-beginTask"
+          text="Начать выполнение"
+          type="Accept"
+          press="onBeginTask"
+          visible="{
+          parts: [
+            {path: 'ListTasks>/tasksList'},
+            {path: 'ListTasks>progress'}
+            ],
+          formatter: '.formatter.getStatusFlow'
+          }"
+        />
         <Button id="btn-endTask" text="Завершить задачу" type="Success"/>
         <ToolbarSpacer/>
         <Button text="Редактировать задачу" type="Attention" press="onEditTask" />

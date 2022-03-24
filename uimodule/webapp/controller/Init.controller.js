@@ -31,7 +31,7 @@ sap.ui.define([
 
         let getData =  async () => {
           try {
-            BusyIndicator.show()
+            BusyIndicator.show();
            let data = await fetch(url, {
               method: "POST",
               headers: sHeaders,
@@ -39,7 +39,7 @@ sap.ui.define([
                 phone: userPhone
               })
             });
-            return data
+            return data;
           } catch (err) {
             console.log("ошибка запроса");
           }

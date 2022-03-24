@@ -453,11 +453,14 @@ const start =  () => {
             id: Number(newRandomId),
             chatId: `${telegramChatId.chats[0].id.value}`,
             title: message.title,
+            date: message.date,
             description: message.description,
             status: "Выполняется",
             importance: message.importance,
             supervisor: message.supervisor,
-            responsible: message.responsible
+            responsible: message.responsible,
+            subtasks: message.subtasks,
+            progress: message.progress
           }
           tasksList.push(newTask)
           console.log(tasksList)
@@ -465,10 +468,10 @@ const start =  () => {
             new Api.messages.SendMessage({
               peer: `${telegramChatId.chats[0].id.value}`,
               message: `Вам назначена новая задача:
-              ${message.title}
-              ${message.date}
-              ${message.description}
-              ${message.importance}
+              Название: ${message.title},
+              Дедлайн: ${message.date},
+              Описание: ${message.description},
+              Важность: ${message.importance},
               http://127.0.0.1:8080/index.html#/AboutTask/${newRandomId}
               `,
               noWebpage: true,

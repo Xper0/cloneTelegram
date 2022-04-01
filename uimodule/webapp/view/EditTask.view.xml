@@ -11,7 +11,7 @@
   >
     <content>
       <FlexBox class="editTaskBox1" alignItems="SpaceAround"  justifyContent="SpaceBetween">
-        <VBox class="editTaskBox1__content editTaskBox1__input" >
+        <VBox id="boxForm" class="editTaskBox1__content editTaskBox1__input" >
           <Label
             text="Название задачи"
             labelFor="NameTask"

@@ -102,10 +102,10 @@ sap.ui.define([
                   key: "CloseTask"
                 },
               ];
+              console.log(tasksList)
               this.oTaskModel.setProperty("/tasksList", tasksList.result);
               this.oTaskModel.setProperty("/users", userList.result);
               this.oTaskModel.setProperty("/tasksGroups", taskGroups);
-              console.log( this.oTaskModel)
 
               // let oEventBus = sap.ui.getCore().getEventBus();
               // oEventBus.publish("tasks", "tasksLoaded" );

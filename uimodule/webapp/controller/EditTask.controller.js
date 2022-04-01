@@ -47,25 +47,56 @@ sap.ui.define([
         // console.log(oModel)
       },
       onSaveTask: async function () {
-        let listSubtasks = this.byId("listSubtasks");
-        let subtasks = [];
-        let itemAgregation = listSubtasks.getAggregation("items");
-        debugger
+        let formData = {};
+        let oModel = this.getView().getModel("CommentsTask").getData();
+        let oItem = this.getView().getBindingContext("ListTasks").getObject();
+        // console.log(oItem.chatId)
+        let chatId = undefined
+        if (oModel.hasOwnProperty("comments")) {
+          chatId = oModel.comments.chats[0].id;
+          // formData.chatId =  oItem.chatId;
+        }
+        let pathId = this.getOwnerComponent().getRouter().oHashChanger.hash.substr(9);
+        let valueNameTask = this.byId("NameTask").getValue(),
+         valueDescription = this.byId("Description").getValue(),
+         valueSupervisor = this.byId("Supervisor").getValue(),
+         valueResponsible = this.byId("Responsible").getValue(),
+         valueDate = this.byId("Date").getValue(),
+         valueImportance = this.byId("Importance").getValue(),
+         listSubtasks = this.byId("listSubtasks"),
+         subtasks = [],
+         itemAgregation = listSubtasks.getAggregation("items");
+
         itemAgregation.forEach( agregation => {
           let itemElement = agregation.getAggregation("content");
           // itemElement[0].getProperty("selected");
           // itemElement[1].getProperty("value");
           subtasks.push({
-            title:  itemElement[1].getProperty("value"),
-            state:   itemElement[0].getProperty("selected")
+            title:  itemElement[0].getProperty("value"),
+            state: false
+            // state:   itemElement[0].getProperty("selected")
           });
         });
-        console.log(subtasks)
-        // debugger
-        let pathId = this.getOwnerComponent().getRouter().oHashChanger.hash.substr(9);
-        let form = this.byId("editTask");
-        let elements = form.getFormContainers()[0].getFormElements();
-        let formData = {};
+        // formData.subtasks = subtasks
+        let convertTime = Math.floor(new Date(valueDate).getTime() / 1000);
+        formData = {
+          id: pathId,
+          chatId,
+          title: valueNameTask,
+          description: valueDescription,
+          date: convertTime,
+          importance: valueImportance,
+          supervisor: valueSupervisor,
+          responsible: valueResponsible,
+          subtasks: subtasks,
+          status: oItem.status,
+          progress: oItem.progress
+        };
+
+
+        // let form = this.byId("editTask");
+        // let elements = form.getFormContainers()[0].getFormElements();
+
         let oRouter =  this.getOwnerComponent().getRouter();
         const url = " http://127.0.0.1:5000/tasksList";
         let sHeaders = {
@@ -75,31 +106,31 @@ sap.ui.define([
           "Access-Control-Allow-Methods": "GET,POST,PUT,DELETE,OPTIONS",
           "Access-Control-Allow-Headers": "Content-Type, Access-Control-Allow-Headers, Authorization, X-Requested-With"
         };
-        debugger
-         elements.forEach(item => {
-          if (item.getLabel() === "Название задачи") {
-            formData.title = item.getFields()[0].getProperty("value");
-          }
-          if (item.getLabel() === "Описание задачи") {
-            formData.description = item.getFields()[0].getProperty("value");
-          }
-          if (item.getLabel() === "Дедлайн") {
-            let convertTime = Math.floor(new Date(item.getFields()[0].getProperty("value")).getTime() / 1000)
-            formData.date = convertTime;
-          }
-          if (item.getLabel() === "Важность") {
-            formData.importance = item.getFields()[0].getProperty("value");
-          }
-          if (item.getLabel() === "Постановщик") {
-            formData.supervisor = item.getFields()[0].getProperty("value");
-          }
-          if (item.getLabel() === "Ответсвенный") {
-            formData.responsible = item.getFields()[0].getProperty("value");
-          }
-          formData.id = pathId
-         });
-          formData.subtasks = subtasks
-        console.log(formData)
+        // debugger
+        //  elements.forEach(item => {
+        //   if (item.getLabel() === "Название задачи") {
+        //     formData.title = item.getFields()[0].getProperty("value");
+        //   }
+        //   if (item.getLabel() === "Описание задачи") {
+        //     formData.description = item.getFields()[0].getProperty("value");
+        //   }
+        //   if (item.getLabel() === "Дедлайн") {
+        //     let convertTime = Math.floor(new Date(item.getFields()[0].getProperty("value")).getTime() / 1000)
+        //     formData.date = convertTime;
+        //   }
+        //   if (item.getLabel() === "Важность") {
+        //     formData.importance = item.getFields()[0].getProperty("value");
+        //   }
+        //   if (item.getLabel() === "Постановщик") {
+        //     formData.supervisor = item.getFields()[0].getProperty("value");
+        //   }
+        //   if (item.getLabel() === "Ответсвенный") {
+        //     formData.responsible = item.getFields()[0].getProperty("value");
+        //   }
+        //   formData.id = pathId
+        //  });
+        //   formData.subtasks = subtasks
+        // console.log(formData)
         let datas = await fetch( url, {
             method: "POST",
             headers: sHeaders,

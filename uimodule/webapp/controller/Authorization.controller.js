@@ -91,8 +91,8 @@ sap.ui.define([
                  phoneCodeHash: datatest.phoneCode
                })
              this.getView().setModel(UserModel, "myUserModel")
-             console.log("Double render")
-             window.alert("registr Ok")
+             // console.log("Double render")
+             // window.alert("registr Ok")
              oWizardStepContainer.nextStep();
            }
            else {
@@ -131,10 +131,10 @@ sap.ui.define([
             return await this.Request(phoneCode)
           }
           // let status = await getStatus();
-          let status = (await this.Request(phoneCode).then(res => res)).status
+          let status = (await this.Request(phoneCode).then(res => res)).status;
           if (status === 201) {
             // window.alert("go page user")
-            oRouter.navTo("MainView");
+            oRouter.navTo("Init");
           }
           else if (status !== 201) {
             return window.alert("phone code invalid")

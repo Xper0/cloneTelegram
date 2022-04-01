@@ -307,13 +307,7 @@
           text="Начать выполнение"
           type="Accept"
           press="onBeginTask"
-          visible="{
-          parts: [
-            {path: 'ListTasks>/tasksList'},
-            {path: 'ListTasks>progress'}
-            ],
-          formatter: '.formatter.getStatusFlow'
-          }"
+
         />
         <Button id="btn-endTask" text="Завершить задачу" type="Success"/>
         <ToolbarSpacer/>

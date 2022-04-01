@@ -14,6 +14,9 @@ sap.ui.define([
     return Controller.extend("cloneTelegramApp.cloneTelegram.controller.Tasks", {
       formatter: formatter,
       onInit:  function () {
+        let oEventBus = sap.ui.getCore().getEventBus();
+        oEventBus.subscribe("messages", "messageResponce", this.onMessageResponce, this);
+        oEventBus.subscribe("newMessages", "messageResponse", this.onNewMessage, this );
         // let processFlow = this.byId("processflow");
         // let btnEndTask = this.byId("btn-endTask");
         // let btnBeginTask = this.byId("btn-beginTask");
@@ -40,35 +43,51 @@ sap.ui.define([
         //     btnBeginTask.setVisible(false);
         //   }
         // });
-
+        let btnEndTask = this.byId("btn-endTask");
+        let btnBeginTask = this.byId("btn-beginTask");
+        // btnEndTask.setVisible(false);
+        // btnBeginTask.setVisible(false);
         let oRouter =  this.getOwnerComponent().getRouter();
         oRouter.getRoute("AboutTask").attachMatched(this._onObjectMatched, this);
+      },
+      onMessageResponce: function (sChanel, sEvent, oData ) {
+        console.dir(oData);
+      },
+      onNewMessage: function (sChanel, sEvent, oData) {
+        console.log(oData)
+        // let oModel = this.getView().getModel("CommentsTask").getData();
+        // let chatId = oModel.comments.chats[0].id;
+        let oModel =  this.getView().getModel("CommentsTask");
+        console.log(oModel)
+        let oCollectionMessage = Object.assign({}, oModel.getData().comments["message"]);
+        console.log(oCollectionMessage)
+        console.log(oModel.getData().comments["message"])
+        let findChat = oModel.getData().comments["message"].messages.find( chat => chat.peerId.channelId === oData.msg.chatId)
+        // debugger
+        console.log(findChat)
+        if (findChat) {
+          oCollectionMessage.messages.push(oData.msg.message);
+          oModel.setProperty("/message", Object.assign({}, oCollectionMessage));
+          console.log(oModel)
+        }
+        else {
+          console.log("другой чат")
+        }
       },
       _onObjectMatched: async function (oEvent) {
         let processFlow = this.byId("processflow");
         let btnEndTask = this.byId("btn-endTask");
         let btnBeginTask = this.byId("btn-beginTask");
         btnEndTask.setVisible(false);
+        btnBeginTask.setVisible(false);
         // debugger
-        let line = processFlow.getLanes()
-        let lanes = processFlow.getAggregation("lanes")
-        lanes.forEach( lanesItem => {
-          let textLanes = lanesItem.getProperty("text");
-          let stateLanes = lanesItem.getProperty("state");
-          if (textLanes === "Взят в работу" && stateLanes[0].state !== "Positive") {
-            btnEndTask.setVisible(false);
-            btnBeginTask.setVisible(true);
-          }
-          else {
-            btnEndTask.setVisible(true);
-            btnBeginTask.setVisible(false);
-          }
-        });
-
+        // let line = processFlow.getLanes()
         let sTaskId = oEvent.getParameter("arguments").AboutTaskId;
-        let aTasks = this.getOwnerComponent().getModel("ListTasks").getData().tasksList;
-        let nTaskIndex = aTasks.findIndex(taskId => taskId.id == sTaskId)
+        // let aTasks = this.getOwnerComponent().getModel("ListTasks").getData().tasksList;
+        // let nTaskIndex = aTasks.findIndex(taskId => taskId.id == sTaskId)
         this.getOwnerComponent().loadTasks().then(() => {
+          let aTasks = this.getOwnerComponent().getModel("ListTasks").getData().tasksList;
+          let nTaskIndex = aTasks.findIndex(taskId => taskId.id == sTaskId)
           // let aTasks = this.getOwnerComponent().getModel("ListTasks").getData().tasksList;
           // console.log(aTasks)
           // let nTaskIndex = aTasks.findIndex(taskId => taskId.id == sTaskId)
@@ -83,6 +102,21 @@ sap.ui.define([
             path: sPath,
             model: "ListTasks"
           });
+
+          let lanes = processFlow.getAggregation("lanes");
+          lanes.forEach( lanesItem => {
+            let textLanes = lanesItem.getProperty("text");
+            let stateLanes = lanesItem.getProperty("state");
+            if (textLanes === "Взят в работу" && stateLanes[0].state !== "Positive") {
+              btnEndTask.setVisible(false);
+              btnBeginTask.setVisible(true);
+            }
+            if (textLanes === "Взят в работу" && stateLanes[0].state === "Positive") {
+              btnEndTask.setVisible(true);
+              btnBeginTask.setVisible(false);
+            }
+          });
+
         });
         this.oCommentsTask = this.getOwnerComponent().getModel("CommentsTask");
         let urlId = `http://127.0.0.1:5000/getCommentTask?commentTaskId=${sTaskId}`;
@@ -196,8 +230,30 @@ sap.ui.define([
           type: sap.m.SwitchType.AcceptReject,
           state: false
         }));
-
         tableContainer.addItem(inputList)
+      },
+      onPost: function (oEvent) {
+        let oModel = this.getView().getModel("CommentsTask").getData();
+        let chatId = oModel.comments.chats[0].id;
+        let oValue = oEvent.getParameter("value");
+        console.log(oModel)
+        console.log(chatId)
+        console.log(oValue)
+
+        // let oCollectionMessage = Object.assign({}, oModel.getData()["message"]);
+        // oCollectionMessage.messages.push({
+        //   date: Math.floor(Date.now() / 1000),
+        //   message: oValue
+        // });
+        // oModel.setProperty("/message", Object.assign({}, oCollectionMessage));
+        let body = JSON.stringify({
+          id: new Date().getTime(),
+          message: oValue,
+          idChat: chatId
+        });
+        let socket = this.getOwnerComponent().socket;
+        socket.send(body);
+
       }
     });
   });

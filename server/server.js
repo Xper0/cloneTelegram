@@ -11,14 +11,25 @@ import path from "path";
 import * as fs from "fs";
 import cors from "cors";
 import messageList from "./messageList.js";
-import TaskList from "./taskList.js";
+import mongoose from "mongoose";
+import Task from "./models/listTask.js";
 
 
+const pwDB ='PTm3PRLka3rIUAvh';
+const blockDB = "nodeGram";
+const db = `mongodb+srv://Xper:${pwDB}@cluster0.0ac6y.mongodb.net/${blockDB}?retryWrites=true&w=majority`;
+
+mongoose
+  .connect(db, { useNewUrlParser: true, useUnifiedTopology: true})
+  .then((res) => console.log("Connect DB"))
+  .catch((error) => console.log(error))
+// const datas = await Task.find()
+// console.log(datas)
 
 
 const __dirname = path.dirname(process.argv[1])
 let oConfig = JSON.parse(fs.readFileSync(path.join(__dirname, "./config.json"), "utf-8"));
-let oTaskList = fs.readFileSync(path.join(__dirname, "./tasks.js"), "utf-8");
+
 
 
 const app = express();
@@ -71,7 +82,7 @@ function _saveList() {
   fs.writeFileSync("./tasks.js", JSON.stringify(tasks), {encoding: "utf-8"});
 }
 
-
+let has = "116c512c1bc4825cd9"
 const client = new TelegramClient(stringSession, apiId, apiHash, {
   connectionRetries: 5,
 });
@@ -102,26 +113,54 @@ let sessions;
 wss.on("connection" , async (ws) => {
   await  client.connect()
   if (oConfig.phoneCodeHash && oConfig.phoneNumber) {
-    // client.addEventHandler((update) => {
-    //   const message = update.message;
-    //   console.log(update)
-    //   if (update.className === "UpdateNewChannelMessage" || update.className === "UpdateNewMessage") {
-    //     let fromID = message._chatPeer.channelId;
-    //     let chatID = message.senderId;
-    //     // console.log(fromID);
-    //     // console.log(chatID);
-    //     return ws.send(JSON.stringify({
-    //       type: "newMessages",
-    //       responseId: message.senderId,
-    //       status: "ok",
-    //       msg: {
-    //         chatId: fromID,
-    //         user: chatID,
-    //         message: update.message
-    //       }
-    //     }));
-    //   }
-    // })
+
+    ws.on("message", async (body) => {
+      console.log(`this is message: ${body}`)
+      let {message, idChat, id} = JSON.parse(body)
+      if (message.length > 0 && idChat) {
+        const result = await client.invoke(
+          new Api.messages.SendMessage({
+            peer: idChat,
+            message: message,
+            noWebpage: true,
+            scheduleDate: 43,
+          })
+        );
+        return ws.send(JSON.stringify({
+          type: "messages",
+          responseId: id,
+          status: "ok",
+          msg: `Сообщение отправлено: ${result}`
+        }))
+      } else {
+        return ws.send(JSON.stringify({
+          type: "messages",
+          responseId: id,
+          status: "ok",
+          msg: `Сообщение ne отправлено`
+        }))
+      }
+    })
+    client.addEventHandler((update) => {
+      const message = update.message;
+      console.log(update)
+      if (update.className === "UpdateNewChannelMessage" || update.className === "UpdateNewMessage") {
+        let fromID = message._chatPeer.channelId;
+        let chatID = message.senderId;
+        // console.log(fromID);
+        // console.log(chatID);
+        return ws.send(JSON.stringify({
+          type: "newMessages",
+          responseId: message.senderId,
+          status: "ok",
+          msg: {
+            chatId: fromID,
+            user: chatID,
+            message: update.message
+          }
+        }));
+      }
+    })
   }
 })
 
@@ -136,124 +175,6 @@ const start =  () => {
           // (async function run() {
          await client.connect();
 
-          // await client.addEventHandler((update) => {
-          //   const message = update.message;
-          //   console.log("Received new Update");
-          //   console.log(update);
-          //   ws.send("hi update")
-          //   if (update.className === "UpdateShortChatMessage") {
-          //     // console.log(message.senderId);
-          //     // console.log(message._chatPeer.channelId)
-          //     console.log("группа");
-          //     let fromID = update.fromId.value;
-          //     let chatID = update.chatId.value;
-          //     // const sender = message.getSender();
-          //     return  ws.send(JSON.stringify({
-          //       type: "messages",
-          //       responseId: message.senderId,
-          //       status: "ok",
-          //       msg: {
-          //         chatId: fromID,
-          //         user: chatID,
-          //         message: update.message
-          //       }
-          //     }));
-          //     // console.log(sender)
-          //   }
-          //   if (update.className === "UpdateNewChannelMessage" || update.className === "UpdateNewMessage") {
-          //     console.log("канал");
-          //     let fromID = message._chatPeer.channelId;
-          //     let chatID = message.senderId;
-          //     console.log(fromID);
-          //     console.log(chatID);
-          //     return ws.send(JSON.stringify({
-          //       type: "newMessages",
-          //       responseId: message.senderId,
-          //       status: "ok",
-          //       msg: {
-          //         chatId: fromID,
-          //         user: chatID,
-          //         message: update.message
-          //       }
-          //     }));
-          //
-          //     // ws.send(JSON.stringify({
-          //     //   type: "newMessages",
-          //     //   responseId: message.senderId,
-          //     //   status: "ok",
-          //     //   msg: {
-          //     //     chatId: fromID,
-          //     //     user: chatID,
-          //     //     message: update.message
-          //     //   }
-          //     // }));
-          //   }
-          //
-          // });
-//           async function eventPrint(event) {
-//             const message = event.message;
-//
-//             // Checks if it's a private message (from user or bot)
-//             if (event.isPrivate){
-//               // prints sender id
-//               console.log(message.senderId);
-//               // read message
-//               if (message.text == "hello"){
-//                 const sender = await message.getSender();
-//                 console.log("sender is",sender);
-//                 await client.sendMessage(sender,{
-//                   message:`hi your id is ${message.senderId}`
-//                 });
-//               }
-//             }
-//           }
-// // adds an event handler for new messages
-//           client.addEventHandler(eventPrint, new NewMessage({}));
-
-
-          //Первое обновление состояния
-          // const initUpdate = await client.invoke(new Api.updates.GetState({}));
-          // console.log(initUpdate)
-          // const result = await client.invoke(new Api.account.GetAuthorizations({}));
-          // const result = await client.invoke(
-          //   new Api.contacts.GetContacts({
-          //     hash: 0,
-          //   })
-          // );
-          // const allChats = await client.invoke(
-          //   new Api.messages.GetAllChats({
-          //     exceptIds: [43],
-          //   })
-          // );
-          // const allMessages = await client.invoke(
-          //   new Api.messages.GetHistory({
-          //     peer: "pirat911",
-          //     offsetId: 0,
-          //     offsetDate: 0,
-          //     addOffset: 0,
-          //     limit: 100,
-          //     maxId: 0,
-          //     minId: 0,
-          //     hash: 0,
-          //   })
-          // );
-          // const GetMessages = await client.invoke(
-          //   new Api.channels.GetMessages({
-          //     channel: "262144",
-          //     id: [43],
-          //   })
-          // );
-          // const allMessageses = await client.invoke(
-          //   new Api.messages.GetMessages({
-          //     id: [43],
-          //   })
-          // );
-          // oConfig.userList = result;
-          // oConfig.userChats = allChats;
-          // oConfig.initUpdate = initUpdate
-          // oConfig.userMessages = allMessageses;
-          // _saveConfig();
-          // })();
           return res.status(201).json({
             status: "ok",
             redirect: "chatLists"
@@ -315,10 +236,17 @@ const start =  () => {
         })
       })
     app.get("/tasksList", async (req,  res) => {
+       // await Task.remove()
+      let  datas = await Task.insertMany(tasksList);
+      console.log(datas)
+      const taski = await Task.find()
+      await Task.remove()
+      console.log(taski)
       console.log(req.query.category)
      return res.json({
         status: "ok",
-        result: tasksList
+        result: tasksList,
+        dataresult: taski
       })
     })
     app.post("/tasksList", async (req,  res) => {
@@ -326,6 +254,18 @@ const start =  () => {
       let { task } = JSON.parse(req.body)
       let taskOnList = tasksList.findIndex( taskId => Number(taskId.id) === Number(task.id))
       if (taskOnList !== undefined) {
+        if (task.chatId !== undefined) {
+          const result = await client.invoke(
+            new Api.messages.SendMessage({
+              peer: `${task.chatId}`,
+              message: `Задача изменена:
+              Ссылка: http://127.0.0.1:8080/index.html#/AboutTask/${task.id}
+              `,
+              noWebpage: true,
+              scheduleDate: 43,
+            })
+          );
+        }
         // tasksList[taskOnList] = task
         [...tasksList, tasksList[taskOnList] = task]
         console.log(tasksList)
@@ -398,7 +338,7 @@ const start =  () => {
         let idChat = req.query.commentTaskId;
         if (idChat) {
           // let findChat = messageList.find( chat => chat.channelId == idChat);
-          let findChat = TaskList.find( chat => chat.id == idChat);
+          let findChat = tasksList.find( chat => chat.id == idChat);
           if (findChat.chatId) {
             const historyTask = await client.invoke(
               new Api.messages.GetHistory({
@@ -449,11 +389,12 @@ const start =  () => {
             })
           );
           // console.log(result.chats[0].id.value)
+          let convertTime = Math.floor(new Date(message.date).getTime() / 1000);
           let newTask = {
             id: Number(newRandomId),
             chatId: `${telegramChatId.chats[0].id.value}`,
             title: message.title,
-            date: message.date,
+            date: convertTime,
             description: message.description,
             status: "Выполняется",
             importance: message.importance,
@@ -464,6 +405,7 @@ const start =  () => {
           }
           tasksList.push(newTask)
           console.log(tasksList)
+          // let convertTime = Math.floor(new Date(message.date).getTime() / 1000);
           const result = await client.invoke(
             new Api.messages.SendMessage({
               peer: `${telegramChatId.chats[0].id.value}`,
@@ -472,7 +414,7 @@ const start =  () => {
               Дедлайн: ${message.date},
               Описание: ${message.description},
               Важность: ${message.importance},
-              http://127.0.0.1:8080/index.html#/AboutTask/${newRandomId}
+              Ссылка: http://127.0.0.1:8080/index.html#/AboutTask/${newRandomId}
               `,
               noWebpage: true,
               scheduleDate: 43,
@@ -480,7 +422,8 @@ const start =  () => {
           );
           return res.json({
             status: "ok",
-            msg: "сообщение отправлено"
+            msg: "сообщение отправлено",
+            result: tasksList
           })
 
         }
@@ -629,8 +572,7 @@ const start =  () => {
           return res.status(422).json({error: "The fields are filled in incorrectly"});
         }
         if (Number(phone) === 89060733437 && !phoneCode) {
-          await (async function run() {
-            await client.connect(); // This assumes you have already authenticated with .start()
+            // await client.connect(); // This assumes you have already authenticated with .start()
             const result = await client.invoke(
               new Api.auth.SendCode({
                 phoneNumber: phone,
@@ -643,18 +585,16 @@ const start =  () => {
                 }),
               })
             );
-
             req.session.phoneCodeHash = result.phoneCodeHash;
             oConfig.phoneCodeHash = result.phoneCodeHash;
             oConfig.phoneNumber = phone;
-            _saveConfig();
+            _saveConfig()
             console.log(result.phoneCodeHash);
             return res.status(201).json(
               {
                 message: "Registration successfully",
                 phoneCode: result.phoneCodeHash
               });
-          })();
           // return res.status(201).json(
           //   {
           //     message: "Registration successfully",

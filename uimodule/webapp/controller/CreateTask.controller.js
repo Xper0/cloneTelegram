@@ -25,9 +25,6 @@ sap.ui.define([
         // let data = await fetch(url);
         // let users = await data.json();
         // this.oTaskModel.setProperty("/users", Object.assign({}, users.result));
-        let btnAddTask = this.byId("btnAddTask")
-        btnAddTask.setEnabled(true)
-        console.log(this.oTaskModel)
       },
       handleEditPress : function () {
         //Clone the data
@@ -156,7 +153,8 @@ sap.ui.define([
         ];
         let formData = {
           subtasks: [],
-          progress
+          progress,
+          status: "Выполняется"
         };
         let form = this.byId("editFormTask");
         let elements = form.getFormContainers()[0].getFormElements();
@@ -196,7 +194,6 @@ sap.ui.define([
             "Access-Control-Allow-Headers": "Content-Type, Access-Control-Allow-Headers, Authorization, X-Requested-With"
           };
 
-          debugger
 
           elements.forEach(item => {
             if (item.getLabel() === "Название задачи") {
@@ -206,8 +203,9 @@ sap.ui.define([
               formData.description = item.getFields()[0].getProperty("value");
             }
             if (item.getLabel() === "Крайний срок") {
-              let convertDate = Math.floor(new Date(item.getFields()[0].getProperty("value")).getTime() / 1000);
-              formData.date = convertDate;
+              // let convertDate = Math.floor(new Date(item.getFields()[0].getProperty("value")).getTime() / 1000);
+              // formData.date = convertDate;
+              formData.date =item.getFields()[0].getProperty("value")
             }
             if (item.getLabel() === "Важность") {
               formData.importance = item.getFields()[0].getProperty("value");
@@ -229,6 +227,8 @@ sap.ui.define([
           });
           let result = await datas.json()
           console.log(result)
+          let aTasksCategory = this.getOwnerComponent().getModel("ListTasks");
+          aTasksCategory.setProperty("/tasksList", result.result);
           oRouter.navTo("Tasks")
           // MessageToast.show("The input is validated. Your form has been submitted.");
         } else {

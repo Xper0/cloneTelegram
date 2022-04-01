@@ -86,6 +86,7 @@ sap.ui.define([
         //   oUserContainer.setVisible(true)
         // }
         // console.log(data)
+        oRouter.getRoute("Init").attachMatched(this._onObjectMatched, this)
       },
       onSignIn: function () {
         let userPhone = 89060733437;
@@ -97,6 +98,14 @@ sap.ui.define([
         fetch(url)
       },
       _onObjectMatched: function (oEvent) {
+        console.log(oEvent)
+        let userPhone = 89060733437;
+        let oRouter =  this.getOwnerComponent().getRouter();
+        oRouter.navTo("Contacts", {
+          UserContacts: userPhone
+        })
+
+
         let oItem, oView;
         oItem = oEvent.getParameter("arguments").UserChatId; // Получение detailId
         let oModel = this.getView().getModel("MessageUsers").getData();

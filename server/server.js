@@ -73,8 +73,7 @@ const wss = new WebSocketServer({ port: 4000})
 
 
 //
-// const apiId = 11602427;
-// const apiHash = "51feba2b614e15b5f63d97c75f6f5a49";
+
 // const stringSession = new StringSession(oConfig.stringSession); // fill this later with the value from session.save()
 const LimitMessage = 15
 

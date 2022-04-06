@@ -21,7 +21,10 @@ sap.ui.define([
         let sTaskId = oEvent.getParameter("arguments").editTaskId;
         this.getOwnerComponent().loadTasks().then(() => {
           let aTasks = this.getOwnerComponent().getModel("ListTasks").getData().tasksList;
-          let nTaskIndex = aTasks.findIndex(taskId => taskId.id == sTaskId)
+          //for listFile
+          // let nTaskIndex = aTasks.findIndex(taskId => taskId.id == sTaskId)
+          //for DB
+          let nTaskIndex = aTasks.findIndex(taskId => taskId._id == sTaskId)
           console.log(nTaskIndex)
           let sPath = `/tasksList/${nTaskIndex}`
           // UsersModel.loadData(url1, null, true, "GET", null, false);

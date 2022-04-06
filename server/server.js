@@ -1,6 +1,6 @@
 import express from "express";
-import {Api, TelegramClient} from "telegram";
-import {StringSession} from "telegram/sessions/index.js";
+import {Api} from "telegram";
+// import {StringSession} from "telegram/sessions/index.js";
 import WebSocket, { WebSocketServer } from 'ws';
 import session from "express-session";
 import  tasks from "./tasks.js"
@@ -13,6 +13,9 @@ import cors from "cors";
 import messageList from "./messageList.js";
 import mongoose from "mongoose";
 import Task from "./models/listTask.js";
+import tasksRouter from "./routes/taskRouters.js";
+import client from "./clientTelegram.js";
+import messangerRouters from "./routes/messangerRouters.js";
 
 
 const pwDB ='PTm3PRLka3rIUAvh';
@@ -69,10 +72,10 @@ const wss = new WebSocketServer({ port: 4000})
 
 
 
-
-const apiId = 11602427;
-const apiHash = "51feba2b614e15b5f63d97c75f6f5a49";
-const stringSession = new StringSession(oConfig.stringSession); // fill this later with the value from session.save()
+//
+// const apiId = 11602427;
+// const apiHash = "51feba2b614e15b5f63d97c75f6f5a49";
+// const stringSession = new StringSession(oConfig.stringSession); // fill this later with the value from session.save()
 const LimitMessage = 15
 
 function _saveConfig() {
@@ -83,10 +86,11 @@ function _saveList() {
 }
 
 let has = "116c512c1bc4825cd9"
-const client = new TelegramClient(stringSession, apiId, apiHash, {
-  connectionRetries: 5,
-});
+// const client = new TelegramClient(stringSession, apiId, apiHash, {
+//   connectionRetries: 5,
+// });
 
+console.log(client)
 const chatId = 1001505671579;
 
 // const bodyParse = bodyParser.json()
@@ -141,397 +145,33 @@ wss.on("connection" , async (ws) => {
         }))
       }
     })
-    client.addEventHandler((update) => {
-      const message = update.message;
-      console.log(update)
-      if (update.className === "UpdateNewChannelMessage" || update.className === "UpdateNewMessage") {
-        let fromID = message._chatPeer.channelId;
-        let chatID = message.senderId;
-        // console.log(fromID);
-        // console.log(chatID);
-        return ws.send(JSON.stringify({
-          type: "newMessages",
-          responseId: message.senderId,
-          status: "ok",
-          msg: {
-            chatId: fromID,
-            user: chatID,
-            message: update.message
-          }
-        }));
-      }
-    })
+    // client.addEventHandler((update) => {
+    //   const message = update.message;
+    //   console.log(update)
+    //   if (update.className === "UpdateNewChannelMessage" || update.className === "UpdateNewMessage") {
+    //     let fromID = message._chatPeer.channelId;
+    //     let chatID = message.senderId;
+    //     // console.log(fromID);
+    //     // console.log(chatID);
+    //     return ws.send(JSON.stringify({
+    //       type: "newMessages",
+    //       responseId: message.senderId,
+    //       status: "ok",
+    //       msg: {
+    //         chatId: fromID,
+    //         user: chatID,
+    //         message: update.message
+    //       }
+    //     }));
+    //   }
+    // })
   }
 })
 
 const start =  () => {
   try {
-    // wss.on('connection',     (ws) => {
-      app.get("/", async (req, res) => {
-        // console.log(req.session.userId)
-        if (oConfig.phoneCodeHash && oConfig.phoneNumber) {
-          req.session.userId = oConfig.phoneNumber;
-          req.session.phoneCodeHash = oConfig.phoneCodeHash;
-          // (async function run() {
-         await client.connect();
-
-          return res.status(201).json({
-            status: "ok",
-            redirect: "chatLists"
-          });
-        } else {
-          return res.status(201).json({
-            status: "ok",
-            redirect: "Auth",
-            path: "lo"
-          });
-        }
-      });
-      app.get("/chatList", async (req, res) => {
-        if (oConfig.phoneCodeHash) {
-          //List
-          await client.connect();
-          const allChats = await client.invoke(
-            new Api.messages.GetAllChats({
-              exceptIds: [43],
-            })
-          );
-          return res.json({
-            status: "ok",
-            result: allChats
-          });
-        } else {
-          return res.json({
-            status: "ok",
-            redirect: "Auth"
-          });
-        }
-      })
-      app.get("/users", (req, res) => {
-        res.send(oConfig.userList);
-      });
-      app.get("/chats", (req, res) => {
-        res.send(oConfig.userChats);
-      });
-      app.get("/messages", (req, res) => {
-        res.send(oConfig.userMessages);
-      });
-      app.get("/session", (req, res) => {
-        console.log(req.session);
-        return res.status(201).json({msg: "это" + " " + req.session.userId});
-        // let user = users.find( user => Number(user.phone) === Number(sessions))
-        //
-        // sessions = req.session.user = "89060733437"
-        // console.log(sessions)
-        // if (sessions){
-        //     res.status(201).json({msg: "Добро пожаловать"})
-        // }else {
-        //   res.status(401).json({msg: "Авторизуйтесь"})
-        // }
-      });
-      app.get("/usersList", async (req,res) => {
-        return res.json({
-          status: "ok",
-          result: usersList
-        })
-      })
-    app.get("/tasksList", async (req,  res) => {
-       // await Task.remove()
-      let  datas = await Task.insertMany(tasksList);
-      console.log(datas)
-      const taski = await Task.find()
-      await Task.remove()
-      console.log(taski)
-      console.log(req.query.category)
-     return res.json({
-        status: "ok",
-        result: tasksList,
-        dataresult: taski
-      })
-    })
-    app.post("/tasksList", async (req,  res) => {
-      // console.log(req.query.category)
-      let { task } = JSON.parse(req.body)
-      let taskOnList = tasksList.findIndex( taskId => Number(taskId.id) === Number(task.id))
-      if (taskOnList !== undefined) {
-        if (task.chatId !== undefined) {
-          const result = await client.invoke(
-            new Api.messages.SendMessage({
-              peer: `${task.chatId}`,
-              message: `Задача изменена:
-              Ссылка: http://127.0.0.1:8080/index.html#/AboutTask/${task.id}
-              `,
-              noWebpage: true,
-              scheduleDate: 43,
-            })
-          );
-        }
-        // tasksList[taskOnList] = task
-        [...tasksList, tasksList[taskOnList] = task]
-        console.log(tasksList)
-        return res.json({
-          status: "ok",
-          result: "Задача изменена"
-        })
-      }else {
-        return res.json({
-          status: "ok",
-          result: tasksList
-        })
-      }
-    })
-
-      app.get("/tasks", async (req,  res) => {
-        // console.log(req.query.category)
-        if (req.query.category) {
-          // let filterTask = Object.keys(tasks).find( task => task === req.query.category)
-          // console.log(filterTask)
-          return res.json({
-            status: "ok",
-            result: tasks[req.query.category]
-          })
-        } else return res.json({
-          status: "ok",
-          result: tasks
-        })
-      })
-      app.post("/tasks", async (req,res) => {
-        let { task } = JSON.parse(req.body);
-        // console.log( task)
-        tasks.myTask.push(task)
-        res.json({
-          status: "ok",
-          msg: "задача добавлена"
-        })
-      })
-      app.get("/message/:sId", async (req, res) => {
-        let idChat = req.params.sId;
-        console.dir(req.params)
-        console.log(oConfig.initUpdate)
-        if (idChat) {
-          console.log(idChat);
-          //история сообщений
-          const result = await client.invoke(
-            new Api.messages.GetHistory({
-              peer: idChat,
-              offsetId: 0,
-              offsetDate: 0,
-              addOffset: 0,
-              limit: LimitMessage,
-              maxId: 0,
-              minId: 0,
-              hash: 0,
-            }));
-          return res.json(
-            {
-              messages: result,
-              idChat: idChat,
-            }
-          );
-        } else {
-          return res.json({
-            msg: "чат не найден"
-          });
-        }
-      });
-      app.get("/getCommentTask", async (req, res) => {
-        let idChat = req.query.commentTaskId;
-        if (idChat) {
-          // let findChat = messageList.find( chat => chat.channelId == idChat);
-          let findChat = tasksList.find( chat => chat.id == idChat);
-          if (findChat.chatId) {
-            const historyTask = await client.invoke(
-              new Api.messages.GetHistory({
-                peer: findChat.chatId,
-                offsetId: 0,
-                offsetDate: 0,
-                addOffset: 0,
-                limit: LimitMessage,
-                maxId: 0,
-                minId: 0,
-                hash: 0,
-              }));
-            return res.json({
-              status: "ok",
-              message: historyTask
-            })
-          }
-          else {
-            return res.json({
-              status: "ok",
-              message: findChat
-            })
-          }
-        }
-        else{
-          res.json({
-            status: "ok",
-            message: "ошибка чата"
-          })
-        }
-       })
-      app.post("/sendMessage" , async (req, res) => {
-        let { message, idChat } = JSON.parse(req.body)
-        // let {chatid} = JSON.parse(chatId)
-        let newRandomId = Math.ceil(Math.random() * 70);
-        let taskOnList = tasksList.find( taskId => taskId.id === newRandomId)
-        if (!taskOnList && idChat ) {
-          const telegramChatId = await client.invoke(
-            new Api.channels.CreateChannel({
-              title: `Задача #${newRandomId}`,
-              about: "Канал для задачи",
-              geoPoint: new Api.InputGeoPoint({
-                lat: 8.24,
-                long: 8.24,
-                accuracyRadius: 43,
-              }),
-              address: "туту",
-            })
-          );
-          // console.log(result.chats[0].id.value)
-          let convertTime = Math.floor(new Date(message.date).getTime() / 1000);
-          let newTask = {
-            id: Number(newRandomId),
-            chatId: `${telegramChatId.chats[0].id.value}`,
-            title: message.title,
-            date: convertTime,
-            description: message.description,
-            status: "Выполняется",
-            importance: message.importance,
-            supervisor: message.supervisor,
-            responsible: message.responsible,
-            subtasks: message.subtasks,
-            progress: message.progress
-          }
-          tasksList.push(newTask)
-          console.log(tasksList)
-          // let convertTime = Math.floor(new Date(message.date).getTime() / 1000);
-          const result = await client.invoke(
-            new Api.messages.SendMessage({
-              peer: `${telegramChatId.chats[0].id.value}`,
-              message: `Вам назначена новая задача:
-              Название: ${message.title},
-              Дедлайн: ${message.date},
-              Описание: ${message.description},
-              Важность: ${message.importance},
-              Ссылка: http://127.0.0.1:8080/index.html#/AboutTask/${newRandomId}
-              `,
-              noWebpage: true,
-              scheduleDate: 43,
-            })
-          );
-          return res.json({
-            status: "ok",
-            msg: "сообщение отправлено",
-            result: tasksList
-          })
-
-        }
-        return res.json({
-          status: "ok",
-          msg: "ошибка сообщения"
-        })
-      })
-      // ws.on("message", async (body) => {
-      //   console.log(`this is message: ${body}`)
-      //   let {message, idChat, id} = JSON.parse(body)
-      //   if (message.length > 0 && idChat) {
-      //     const result = await client.invoke(
-      //       new Api.messages.SendMessage({
-      //         peer: idChat,
-      //         message: message,
-      //         noWebpage: true,
-      //         scheduleDate: 43,
-      //       })
-      //     );
-      //     return ws.send(JSON.stringify({
-      //       type: "messages",
-      //       responseId: id,
-      //       status: "ok",
-      //       msg: `Сообщение отправлено: ${result}`
-      //     }))
-      //     const chatPts = await client.invoke(
-      //       new Api.messages.GetHistory({
-      //         peer: idChat,
-      //         offsetId: 0,
-      //         offsetDate: 0,
-      //         addOffset: 0,
-      //         limit: 100,
-      //         maxId: 0,
-      //         minId: 0,
-      //         hash: 0,
-      //       }));
-      //     // console.log(chatPts.pts)
-      //     // console.log(Update)
-      //     const updateMessage = await client.invoke(
-      //       new Api.updates.GetChannelDifference({
-      //         channel: idChat,
-      //         filter: new Api.ChannelMessagesFilterEmpty({}),
-      //         pts: chatPts.pts,
-      //         limit: 10,
-      //         force: true,
-      //       })
-      //     );
-      //     console.dir(updateMessage)
-      //
-      //
-      //   } else {
-      //     return ws.send(JSON.stringify({
-      //       type: "messages",
-      //       responseId: id,
-      //       status: "ok",
-      //       msg: `Сообщение ne отправлено`
-      //     }))
-      //   }
-      // })
-      // })
-      // const result =  client.invoke(
-      //   new Api.messages.SendMessage({
-      //     peer: idChat,
-      //     message: message,
-      //     noWebpage: true,
-      //     scheduleDate: 43,
-      //   })
-      // );
-      // ws.send(result + "this bot message")
-
-      // });
-      // console.log(oConfig.initUpdate)
-      // if (message.length > 0 && idChat) {
-      //   const result = await client.invoke(
-      //     new Api.messages.SendMessage({
-      //       peer: idChat,
-      //       message: message,
-      //       noWebpage: true,
-      //       scheduleDate: 43,
-      //     })
-      //   );
-
-      // const Update = await client.invoke(new Api.updates.GetState({}));
-      //
-
-      // console.log(updateMessage)
-      // const updateMessage = await client.invoke(
-      //   new Api.updates.GetDifference({
-      //     pts: Update.pts,
-      //     date: Date.now() - Update.date,
-      //     qts: Update.qts,
-      //   })
-      // );
-      // console.log(updateMessage)
-
-      //     return res.json({
-      //       status: "ok",
-      //       msg: `Сообщение отправлено: ${result}`
-      //     })
-      //   }else {
-      //     res.json({
-      //       status: "ok",
-      //       msg: "Пустое сообщение"
-      //     })
-      //   }
-      //
-      // })
+      app.use(messangerRouters)
+      app.use(tasksRouter)
 
       app.post("/session", (req, res) => {
         let {phone} = JSON.parse(req.body);

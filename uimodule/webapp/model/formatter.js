@@ -10,9 +10,11 @@ sap.ui.define([
       return user
     },
     getData: function (data) {
-      var oFormat = DateFormat.getDateTimeInstance({ style: "medium" });
-      var oDate = new Date(data * 1000);
-      var sDate = oFormat.format(oDate);
+      let oFormat = DateFormat.getDateTimeInstance({ style: "medium" });
+      // let oDate = new Date(data * 1000);
+      //for DB Mongo
+      let oDate = new Date(data );
+      let sDate = oFormat.format(new Date(oDate * 1000));
       return sDate
     },
     getUser: function (oSenderUser, aUsers) {

@@ -92,8 +92,13 @@ sap.ui.define([
         let oItem = oEvent.getSource().getBindingContext("ListTasks").getObject();
         console.log(oItem)
         let oRouter = this.getOwnerComponent().getRouter();
+        //for list File
+        // oRouter.navTo("AboutTask", {
+        //   AboutTaskId: oItem.id
+        // })
+        //for DB Mongo
         oRouter.navTo("AboutTask", {
-          AboutTaskId: oItem.id
+          AboutTaskId: oItem._id
         })
       },
       handleFilterButtonPressed: function () {

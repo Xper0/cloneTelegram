@@ -87,7 +87,13 @@ sap.ui.define([
         // let nTaskIndex = aTasks.findIndex(taskId => taskId.id == sTaskId)
         this.getOwnerComponent().loadTasks().then(() => {
           let aTasks = this.getOwnerComponent().getModel("ListTasks").getData().tasksList;
-          let nTaskIndex = aTasks.findIndex(taskId => taskId.id == sTaskId)
+          console.log(aTasks)
+          //for list File
+          // let nTaskIndex = aTasks.findIndex(taskId => taskId.id == sTaskId);
+
+          //for DB Mongo
+          let nTaskIndex = aTasks.findIndex(taskId => taskId._id == sTaskId);
+
           // let aTasks = this.getOwnerComponent().getModel("ListTasks").getData().tasksList;
           // console.log(aTasks)
           // let nTaskIndex = aTasks.findIndex(taskId => taskId.id == sTaskId)
@@ -118,13 +124,17 @@ sap.ui.define([
           });
 
         });
+
         this.oCommentsTask = this.getOwnerComponent().getModel("CommentsTask");
         let urlId = `http://127.0.0.1:5000/getCommentTask?commentTaskId=${sTaskId}`;
         let data = await fetch(urlId)
         let result = await data.json();
         console.log(result)
         this.oCommentsTask.setProperty("/comments", result.message)
-        console.log(this.oCommentsTask)
+        // console.log(this.oCommentsTask)
+
+
+
         // let oEventBus = sap.ui.getCore().getEventBus();
         // oEventBus.subscribe("tasks", "tasksLoaded",
         // })
@@ -152,8 +162,12 @@ sap.ui.define([
       onEditTask: function (oEventTask) {
         let oRouter = this.getOwnerComponent().getRouter();
         const oItem = oEventTask.getSource().getBindingContext("ListTasks").getObject();
+        // oRouter.navTo("EditTask", {
+        //   editTaskId: oItem.id
+        // });
+        //for DB
         oRouter.navTo("EditTask", {
-          editTaskId: oItem.id
+          editTaskId: oItem._id
         });
       },
       onBeginTask: function () {

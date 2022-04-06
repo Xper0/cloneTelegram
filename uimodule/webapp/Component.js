@@ -103,7 +103,8 @@ sap.ui.define([
                 },
               ];
               console.log(tasksList)
-              this.oTaskModel.setProperty("/tasksList", tasksList.result);
+              this.oTaskModel.setProperty("/tasksList", tasksList.dataresult);
+              // this.oTaskModel.setProperty("/tasksList", tasksList.result);
               this.oTaskModel.setProperty("/users", userList.result);
               this.oTaskModel.setProperty("/tasksGroups", taskGroups);
 
